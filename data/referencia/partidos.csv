@@ -1,0 +1,50 @@
+sigla_api,sigla,partido_id,familia,evento,data_evento,processo_tse,fonte,observacao,conferido_tse
+AGIR,AGIR,AGIR,AGIR,,,,,,nao
+AVANTE,AVANTE,AVANTE,AVANTE,,,,,,nao
+CIDADANIA,CIDADANIA,CIDADANIA,CIDADANIA,,,,,,nao
+DC,DC,DC,DC,,,,,,nao
+DEM,DEM,DEM,UNIÃO,fusao,2022-02-08,RPP nº 0600641-95.2021.6.00.0000,https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,DEM + PSL formam o UNIÃO,sim
+MDB,MDB,MDB,MDB,,,,,,nao
+MISSÃO,MISSÃO,MISSÃO,MISSÃO,,,,,Partido novo; espectro classificado manualmente (D9),nao
+NOVO,NOVO,NOVO,NOVO,,,,,,nao
+PATRI,PATRIOTA,PATRIOTA,PRD,grafia,,,,Abreviação usada pela API para PATRIOTA,nao
+PATRIOTA,PATRIOTA,PATRIOTA,PRD,fusao,2023-11-09,RPP nº 0601913-90.2022.6.00.0000,https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PATRIOTA + PTB formam o PRD,sim
+PCdoB,PCdoB,PCdoB,PCdoB,,,,,,nao
+PDT,PDT,PDT,PDT,,,,,,nao
+PEN,PEN,PATRIOTA,PRD,renomeacao,2018-04-26,RPP nº 1535-72.2011.6.00.0000,https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PEN passa a se chamar PATRIOTA,sim
+PHS,PHS,PHS,PODE,incorporacao,2019-09-19,PET nº 0602013-84.2018.6.00.0000,https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PHS incorporado ao PODE,sim
+PL,PL,PL,PL,,,,,,nao
+PMB,PMB,PMB,PMB,,,,,,nao
+PMDB,PMDB,MDB,MDB,renomeacao,2018-05-15,PET nº 128 (1286-49.1996.6.00.0000),https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PMDB passa a se chamar MDB (convenção em dez/2017; decisão do TSE em 2018),sim
+PMN,PMN,PMN,PMN,,,,,Conferir eventual mudança de nome após 2023,nao
+PODE,PODE,PODE,PODE,,,,,,nao
+PP,PP,PP,PP,,,,,,nao
+PP**,PP,PP,PP,grafia,,,,Sufixo espúrio da API,nao
+PPL,PPL,PPL,PCdoB,incorporacao,2019-05-28,PET nº 0601972-20.2018.6.00.0000,https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PPL incorporado ao PCdoB,sim
+PPS,PPS,CIDADANIA,CIDADANIA,renomeacao,2019-09-19,PET nº 74 (1782-78.1996.6.00.0000),https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PPS passa a se chamar CIDADANIA,sim
+PR,PR,PL,PL,renomeacao,2019-05-07,RPP nº 305 (29782-39.2006.6.00.0000),https://www.tse.jus.br/comunicacao/noticias/2019/Maio/aprovada-alteracao-do-nome-do-partido-da-republica-pr-para-partido-liberal-pl,PR passa a se chamar PL (resolução do partido em 9/2/2019; aprovada pelo TSE em 7/5/2019),sim
+PRB,PRB,REPUBLICANOS,REPUBLICANOS,renomeacao,2019-08-15,RPP nº 301 (25929-56.2005.6.00.0000),https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PRB passa a se chamar REPUBLICANOS,sim
+PRD,PRD,PRD,PRD,,,,,,nao
+PROS,PROS,PROS,SOLIDARIEDADE,incorporacao,2023-02-14,PetCiv nº 0601967-56.2022.6.00.0000,https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PROS incorporado ao SOLIDARIEDADE,sim
+PRP,PRP,PRP,PRD,incorporacao,2019-03-28,PET nº 0601953-14.2018.6.00.0000,https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PRP incorporado ao PATRIOTA (que depois forma o PRD),sim
+PRTB,PRTB,PRTB,PRTB,,,,,,nao
+PSB,PSB,PSB,PSB,,,,,,nao
+PSC,PSC,PSC,PODE,incorporacao,2023-06-15,PetCiv nº 0600013-38.2023.6.00.0000,https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PSC incorporado ao PODE,sim
+PSD,PSD,PSD,PSD,,,,,,nao
+PSDB,PSDB,PSDB,PSDB,,,,,,nao
+PSDC,PSDC,DC,DC,renomeacao,2018-05-17,PET nº 96 (863-89.1996.6.00.0000),https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PSDC passa a se chamar DC,sim
+PSL,PSL,PSL,UNIÃO,fusao,2022-02-08,RPP nº 0600641-95.2021.6.00.0000,https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,DEM + PSL formam o UNIÃO,sim
+PSOL,PSOL,PSOL,PSOL,,,,,,nao
+PT,PT,PT,PT,,,,,,nao
+PTB,PTB,PTB,PRD,fusao,2023-11-09,RPP nº 0601913-90.2022.6.00.0000,https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PATRIOTA + PTB formam o PRD,sim
+PTC,PTC,AGIR,AGIR,renomeacao,2022-03-31,RPP nº 51-91.1989.6.00.0000,https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PTC passa a se chamar AGIR,sim
+PTN,PTN,PODE,PODE,renomeacao,2017-05-16,PET nº 52 (658-94.1995.6.00.0000),https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PTN passa a se chamar PODE,sim
+PTdoB,PTdoB,AVANTE,AVANTE,renomeacao,2017-09-12,PET nº 115 (6-43.1996.6.00.0000),https://www.tse.jus.br/partidos/partidos-registrados-no-tse/registrados-no-tse,PTdoB passa a se chamar AVANTE,sim
+PV,PV,PV,PV,,,,,,nao
+REDE,REDE,REDE,REDE,,,,,,nao
+REPUBLICANOS,REPUBLICANOS,REPUBLICANOS,REPUBLICANOS,,,,,,nao
+S.PART.,S.PART.,,,,,,,Sem partido: fora do Rice e das análises por partido,nao
+SD,SD,SOLIDARIEDADE,SOLIDARIEDADE,grafia,,,,Sigla antiga usada pela API para SOLIDARIEDADE,nao
+SOLIDARIEDADE,SOLIDARIEDADE,SOLIDARIEDADE,SOLIDARIEDADE,,,,,,nao
+Solidaried,SOLIDARIEDADE,SOLIDARIEDADE,SOLIDARIEDADE,grafia,,,,Nome truncado nas orientações da API,nao
+UNIÃO,UNIÃO,UNIÃO,UNIÃO,,,,,,nao

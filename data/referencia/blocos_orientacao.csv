@@ -1,0 +1,14 @@
+bloco_api,votacoes,partidos,origem_composicao,situacao,vigencia_inicio,fonte,observacao
+PmdbPpPtbPscPhsPen,maioridade_penal,PMDB;PP;PTB;PSC;PHS;PEN,nome_do_bloco,ok,,nome do bloco na API,
+PrbPtnPmnPrpPsdcPrtbPtcPslPtdoB,maioridade_penal,PRB;PTN;PMN;PRP;PSDC;PRTB;PTC;PSL;PTdoB,nome_do_bloco,ok,,nome do bloco na API,
+PmdbPen,teto_gastos,PMDB;PEN,nome_do_bloco,ok,,nome do bloco na API,
+PpPtbPsc,teto_gastos,PP;PTB;PSC,nome_do_bloco,ok,,nome do bloco na API,
+PtnPtdoBPsl,teto_gastos,PTN;PTdoB;PSL,nome_do_bloco,ok,,nome do bloco na API,
+PpPtnPTdoB,reforma_trabalhista,PP;PTN;PTdoB,nome_do_bloco,ok,,nome do bloco na API,
+PtbProsPsl,reforma_trabalhista,PTB;PROS;PSL,nome_do_bloco,ok,,nome do bloco na API,
+PpMdbPtb,reforma_previdencia,PP;MDB;PTB,nome_do_bloco,ok,,nome do bloco na API,
+Bl MdbPsdRepPodePsc,igualdade_salarial;marco_temporal,MDB;PSD;REPUBLICANOS;PODE;PSC,nome_do_bloco,ok,,https://www.camara.leg.br/noticias/952375-novo-bloco-parlamentar-reune-nove-partidos-e-173-deputados-na-camara/,A matéria de 12/04/2023 cita este bloco (142 deputados) como o outro bloco em funcionamento
+Fdr PT-PCdoB-PV,igualdade_salarial;marco_temporal;fim_escala_6x1,PT;PCdoB;PV,nome_do_bloco,ok,,nome do bloco na API,Federação
+Fdr PSOL-REDE,igualdade_salarial;marco_temporal;fim_escala_6x1,PSOL;REDE,nome_do_bloco,ok,,nome do bloco na API,Federação
+Bl UniPpPsd...,fim_escala_6x1,UNIÃO;PP;PSD;REPUBLICANOS;MDB;PSDB;CIDADANIA;PODE,api_blocos_589,a_confirmar,,,Nome truncado pela API; composição do bloco 589 (/blocos?idLegislatura=57) consultada em 14/11/2026; confirmar que era a mesma em 27/05/2026
+Bl UniPpFdrPsdbCid...,igualdade_salarial;marco_temporal,UNIÃO;PP;PSDB;CIDADANIA;PDT;PSB;AVANTE;SOLIDARIEDADE;PATRIOTA,fonte_documental,ok,2023-04-12,https://www.camara.leg.br/noticias/952375-novo-bloco-parlamentar-reune-nove-partidos-e-173-deputados-na-camara/,"Nome completo: Bloco UNIÃO, PP, Federação PSDB CIDADANIA, PDT, PSB, AVANTE, SOLIDARIEDADE, PATRIOTA (relação de composição de comissões mistas do Congresso, mai–jun/2023, informada pelo grupo, sem link). Composição igual à inferida por exclusão nas duas votações e inalterada em 20/06/2023. Não confundir com o bloco de apoio a Lira de 01/02/2023 (eleição da Mesa)"

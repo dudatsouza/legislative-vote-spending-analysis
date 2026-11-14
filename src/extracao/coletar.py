@@ -73,7 +73,7 @@ def coletar_deputados() -> None:
 
 
 def coletar_proposicoes() -> None:
-    ano_ini = config.LEGISLATURAS[51][0].year
+    ano_ini = config.ANO_INICIO
     for ano in range(ano_ini, config.ANO_FIM + 1):
         for nome in ("proposicoes", "proposicoesAutores"):
             url = f"{config.ARQUIVOS_CAMARA}/{nome}/csv/{nome}-{ano}.csv"
