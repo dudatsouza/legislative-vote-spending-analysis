@@ -1,79 +1,194 @@
-chave_votacao,votacao,legislatura,partido,Abstenção,Artigo 17,Ausente,Não,Sim,n_deputados,rice
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,AVANTE,0,0,0,0,5,5,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,CIDADANIA,0,0,1,0,1,2,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,MDB,0,0,3,2,33,38,88.57142857142857
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,MISSÃO,0,0,0,1,0,1,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,NOVO,0,0,1,4,0,5,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PCdoB,0,0,0,0,11,11,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PDT,0,0,0,0,9,9,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PL,0,0,7,9,81,97,80.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PODE,0,0,0,0,27,27,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PP,0,0,6,1,40,47,95.1219512195122
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PRD,0,0,0,0,2,2,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PSB,0,0,1,0,16,17,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PSD,0,0,6,1,41,48,95.23809523809523
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PSDB,0,0,2,0,16,18,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PSOL,0,0,0,0,12,12,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PT,0,0,0,0,65,65,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PV,0,0,0,0,6,6,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,REDE,0,0,0,0,4,4,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,REPUBLICANOS,0,0,4,0,39,43,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,SOLIDARIEDADE,0,0,0,0,6,6,100.0
-fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,UNIÃO,0,0,2,1,47,50,95.83333333333334
-maioridade_penal,Redução da maioridade penal (2º turno),55,DEM,0,0,1,1,19,21,90.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PCdoB,0,0,0,13,0,13,100.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PDT,0,0,3,11,5,19,37.5
-maioridade_penal,Redução da maioridade penal (2º turno),55,PEN,0,0,0,0,2,2,100.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PHS,0,0,1,1,3,5,50.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PMDB,1,1,5,13,47,67,56.666666666666664
-maioridade_penal,Redução da maioridade penal (2º turno),55,PMN,0,0,1,0,2,3,100.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PP,0,0,0,1,36,37,94.5945945945946
-maioridade_penal,Redução da maioridade penal (2º turno),55,PP**,0,0,2,0,0,2,
-maioridade_penal,Redução da maioridade penal (2º turno),55,PPS,0,0,0,7,4,11,27.27272727272727
-maioridade_penal,Redução da maioridade penal (2º turno),55,PR,0,0,2,1,31,34,93.75
-maioridade_penal,Redução da maioridade penal (2º turno),55,PRB,0,0,0,0,20,20,100.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PROS,0,0,1,7,4,12,27.27272727272727
-maioridade_penal,Redução da maioridade penal (2º turno),55,PRP,0,0,0,0,3,3,100.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PRTB,0,0,0,0,1,1,100.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PSB,0,0,6,12,15,33,11.11111111111111
-maioridade_penal,Redução da maioridade penal (2º turno),55,PSC,0,0,2,1,10,13,81.81818181818183
-maioridade_penal,Redução da maioridade penal (2º turno),55,PSD,0,0,2,2,30,34,87.5
-maioridade_penal,Redução da maioridade penal (2º turno),55,PSDB,0,0,6,4,43,53,82.97872340425532
-maioridade_penal,Redução da maioridade penal (2º turno),55,PSDC,0,0,0,0,2,2,100.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PSL,0,0,0,0,1,1,100.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PSOL,0,0,0,4,0,4,100.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PT,0,0,2,60,1,63,96.72131147540983
-maioridade_penal,Redução da maioridade penal (2º turno),55,PTB,0,0,3,4,18,25,63.63636363636363
-maioridade_penal,Redução da maioridade penal (2º turno),55,PTC,0,0,0,1,1,2,0.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PTN,0,0,0,2,2,4,0.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PTdoB,0,0,0,0,2,2,100.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,PV,0,0,0,4,4,8,0.0
-maioridade_penal,Redução da maioridade penal (2º turno),55,S.PART.,0,0,1,0,0,1,
-maioridade_penal,Redução da maioridade penal (2º turno),55,SD,0,0,1,3,14,18,64.70588235294117
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,DEM,0,1,0,0,29,30,100.0
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PCdoB,0,0,3,9,0,12,100.0
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PDT,0,0,3,15,1,19,87.5
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PEN,0,0,0,1,2,3,33.33333333333333
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PHS,0,0,1,4,2,7,33.33333333333333
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PMB,0,0,0,1,0,1,100.0
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PMDB,0,0,5,7,51,63,75.86206896551724
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PP,0,0,0,9,35,44,59.09090909090909
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PP**,0,0,4,0,0,4,
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PPS,0,0,0,3,6,9,33.33333333333333
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PR,0,0,4,7,28,39,60.0
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PRB,0,0,4,4,15,23,57.89473684210527
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PROS,0,0,0,4,1,5,60.0
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PRP,0,0,0,0,1,1,100.0
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSB,0,0,6,16,14,36,6.666666666666667
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSC,0,0,0,2,8,10,60.0
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSD,0,0,3,5,29,37,70.58823529411765
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSDB,0,0,4,1,43,48,95.45454545454545
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSL,0,0,0,1,1,2,0.0
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSOL,0,0,0,6,0,6,100.0
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PT,0,0,2,56,0,58,100.0
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PTB,0,0,1,4,13,18,52.94117647058824
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PTN,0,0,1,5,7,13,16.666666666666664
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PTdoB,0,0,0,3,1,4,50.0
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,PV,0,0,0,2,4,6,33.33333333333333
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,REDE,0,0,0,4,0,4,100.0
-reforma_trabalhista,Reforma Trabalhista (texto-base),55,SD,0,0,1,8,5,14,23.076923076923077
+chave_votacao,votacao,legislatura,partido,partido_id,espectro,sim,nao,abstencao,ausente,n_deputados,validos,rice
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,AVANTE,AVANTE,direita,5,0,0,0,5,5,100.0
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,CIDADANIA,CIDADANIA,centro,1,0,0,1,2,1,
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,MDB,MDB,direita,33,2,0,3,38,35,88.57
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,MISSÃO,MISSÃO,direita,0,1,0,0,1,1,
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,NOVO,NOVO,direita,0,4,0,1,5,4,
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PCdoB,PCdoB,esquerda,11,0,0,0,11,11,100.0
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PDT,PDT,esquerda,9,0,0,0,9,9,100.0
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PL,PL,direita,81,9,0,7,97,90,80.0
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PODE,PODE,direita,27,0,0,0,27,27,100.0
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PP,PP,direita,40,1,0,6,47,41,95.12
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PRD,PRD,direita,2,0,0,0,2,2,
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PSB,PSB,esquerda,16,0,0,1,17,16,100.0
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PSD,PSD,direita,41,1,0,6,48,42,95.24
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PSDB,PSDB,direita,16,0,0,2,18,16,100.0
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PSOL,PSOL,esquerda,12,0,0,0,12,12,100.0
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PT,PT,esquerda,65,0,0,0,65,65,100.0
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PV,PV,centro,6,0,0,0,6,6,100.0
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,REDE,REDE,centro,4,0,0,0,4,4,
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,REPUBLICANOS,REPUBLICANOS,direita,39,0,0,4,43,39,100.0
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,SOLIDARIEDADE,SOLIDARIEDADE,direita,6,0,0,0,6,6,100.0
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,UNIÃO,UNIÃO,direita,47,1,0,2,50,48,95.83
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,AVANTE,AVANTE,direita,5,0,0,2,7,5,100.0
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,CIDADANIA,CIDADANIA,centro,2,1,0,1,4,3,
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,MDB,MDB,direita,25,0,0,17,42,25,100.0
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,NOVO,NOVO,direita,0,3,0,0,3,3,
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PATRIOTA,PATRIOTA,direita,4,0,0,0,4,4,
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PCdoB,PCdoB,esquerda,6,0,0,1,7,6,100.0
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PDT,PDT,esquerda,15,0,0,3,18,15,100.0
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PL,PL,direita,46,24,2,27,99,70,31.43
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PODE,PODE,direita,4,2,0,6,12,6,33.33
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PP,PP,direita,32,1,0,16,49,33,93.94
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PSB,PSB,esquerda,11,0,0,3,14,11,100.0
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PSC,PSC,direita,2,0,0,2,4,2,
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PSD,PSD,direita,27,1,0,13,41,28,92.86
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PSDB,PSDB,direita,13,0,0,1,14,13,100.0
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PSOL,PSOL,esquerda,9,0,0,4,13,9,100.0
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PT,PT,esquerda,52,1,0,15,68,53,96.23
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PV,PV,centro,5,0,0,1,6,5,100.0
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,REDE,REDE,centro,1,0,0,0,1,1,
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,REPUBLICANOS,REPUBLICANOS,direita,31,0,0,10,41,31,100.0
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,SOLIDARIEDADE,SOLIDARIEDADE,direita,4,0,0,0,4,4,
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,UNIÃO,UNIÃO,direita,30,3,1,25,59,33,81.82
+maioridade_penal,Redução da maioridade penal (2º turno),55,DEM,DEM,direita,19,1,0,1,21,20,90.0
+maioridade_penal,Redução da maioridade penal (2º turno),55,PCdoB,PCdoB,esquerda,0,13,0,0,13,13,100.0
+maioridade_penal,Redução da maioridade penal (2º turno),55,PDT,PDT,esquerda,5,11,0,3,19,16,37.5
+maioridade_penal,Redução da maioridade penal (2º turno),55,PEN,PATRIOTA,direita,2,0,0,0,2,2,
+maioridade_penal,Redução da maioridade penal (2º turno),55,PHS,PHS,direita,3,1,0,1,5,4,
+maioridade_penal,Redução da maioridade penal (2º turno),55,PMDB,MDB,direita,47,13,1,5,66,60,56.67
+maioridade_penal,Redução da maioridade penal (2º turno),55,PMN,PMN,direita,2,0,0,1,3,2,
+maioridade_penal,Redução da maioridade penal (2º turno),55,PP,PP,direita,36,1,0,2,39,37,94.59
+maioridade_penal,Redução da maioridade penal (2º turno),55,PPS,CIDADANIA,centro,4,7,0,0,11,11,27.27
+maioridade_penal,Redução da maioridade penal (2º turno),55,PR,PL,direita,31,1,0,2,34,32,93.75
+maioridade_penal,Redução da maioridade penal (2º turno),55,PRB,REPUBLICANOS,direita,20,0,0,0,20,20,100.0
+maioridade_penal,Redução da maioridade penal (2º turno),55,PROS,PROS,direita,4,7,0,1,12,11,27.27
+maioridade_penal,Redução da maioridade penal (2º turno),55,PRP,PRP,direita,3,0,0,0,3,3,
+maioridade_penal,Redução da maioridade penal (2º turno),55,PRTB,PRTB,direita,1,0,0,0,1,1,
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSB,PSB,esquerda,15,12,0,6,33,27,11.11
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSC,PSC,direita,10,1,0,2,13,11,81.82
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSD,PSD,direita,30,2,0,2,34,32,87.5
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSDB,PSDB,direita,43,4,0,6,53,47,82.98
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSDC,DC,direita,2,0,0,0,2,2,
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSL,PSL,direita,1,0,0,0,1,1,
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSOL,PSOL,esquerda,0,4,0,0,4,4,
+maioridade_penal,Redução da maioridade penal (2º turno),55,PT,PT,esquerda,1,60,0,2,63,61,96.72
+maioridade_penal,Redução da maioridade penal (2º turno),55,PTB,PTB,direita,18,4,0,3,25,22,63.64
+maioridade_penal,Redução da maioridade penal (2º turno),55,PTC,AGIR,direita,1,1,0,0,2,2,
+maioridade_penal,Redução da maioridade penal (2º turno),55,PTN,PODE,direita,2,2,0,0,4,4,
+maioridade_penal,Redução da maioridade penal (2º turno),55,PTdoB,AVANTE,direita,2,0,0,0,2,2,
+maioridade_penal,Redução da maioridade penal (2º turno),55,PV,PV,centro,4,4,0,0,8,8,0.0
+maioridade_penal,Redução da maioridade penal (2º turno),55,SD,SOLIDARIEDADE,direita,14,3,0,1,18,17,64.71
+marco_temporal,Marco temporal das terras indígenas,57,AVANTE,AVANTE,direita,4,3,0,0,7,7,14.29
+marco_temporal,Marco temporal das terras indígenas,57,CIDADANIA,CIDADANIA,centro,2,1,0,1,4,3,
+marco_temporal,Marco temporal das terras indígenas,57,MDB,MDB,direita,22,8,0,12,42,30,46.67
+marco_temporal,Marco temporal das terras indígenas,57,NOVO,NOVO,direita,3,0,0,0,3,3,
+marco_temporal,Marco temporal das terras indígenas,57,PATRIOTA,PATRIOTA,direita,2,2,0,0,4,4,
+marco_temporal,Marco temporal das terras indígenas,57,PCdoB,PCdoB,esquerda,0,6,0,1,7,6,100.0
+marco_temporal,Marco temporal das terras indígenas,57,PDT,PDT,esquerda,1,14,0,3,18,15,86.67
+marco_temporal,Marco temporal das terras indígenas,57,PL,PL,direita,82,1,0,16,99,83,97.59
+marco_temporal,Marco temporal das terras indígenas,57,PODE,PODE,direita,7,3,0,2,12,10,40.0
+marco_temporal,Marco temporal das terras indígenas,57,PP,PP,direita,37,4,0,7,48,41,80.49
+marco_temporal,Marco temporal das terras indígenas,57,PSB,PSB,esquerda,3,12,0,0,15,15,60.0
+marco_temporal,Marco temporal das terras indígenas,57,PSC,PSC,direita,2,0,0,1,3,2,
+marco_temporal,Marco temporal das terras indígenas,57,PSD,PSD,direita,25,8,1,9,43,33,51.52
+marco_temporal,Marco temporal das terras indígenas,57,PSDB,PSDB,direita,10,2,0,2,14,12,66.67
+marco_temporal,Marco temporal das terras indígenas,57,PSOL,PSOL,esquerda,0,12,0,1,13,12,100.0
+marco_temporal,Marco temporal das terras indígenas,57,PT,PT,esquerda,0,65,0,3,68,65,100.0
+marco_temporal,Marco temporal das terras indígenas,57,PV,PV,centro,1,5,0,0,6,6,66.67
+marco_temporal,Marco temporal das terras indígenas,57,REDE,REDE,centro,0,1,0,0,1,1,
+marco_temporal,Marco temporal das terras indígenas,57,REPUBLICANOS,REPUBLICANOS,direita,33,4,0,5,42,37,78.38
+marco_temporal,Marco temporal das terras indígenas,57,SOLIDARIEDADE,SOLIDARIEDADE,direita,1,2,0,1,4,3,
+marco_temporal,Marco temporal das terras indígenas,57,UNIÃO,UNIÃO,direita,48,2,0,9,59,50,92.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,AVANTE,AVANTE,direita,6,2,0,0,8,8,50.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,CIDADANIA,CIDADANIA,centro,2,5,0,0,7,7,42.86
+pec_precatorios,PEC dos Precatórios (2º turno),56,DEM,DEM,direita,24,2,0,1,27,26,84.62
+pec_precatorios,PEC dos Precatórios (2º turno),56,MDB,MDB,direita,13,16,0,4,33,29,10.34
+pec_precatorios,PEC dos Precatórios (2º turno),56,NOVO,NOVO,direita,0,8,0,0,8,8,100.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,PATRIOTA,PATRIOTA,direita,6,0,0,0,6,6,100.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,PCdoB,PCdoB,esquerda,0,8,0,1,9,8,100.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,PDT,PDT,esquerda,5,19,0,1,25,24,58.33
+pec_precatorios,PEC dos Precatórios (2º turno),56,PL,PL,direita,41,2,0,0,43,43,90.7
+pec_precatorios,PEC dos Precatórios (2º turno),56,PODE,PODE,direita,4,6,0,1,11,10,20.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,PP,PP,direita,41,0,0,1,42,41,100.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,PROS,PROS,direita,9,0,0,0,9,9,100.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,PSB,PSB,esquerda,8,21,0,2,31,29,44.83
+pec_precatorios,PEC dos Precatórios (2º turno),56,PSC,PSC,direita,11,0,0,0,11,11,100.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,PSD,PSD,direita,30,5,0,0,35,35,71.43
+pec_precatorios,PEC dos Precatórios (2º turno),56,PSDB,PSDB,direita,21,11,0,0,32,32,31.25
+pec_precatorios,PEC dos Precatórios (2º turno),56,PSL,PSL,direita,49,3,1,1,54,52,88.46
+pec_precatorios,PEC dos Precatórios (2º turno),56,PSOL,PSOL,esquerda,0,7,0,2,9,7,100.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,PT,PT,esquerda,0,52,0,1,53,52,100.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,PTB,PTB,direita,9,1,0,0,10,10,80.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,PV,PV,centro,1,3,0,0,4,4,
+pec_precatorios,PEC dos Precatórios (2º turno),56,REDE,REDE,centro,0,0,0,1,1,0,
+pec_precatorios,PEC dos Precatórios (2º turno),56,REPUBLICANOS,REPUBLICANOS,direita,30,0,0,1,31,30,100.0
+pec_precatorios,PEC dos Precatórios (2º turno),56,SOLIDARIEDADE,SOLIDARIEDADE,direita,13,0,0,0,13,13,100.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,AVANTE,AVANTE,direita,5,2,0,0,7,7,42.86
+reforma_previdencia,Reforma da Previdência (2º turno),56,CIDADANIA,CIDADANIA,centro,8,0,0,0,8,8,100.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,DEM,DEM,direita,30,0,0,0,30,30,100.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,MDB,MDB,direita,32,0,0,2,34,32,100.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,NOVO,NOVO,direita,8,0,0,0,8,8,100.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,PATRIOTA,PATRIOTA,direita,5,0,0,0,5,5,100.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,PCdoB,PCdoB,esquerda,0,8,0,0,8,8,100.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,PDT,PDT,esquerda,8,18,0,1,27,26,38.46
+reforma_previdencia,Reforma da Previdência (2º turno),56,PHS,PHS,direita,1,0,0,0,1,1,
+reforma_previdencia,Reforma da Previdência (2º turno),56,PL,PL,direita,35,2,0,2,39,37,89.19
+reforma_previdencia,Reforma da Previdência (2º turno),56,PMN,PMN,direita,0,1,0,0,1,1,
+reforma_previdencia,Reforma da Previdência (2º turno),56,PODE,PODE,direita,10,1,0,0,11,11,81.82
+reforma_previdencia,Reforma da Previdência (2º turno),56,PP,PP,direita,35,3,0,1,39,38,84.21
+reforma_previdencia,Reforma da Previdência (2º turno),56,PRB,REPUBLICANOS,direita,29,2,0,0,31,31,87.1
+reforma_previdencia,Reforma da Previdência (2º turno),56,PROS,PROS,direita,7,3,0,0,10,10,40.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,PSB,PSB,esquerda,10,20,0,2,32,30,33.33
+reforma_previdencia,Reforma da Previdência (2º turno),56,PSC,PSC,direita,7,0,0,1,8,7,100.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,PSD,PSD,direita,33,2,0,1,36,35,88.57
+reforma_previdencia,Reforma da Previdência (2º turno),56,PSDB,PSDB,direita,28,1,0,0,29,29,93.1
+reforma_previdencia,Reforma da Previdência (2º turno),56,PSL,PSL,direita,51,0,1,1,53,51,100.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,PSOL,PSOL,esquerda,0,8,0,2,10,8,100.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,PT,PT,esquerda,0,49,0,5,54,49,100.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,PTB,PTB,direita,12,0,0,0,12,12,100.0
+reforma_previdencia,Reforma da Previdência (2º turno),56,PV,PV,centro,2,2,0,0,4,4,
+reforma_previdencia,Reforma da Previdência (2º turno),56,REDE,REDE,centro,0,1,0,0,1,1,
+reforma_previdencia,Reforma da Previdência (2º turno),56,SOLIDARIEDADE,SOLIDARIEDADE,direita,13,1,0,0,14,14,85.71
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,DEM,DEM,direita,29,0,0,0,29,29,100.0
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PCdoB,PCdoB,esquerda,0,9,0,2,11,9,100.0
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PDT,PDT,esquerda,1,15,0,3,19,16,87.5
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PEN,PATRIOTA,direita,2,1,0,0,3,3,
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PHS,PHS,direita,2,4,0,1,7,6,33.33
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PMB,PMB,direita,0,1,0,0,1,1,
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PMDB,MDB,direita,51,7,0,5,63,58,75.86
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PP,PP,direita,35,9,0,4,48,44,59.09
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PPS,CIDADANIA,centro,6,3,0,0,9,9,33.33
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PR,PL,direita,28,7,0,4,39,35,60.0
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PRB,REPUBLICANOS,direita,15,4,0,4,23,19,57.89
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PROS,PROS,direita,1,4,0,0,5,5,60.0
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PRP,PRP,direita,1,0,0,0,1,1,
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSB,PSB,esquerda,14,16,0,4,34,30,6.67
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSC,PSC,direita,8,2,0,0,10,10,60.0
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSD,PSD,direita,29,5,0,3,37,34,70.59
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSDB,PSDB,direita,43,1,0,3,47,44,95.45
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSL,PSL,direita,1,1,0,0,2,2,
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSOL,PSOL,esquerda,0,6,0,0,6,6,100.0
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PT,PT,esquerda,0,56,0,2,58,56,100.0
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PTB,PTB,direita,13,4,0,1,18,17,52.94
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PTN,PODE,direita,7,5,0,1,13,12,16.67
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PTdoB,AVANTE,direita,1,3,0,0,4,4,
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PV,PV,centro,4,2,0,0,6,6,33.33
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,REDE,REDE,centro,0,4,0,0,4,4,
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,SD,SOLIDARIEDADE,direita,5,8,0,1,14,13,23.08
+teto_gastos,Teto de gastos (2º turno),55,DEM,DEM,direita,22,1,0,3,26,23,91.3
+teto_gastos,Teto de gastos (2º turno),55,PCdoB,PCdoB,esquerda,0,11,0,0,11,11,100.0
+teto_gastos,Teto de gastos (2º turno),55,PDT,PDT,esquerda,4,14,0,1,19,18,55.56
+teto_gastos,Teto de gastos (2º turno),55,PEN,PATRIOTA,direita,1,1,0,1,3,2,
+teto_gastos,Teto de gastos (2º turno),55,PHS,PHS,direita,6,0,0,1,7,6,100.0
+teto_gastos,Teto de gastos (2º turno),55,PMB,PMB,direita,0,1,0,0,1,1,
+teto_gastos,Teto de gastos (2º turno),55,PMDB,MDB,direita,63,0,0,3,66,63,100.0
+teto_gastos,Teto de gastos (2º turno),55,PP,PP,direita,45,1,0,3,49,46,95.65
+teto_gastos,Teto de gastos (2º turno),55,PPS,CIDADANIA,centro,4,3,0,1,8,7,14.29
+teto_gastos,Teto de gastos (2º turno),55,PR,PL,direita,37,3,0,2,42,40,85.0
+teto_gastos,Teto de gastos (2º turno),55,PRB,REPUBLICANOS,direita,21,1,0,0,22,22,90.91
+teto_gastos,Teto de gastos (2º turno),55,PROS,PROS,direita,4,3,0,0,7,7,14.29
+teto_gastos,Teto de gastos (2º turno),55,PRP,PRP,direita,1,0,0,0,1,1,
+teto_gastos,Teto de gastos (2º turno),55,PSB,PSB,esquerda,18,9,1,3,31,27,33.33
+teto_gastos,Teto de gastos (2º turno),55,PSC,PSC,direita,6,1,0,1,8,7,71.43
+teto_gastos,Teto de gastos (2º turno),55,PSD,PSD,direita,32,1,0,3,36,33,93.94
+teto_gastos,Teto de gastos (2º turno),55,PSDB,PSDB,direita,46,0,0,4,50,46,100.0
+teto_gastos,Teto de gastos (2º turno),55,PSL,PSL,direita,2,0,0,0,2,2,
+teto_gastos,Teto de gastos (2º turno),55,PSOL,PSOL,esquerda,0,5,0,1,6,5,100.0
+teto_gastos,Teto de gastos (2º turno),55,PT,PT,esquerda,0,54,1,3,58,54,100.0
+teto_gastos,Teto de gastos (2º turno),55,PTB,PTB,direita,17,1,0,0,18,18,88.89
+teto_gastos,Teto de gastos (2º turno),55,PTN,PODE,direita,10,1,0,2,13,11,81.82
+teto_gastos,Teto de gastos (2º turno),55,PTdoB,AVANTE,direita,3,1,0,0,4,4,
+teto_gastos,Teto de gastos (2º turno),55,PV,PV,centro,5,0,0,1,6,5,100.0
+teto_gastos,Teto de gastos (2º turno),55,REDE,REDE,centro,0,3,0,1,4,3,
+teto_gastos,Teto de gastos (2º turno),55,SD,SOLIDARIEDADE,direita,12,1,0,1,14,13,84.62

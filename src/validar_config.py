@@ -131,6 +131,15 @@ def validar_parametros() -> None:
     checar(config.SITUACAO_NORMA in config.SITUACOES_APROVADA_CAMARA
            and config.SITUACAO_APENSADA not in config.SITUACOES_APROVADA_CAMARA,
            "D14: norma conta como aprovada; apensada não conta", "D14: conjuntos de situação incoerentes")
+    corte = config.CEAP_ULTIMA_COMPETENCIA
+    fim_corte = date(corte[0] + (corte[1] == 12), corte[1] % 12 + 1, 1) - timedelta(days=1)
+    checar(fim_corte <= config.DATA_CORTE - timedelta(days=config.CEAP_DIAS_PRAZO_NOTAS)
+           and (fim_corte + timedelta(days=1)) > config.DATA_CORTE - timedelta(days=config.CEAP_DIAS_PRAZO_NOTAS + 31),
+           f"D15: competência da CEAP até {corte[1]:02d}/{corte[0]} (último mês inteiro antes de corte − 90 dias)",
+           f"D15: CEAP_ULTIMA_COMPETENCIA incoerente: {corte}")
+    checar(config.SIGEPA_API_DESDE <= corte and config.TETO_MES_PARCIAL == "ponderado_por_dias",
+           f"D15: SIGEPA pela API desde {config.SIGEPA_API_DESDE[1]:02d}/{config.SIGEPA_API_DESDE[0]}; "
+           f"teto do mês ponderado por dias", "D15: parâmetros de SIGEPA/teto incoerentes")
     checar(config.ALPHA == 0.05 and config.CORRECAO_MULTIPLA == "holm" and len(config.FAMILIAS_TESTES) == 5,
            "D18: α = 0,05, Holm, 5 famílias", "D18: parâmetros estatísticos divergem do decidido")
 

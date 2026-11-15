@@ -12,7 +12,7 @@ Para conferir a consistência de tudo:
     python -m src.validar_config            (com consultas à API, usa cache)
     python -m src.validar_config --sem-api  (só verificações locais)
 """
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 # ===========================================================================
@@ -28,6 +28,9 @@ PARTIDOS_CSV = DATA_REFERENCIA / "partidos.csv"                   # D7/D8
 ESPECTRO_CSV = DATA_REFERENCIA / "espectro_partidos.csv"          # D9
 BLOCOS_CSV = DATA_REFERENCIA / "blocos_orientacao.csv"            # D11
 TETOS_CEAP_CSV = DATA_REFERENCIA / "tetos_ceap.csv"               # D15
+
+MALHA_UF_GEOJSON = DATA_RAW / "ibge" / "malha_uf.geojson"         # mapa
+MANIFESTO_COLETA = DATA_PROCESSED / "manifesto_coleta.json"       # o que foi coletado e quando
 
 
 API_CAMARA = "https://dadosabertos.camara.leg.br/api/v2"
@@ -329,6 +332,37 @@ SITUACOES_SEM_INFORMACAO = {"", "<Não Definido>"}  # saem do denominador
 # D15 — Gasto relativo da CEAP
 # ===========================================================================
 CAMPO_VALOR_CEAP = "vlrLiquido"
+
+# Corte da CEAP: o deputado tem 90 dias para apresentar as notas, então os
+# meses mais recentes ainda estão incompletos. Entra só a competência até o
+# último mês inteiro anterior a DATA_CORTE − 90 dias. Numerador e teto usam
+# os mesmos meses.
+CEAP_DIAS_PRAZO_NOTAS = 90
+
+
+def _ultima_competencia_ceap() -> tuple[int, int]:
+    limite = DATA_CORTE - timedelta(days=CEAP_DIAS_PRAZO_NOTAS)
+    primeiro_do_mes = limite.replace(day=1)
+    anterior = primeiro_do_mes - timedelta(days=1)
+    return anterior.year, anterior.month
+
+
+CEAP_ULTIMA_COMPETENCIA = _ultima_competencia_ceap()  # (2026, 7) com a data de corte atual
+
+# Lacuna do arquivo em lote: a partir de ago/2025, "PASSAGEM AÉREA - SIGEPA"
+# não aparece em Ano-{ano}.csv.zip, mas está na API /deputados/{id}/despesas
+# (os valores batem com o arquivo nos meses em que os dois têm o dado). Nessas
+# competências, o SIGEPA do arquivo é descartado e substituído pelo da API.
+# Só o SIGEPA vem da API: nas demais categorias ela devolve o valor com o
+# sinal invertido.
+CATEGORIA_SIGEPA = "PASSAGEM AÉREA - SIGEPA"
+SIGEPA_API_DESDE = (2025, 8)
+SIGEPA_API_CSV = DATA_RAW / "ceap" / "sigepa_api.csv"
+
+# Teto em mês com mudança de vigência (fev/2016, fev/2026): média dos tetos
+# vigentes no mês, ponderada pelos dias de cada vigência; depois multiplicada
+# pela fração de dias em exercício (D12).
+TETO_MES_PARCIAL = "ponderado_por_dias"
 
 # ===========================================================================
 # D16 — Quadrantes

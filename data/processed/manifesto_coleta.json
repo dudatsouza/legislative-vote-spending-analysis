@@ -1,0 +1,402 @@
+{
+  "data_corte": "2026-11-14",
+  "janela": [
+    "2015-02-01",
+    "2026-11-14"
+  ],
+  "atualizado_em": "2026-11-14T18:40:20",
+  "secoes": {
+    "votacoes": {
+      "coletado_em": "2026-11-14T17:30:13",
+      "conteudo": {
+        "maioridade_penal": {
+          "id_votacao": "14493-536",
+          "data": "2015-08-19",
+          "votos": 474,
+          "orientacoes": 17,
+          "em_exercicio": 513,
+          "mulheres_em_exercicio": 50
+        },
+        "teto_gastos": {
+          "id_votacao": "2088351-324",
+          "data": "2016-10-25",
+          "votos": 478,
+          "orientacoes": 23,
+          "em_exercicio": 512,
+          "mulheres_em_exercicio": 54
+        },
+        "reforma_trabalhista": {
+          "id_votacao": "2122076-348",
+          "data": "2017-04-26",
+          "votos": 474,
+          "orientacoes": 24,
+          "em_exercicio": 507,
+          "mulheres_em_exercicio": 53
+        },
+        "reforma_previdencia": {
+          "id_votacao": "2192459-786",
+          "data": "2019-08-06",
+          "votos": 495,
+          "orientacoes": 25,
+          "em_exercicio": 513,
+          "mulheres_em_exercicio": 77
+        },
+        "pec_precatorios": {
+          "id_votacao": "2293449-241",
+          "data": "2021-11-09",
+          "votos": 496,
+          "orientacoes": 28,
+          "em_exercicio": 512,
+          "mulheres_em_exercicio": 77
+        },
+        "igualdade_salarial": {
+          "id_votacao": "2351179-51",
+          "data": "2023-05-04",
+          "votos": 365,
+          "orientacoes": 10,
+          "em_exercicio": 512,
+          "mulheres_em_exercicio": 87
+        },
+        "marco_temporal": {
+          "id_votacao": "345311-270",
+          "data": "2023-05-30",
+          "votos": 440,
+          "orientacoes": 10,
+          "em_exercicio": 513,
+          "mulheres_em_exercicio": 87
+        },
+        "fim_escala_6x1": {
+          "id_votacao": "2233802-438",
+          "data": "2026-05-27",
+          "votos": 480,
+          "orientacoes": 15,
+          "em_exercicio": 513,
+          "mulheres_em_exercicio": 88
+        }
+      }
+    },
+    "malha": {
+      "coletado_em": "2026-11-14T17:30:14",
+      "conteudo": [
+        {
+          "arquivo": "data/raw/ibge/malha_uf.geojson",
+          "url": "https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR?formato=application/vnd.geo+json&qualidade=minima&intrarregiao=UF",
+          "bytes": 98502,
+          "baixado_em": "2026-11-14T17:30:14",
+          "sha256": "07c671aa87aa1ab296c446de6294df9827112782537b996c0a160284907e7c0f"
+        }
+      ]
+    },
+    "proposicoes": {
+      "coletado_em": "2026-11-14T17:31:00",
+      "conteudo": [
+        {
+          "arquivo": "data/raw/proposicoes/proposicoes-2015.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoes/csv/proposicoes-2015.csv",
+          "bytes": 34170418,
+          "baixado_em": "2026-11-14T15:37:08",
+          "sha256": "1d3d59f6344766ea7b2d0a0cfed46452c611e7fcb149a1ad45d9bd6ebc022910"
+        },
+        {
+          "arquivo": "data/raw/proposicoesAutores/proposicoesAutores-2015.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/csv/proposicoesAutores-2015.csv",
+          "bytes": 14394726,
+          "baixado_em": "2026-11-14T17:30:22",
+          "sha256": "fc5fd1494d8ec68852aa7f7e7e5f990b737e1f0d209897bf40e950ca71bc4474"
+        },
+        {
+          "arquivo": "data/raw/proposicoes/proposicoes-2016.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoes/csv/proposicoes-2016.csv",
+          "bytes": 21376602,
+          "baixado_em": "2026-11-14T15:37:10",
+          "sha256": "bfc3a82fb45d979b65114752dbdeadf1aba33248885aca055ee51c88c825e441"
+        },
+        {
+          "arquivo": "data/raw/proposicoesAutores/proposicoesAutores-2016.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/csv/proposicoesAutores-2016.csv",
+          "bytes": 8775344,
+          "baixado_em": "2026-11-14T17:30:23",
+          "sha256": "7797613e7d7e4d74fa9b25736bcae364697cf525223667180e2e85023c2751ab"
+        },
+        {
+          "arquivo": "data/raw/proposicoes/proposicoes-2017.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoes/csv/proposicoes-2017.csv",
+          "bytes": 27697406,
+          "baixado_em": "2026-11-14T15:37:12",
+          "sha256": "73d55b32762dc3f44675d5818bd5411b6495ff9cd1934dd2b33f03d27de8a62a"
+        },
+        {
+          "arquivo": "data/raw/proposicoesAutores/proposicoesAutores-2017.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/csv/proposicoesAutores-2017.csv",
+          "bytes": 16164295,
+          "baixado_em": "2026-11-14T17:30:24",
+          "sha256": "cfd6e49aa97001bd295f4e62a27ead1353f9b59790d0f02e03afe7deb6569203"
+        },
+        {
+          "arquivo": "data/raw/proposicoes/proposicoes-2018.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoes/csv/proposicoes-2018.csv",
+          "bytes": 16253161,
+          "baixado_em": "2026-11-14T15:37:14",
+          "sha256": "b5f13749cbf99c34643268ddcbf17702179f5cff20f8099523b573e8d7f82b4f"
+        },
+        {
+          "arquivo": "data/raw/proposicoesAutores/proposicoesAutores-2018.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/csv/proposicoesAutores-2018.csv",
+          "bytes": 5566844,
+          "baixado_em": "2026-11-14T17:30:27",
+          "sha256": "b90b48b5274225c6a8504ab2125be29dcf163415779870bc632990000f371f31"
+        },
+        {
+          "arquivo": "data/raw/proposicoes/proposicoes-2019.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoes/csv/proposicoes-2019.csv",
+          "bytes": 33309606,
+          "baixado_em": "2026-11-14T15:37:16",
+          "sha256": "81da0461cfbb9df62c41486bc99cc9b1b08a34596fa6a156e4fe90e58fc2a746"
+        },
+        {
+          "arquivo": "data/raw/proposicoesAutores/proposicoesAutores-2019.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/csv/proposicoesAutores-2019.csv",
+          "bytes": 32918667,
+          "baixado_em": "2026-11-14T17:30:32",
+          "sha256": "b612feab9e09117895c0af0c2186f193417c8bb5030e0f5a0e393c59c470992d"
+        },
+        {
+          "arquivo": "data/raw/proposicoes/proposicoes-2020.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoes/csv/proposicoes-2020.csv",
+          "bytes": 25270887,
+          "baixado_em": "2026-11-14T15:37:18",
+          "sha256": "7a7eab6cbf848a1c34d7267da4ab0265665726e09f28d838a506b6a4a259b9d6"
+        },
+        {
+          "arquivo": "data/raw/proposicoesAutores/proposicoesAutores-2020.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/csv/proposicoesAutores-2020.csv",
+          "bytes": 14165100,
+          "baixado_em": "2026-11-14T17:30:34",
+          "sha256": "a572a95c45faac22d72cc54086656e8b87505325b6f892bcd758ab6b55581db4"
+        },
+        {
+          "arquivo": "data/raw/proposicoes/proposicoes-2021.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoes/csv/proposicoes-2021.csv",
+          "bytes": 34590467,
+          "baixado_em": "2026-11-14T15:37:20",
+          "sha256": "dad309f6fb516ae231a7712ef32d90419150cac04585acd5d8427d4886e12623"
+        },
+        {
+          "arquivo": "data/raw/proposicoesAutores/proposicoesAutores-2021.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/csv/proposicoesAutores-2021.csv",
+          "bytes": 19442789,
+          "baixado_em": "2026-11-14T17:30:39",
+          "sha256": "daad0a05354665894ee38310939a188335888f0b99dd7500f41c0263768fb710"
+        },
+        {
+          "arquivo": "data/raw/proposicoes/proposicoes-2022.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoes/csv/proposicoes-2022.csv",
+          "bytes": 23190849,
+          "baixado_em": "2026-11-14T15:37:22",
+          "sha256": "2679603d29f1bc984866a00833af65bb365131bc4741391c278725996add8128"
+        },
+        {
+          "arquivo": "data/raw/proposicoesAutores/proposicoesAutores-2022.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/csv/proposicoesAutores-2022.csv",
+          "bytes": 11093939,
+          "baixado_em": "2026-11-14T17:30:41",
+          "sha256": "7b74ae1f2bb8db727ad032fb9b6e8a19d5d02c4bd00809ff4aacc244a06845e8"
+        },
+        {
+          "arquivo": "data/raw/proposicoes/proposicoes-2023.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoes/csv/proposicoes-2023.csv",
+          "bytes": 52265401,
+          "baixado_em": "2026-11-14T15:37:26",
+          "sha256": "ec7f4baa280fdca408210fb2d0ecf155618faf9ba3de2ecf9d242e9e921bad8b"
+        },
+        {
+          "arquivo": "data/raw/proposicoesAutores/proposicoesAutores-2023.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/csv/proposicoesAutores-2023.csv",
+          "bytes": 42276306,
+          "baixado_em": "2026-11-14T17:30:48",
+          "sha256": "c212d8bd89764a83258166b335d6ac057b608f2bc1c6b7b4f7c0a06c6cc2625b"
+        },
+        {
+          "arquivo": "data/raw/proposicoes/proposicoes-2024.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoes/csv/proposicoes-2024.csv",
+          "bytes": 53096561,
+          "baixado_em": "2026-11-14T15:37:31",
+          "sha256": "7335a41c474610dec7c02af46a20d8e02cb9ce598c9666089745e15a563a44a8"
+        },
+        {
+          "arquivo": "data/raw/proposicoesAutores/proposicoesAutores-2024.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/csv/proposicoesAutores-2024.csv",
+          "bytes": 24401498,
+          "baixado_em": "2026-11-14T17:30:52",
+          "sha256": "225ae7cd995d2221899cbea70e428f617003c41238dfe282fb4586ecabd26727"
+        },
+        {
+          "arquivo": "data/raw/proposicoes/proposicoes-2025.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoes/csv/proposicoes-2025.csv",
+          "bytes": 90234485,
+          "baixado_em": "2026-11-14T15:37:36",
+          "sha256": "c98e615ad8c83aea6967c033d615817927fca227f58ef3f17d88a1fe88fd6628"
+        },
+        {
+          "arquivo": "data/raw/proposicoesAutores/proposicoesAutores-2025.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/csv/proposicoesAutores-2025.csv",
+          "bytes": 38939258,
+          "baixado_em": "2026-11-14T17:30:57",
+          "sha256": "d17c860a16231880778d92c69ae67c86589603c647d16d31ed9fc18f729bfc90"
+        },
+        {
+          "arquivo": "data/raw/proposicoes/proposicoes-2026.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoes/csv/proposicoes-2026.csv",
+          "bytes": 44709237,
+          "baixado_em": "2026-11-14T15:37:40",
+          "sha256": "7c9826d64a57dbf74d99558c9ba2db99cfbd75330f4066f80c6d386f7e128d93"
+        },
+        {
+          "arquivo": "data/raw/proposicoesAutores/proposicoesAutores-2026.csv",
+          "url": "https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/csv/proposicoesAutores-2026.csv",
+          "bytes": 16092376,
+          "baixado_em": "2026-11-14T17:30:59",
+          "sha256": "d82f3df1307a42cdb4ccb0914d04a690b7761d8a6360fa2bd7c99416cbdd055e"
+        }
+      ]
+    },
+    "despesas": {
+      "coletado_em": "2026-11-14T17:31:13",
+      "conteudo": [
+        {
+          "arquivo": "data/raw/ceap/Ano-2015.csv.zip",
+          "url": "https://www.camara.leg.br/cotas/Ano-2015.csv.zip",
+          "bytes": 11421893,
+          "baixado_em": "2026-11-14T17:31:01",
+          "sha256": "4d866d97f2e7b35ce53cfa8ff06dc02f7f5340445aa5bbe2569cfc4a8d9a19e0"
+        },
+        {
+          "arquivo": "data/raw/ceap/Ano-2016.csv.zip",
+          "url": "https://www.camara.leg.br/cotas/Ano-2016.csv.zip",
+          "bytes": 10735025,
+          "baixado_em": "2026-11-14T17:31:02",
+          "sha256": "0a90ef55e0d7e9a9764cbcc25380bb146d104fa1c534925f33cd918feee8aecf"
+        },
+        {
+          "arquivo": "data/raw/ceap/Ano-2017.csv.zip",
+          "url": "https://www.camara.leg.br/cotas/Ano-2017.csv.zip",
+          "bytes": 10446520,
+          "baixado_em": "2026-11-14T17:31:03",
+          "sha256": "ba7f10fa904e4caacc54a70e700076232d66b0728a8f7afc23b6ac5eab9ef713"
+        },
+        {
+          "arquivo": "data/raw/ceap/Ano-2018.csv.zip",
+          "url": "https://www.camara.leg.br/cotas/Ano-2018.csv.zip",
+          "bytes": 8864168,
+          "baixado_em": "2026-11-14T17:31:04",
+          "sha256": "132aa4f27818e7718b82343b75a34fb0cf6a121ff0401e1f1baaa48ce6e99bdf"
+        },
+        {
+          "arquivo": "data/raw/ceap/Ano-2019.csv.zip",
+          "url": "https://www.camara.leg.br/cotas/Ano-2019.csv.zip",
+          "bytes": 9086279,
+          "baixado_em": "2026-11-14T17:31:06",
+          "sha256": "e61936947daf7213faa4b26666eb786f6fed1f19b38d08fbfbef686a26df2428"
+        },
+        {
+          "arquivo": "data/raw/ceap/Ano-2020.csv.zip",
+          "url": "https://www.camara.leg.br/cotas/Ano-2020.csv.zip",
+          "bytes": 5377694,
+          "baixado_em": "2026-11-14T17:31:06",
+          "sha256": "eb2059a2c5fe10b3378dd52ee33aea9140ffc4bfa0fdd10be19d6c7c625a3fb0"
+        },
+        {
+          "arquivo": "data/raw/ceap/Ano-2021.csv.zip",
+          "url": "https://www.camara.leg.br/cotas/Ano-2021.csv.zip",
+          "bytes": 6879941,
+          "baixado_em": "2026-11-14T17:31:08",
+          "sha256": "ddabfd3acddef6b3d4a3bd26c7f7062af6efc69c0740b3bbf53ac196f1a30598"
+        },
+        {
+          "arquivo": "data/raw/ceap/Ano-2022.csv.zip",
+          "url": "https://www.camara.leg.br/cotas/Ano-2022.csv.zip",
+          "bytes": 6672432,
+          "baixado_em": "2026-11-14T17:31:09",
+          "sha256": "0412fb9bc3a061451c2ee6f30cebc0e2bedb77af173bdd9a61a135a01cc9f4ad"
+        },
+        {
+          "arquivo": "data/raw/ceap/Ano-2023.csv.zip",
+          "url": "https://www.camara.leg.br/cotas/Ano-2023.csv.zip",
+          "bytes": 7550643,
+          "baixado_em": "2026-11-14T17:31:10",
+          "sha256": "f3bc179cc3473d45a5d8da031d9e5830067ab67304f32afc2fc0c5db00a10ad6"
+        },
+        {
+          "arquivo": "data/raw/ceap/Ano-2024.csv.zip",
+          "url": "https://www.camara.leg.br/cotas/Ano-2024.csv.zip",
+          "bytes": 7548475,
+          "baixado_em": "2026-11-14T17:31:11",
+          "sha256": "f93705e8302c4477e34bd790467f3c1e6beafe9b856cf1e78f2f4357bdf58a81"
+        },
+        {
+          "arquivo": "data/raw/ceap/Ano-2025.csv.zip",
+          "url": "https://www.camara.leg.br/cotas/Ano-2025.csv.zip",
+          "bytes": 6933130,
+          "baixado_em": "2026-11-14T17:31:12",
+          "sha256": "dac38b9e07ead4936c916d2a73aa805d6ff63b1979e0baf7321f75b91e274b68"
+        },
+        {
+          "arquivo": "data/raw/ceap/Ano-2026.csv.zip",
+          "url": "https://www.camara.leg.br/cotas/Ano-2026.csv.zip",
+          "bytes": 4669971,
+          "baixado_em": "2026-11-14T17:31:13",
+          "sha256": "7bfb35433e3b9771a35d0ce5bb28bf01d2269aba338b57ba73477d63d99a541a"
+        }
+      ]
+    },
+    "deputados": {
+      "coletado_em": "2026-11-14T17:43:54",
+      "conteudo": {
+        "por_legislatura": {
+          "55": {
+            "registros": 1136,
+            "deputados": 623,
+            "mulheres": 65
+          },
+          "56": {
+            "registros": 1071,
+            "deputados": 613,
+            "mulheres": 91
+          },
+          "57": {
+            "registros": 877,
+            "deputados": 648,
+            "mulheres": 118
+          }
+        },
+        "deputados_unicos": 1252,
+        "registros_historico": 13769,
+        "falhas_historico": []
+      }
+    },
+    "sigepa": {
+      "coletado_em": "2026-11-14T18:40:20",
+      "conteudo": {
+        "deputados": 648,
+        "registros_sigepa": 104407,
+        "registros_na_lacuna": 67306,
+        "valor_na_lacuna": 56610628.78,
+        "validacao": {
+          "deputado_mes_comparados": 3267,
+          "iguais": 3267,
+          "pct_iguais": 100.0,
+          "total_arquivo": 27146900.42,
+          "total_api": 27146900.42
+        },
+        "falhas": [],
+        "arquivo": {
+          "arquivo": "data/raw/ceap/sigepa_api.csv",
+          "url": "https://dadosabertos.camara.leg.br/api/v2/deputados/{id}/despesas",
+          "bytes": 10284123,
+          "baixado_em": "2026-11-14T18:40:19",
+          "sha256": "c0d8a38e2684f59d49296d2c56bda796e5e3839c631d8288c5132832fcc43421"
+        }
+      }
+    }
+  }
+}

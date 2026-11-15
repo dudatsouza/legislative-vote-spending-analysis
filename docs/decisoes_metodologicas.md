@@ -355,7 +355,9 @@ Efeito de cada corte nas 8 votações:
 
 **Justificativa.** A fidelidade à orientação é a forma mais direta de medir alinhamento partidário, e o alinhamento ao governo permite separar ideologia de pertencer à base ou à oposição.
 
-**Limitações.** A tradução de bloco em partidos exige uma tabela montada por parsing dos nomes e conferida à mão.
+**Limitações.**
+- A tradução de bloco em partidos exige uma tabela montada por parsing dos nomes e conferida à mão.
+- **Na 57ª legislatura, a maior parte das orientações vem de bloco**, não do partido: 72% a 80% dos votos válidos na Igualdade salarial, no Marco temporal e na 6x1, contra 0% a 37% nas legislaturas anteriores. Nesses casos, a "fidelidade" mede o alinhamento ao **líder do bloco**, que pode divergir da posição do partido. Exemplo: no Marco temporal, o bloco União-PP-PSDB-Cidadania-PDT-PSB-… orientou "Sim", mas 14 dos 15 deputados do PDT e 12 dos 15 do PSB votaram Não. Por isso, `votos.csv` traz a coluna `fonte_orientacao` (partido ou bloco). A análise deve reportar a fidelidade separada por fonte e fazer um teste de robustez usando só a orientação própria do partido.
 
 ---
 
@@ -479,8 +481,13 @@ O Ato 244/2026 não publica tabela, só manda aplicar o IPCA. Os valores vêm da
 
 **Limitações.**
 1. **Adicionais por cargo:** líderes, vice-líderes, presidentes e vice-presidentes de comissão e outros cargos recebem um adicional sobre a cota (R$ 1.353,04, R$ 902,02 ou R$ 5.075,62). O denominador usa só o teto da UF, então esses deputados podem parecer gastar "acima do teto". O adicional representa cerca de 2% a 4% da cota.
-2. **Passagens fora da cota desde fev/2023:** o Ato 270/2023 deu direito a até 4 trechos aéreos de ida e volta por mês **além** da cota. Na implementação, é preciso verificar se essas passagens aparecem no arquivo da CEAP. Se aparecerem, precisam ser excluídas do numerador, senão o gasto relativo da 57ª fica inflado.
-3. **Mudança de teto no meio do mês:** em fevereiro de 2016 e fevereiro de 2026, o teto mudou no meio do mês. Proposta: ponderar o teto pelos dias de cada vigência no mês, o mesmo critério dos meses parciais de exercício.
+2. **Passagens fora da cota desde fev/2023 (verificado, sem ajuste):** o Ato 270/2023 deu direito a até 4 trechos aéreos de ida e volta por mês **além** da cota. Essas passagens **não aparecem** no arquivo da CEAP: a razão gasto/teto dos deputados com o ano inteiro de gastos ficou igual antes e depois de 2023 (mediana entre 0,94 e 0,99 de 2015 a 2024), e o gasto com passagens da cota caiu a partir de 2023.
+3. **Teto em mês com mudança de vigência (decidido):** em fev/2016 e fev/2026, o teto do mês é a média dos tetos vigentes, ponderada pelos dias de cada vigência. Em seguida, ele é multiplicado pela fração de dias em exercício (D12).
+
+**Correções na fonte de dados (decididas após a coleta, 14/11/2026).**
+4. **Lacuna do SIGEPA:** o arquivo em lote não traz "PASSAGEM AÉREA - SIGEPA" a partir de **agosto de 2025**. Essa categoria vale cerca de 14% da cota, de R$ 3 a 5 milhões por mês somando todos os deputados. A API (`/deputados/{id}/despesas`) tem esses registros, e os valores batem com o arquivo nos meses em que os dois têm o dado. **Decisão:** a partir de ago/2025, o SIGEPA do arquivo é descartado e substituído pelo da API (`data/raw/ceap/sigepa_api.csv`, coletado por `python -m src.extracao.coletar sigepa`, que também valida a API contra o arquivo em jan–jul/2025). **Só o SIGEPA vem da API:** nas demais categorias, ela devolve o `valorLiquido` com o sinal invertido em relação ao arquivo.
+5. **Corte da CEAP:** o deputado tem 90 dias para apresentar as notas, então os meses mais recentes estão incompletos (nov/2026 tinha R$ 2,5 mil por deputado, contra cerca de R$ 35 mil num mês normal). **Decisão:** só entra a competência até o último mês inteiro anterior a `DATA_CORTE − 90 dias` (**jul/2026**, com a data de corte atual). Numerador e teto usam os mesmos meses.
+6. **Ano eleitoral (sem ajuste, a declarar):** em 2022 e 2026, a despesa com divulgação cai a quase zero de junho a setembro, porque a divulgação pela cota é vedada nos 120 dias anteriores à eleição para candidatos, e os gastos são antecipados nos meses anteriores. É comportamento real. Cada legislatura tem o seu ano eleitoral, e a comparação é feita dentro da legislatura (D3/D16).
 
 ---
 
