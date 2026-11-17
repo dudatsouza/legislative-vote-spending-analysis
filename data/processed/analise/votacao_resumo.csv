@@ -1,0 +1,9 @@
+chave_votacao,votacao,legislatura,registros,sim,nao,abstencao,ausente,validos_sem_partido,validos_na_pop_d3,validos_fora_pop_d3,data,direcao_pro_pauta
+maioridade_penal,Redução da maioridade penal (2º turno),55,512,320,152,1,39,0,469,3,2015-08-19,Não
+teto_gastos,Teto de gastos (2º turno),55,512,359,116,2,35,0,470,5,2016-10-25,Não
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,511,296,177,0,38,0,468,5,2017-04-26,Não
+reforma_previdencia,Reforma da Previdência (2º turno),56,513,370,124,1,18,1,491,3,2019-08-06,Não
+pec_precatorios,PEC dos Precatórios (2º turno),56,513,323,172,1,17,1,490,5,2021-11-09,
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,511,325,36,3,147,1,359,2,2023-05-04,Sim
+marco_temporal,Marco temporal das terras indígenas,57,512,283,155,1,73,0,433,5,2023-05-30,Não
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,513,461,19,0,33,0,460,20,2026-05-27,Sim

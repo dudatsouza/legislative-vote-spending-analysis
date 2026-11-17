@@ -1,0 +1,92 @@
+teste,recorte,efeito_principal,efeito_robustez,p_holm_principal,p_holm_robustez,conclusao_mantida,n_afetados,n_principal,n_robustez
+F2 sem classificação manual,maioridade_penal,0.6617488079427936,0.6617488079427936,1.0471531721156922e-44,1.0471531721156922e-44,True,0.0,,
+F2 sem classificação manual,teto_gastos,0.7560791468755788,0.7560791468755788,0.0005999400059994001,0.0005999400059994001,True,0.0,,
+F2 sem classificação manual,reforma_trabalhista,0.6000139976489575,0.6000139976489575,7.371240508709911e-37,7.371240508709911e-37,True,0.0,,
+F2 sem classificação manual,reforma_previdencia,0.7910923185945056,0.7910923185945056,0.0005999400059994001,0.0005999400059994001,True,0.0,,
+F2 sem classificação manual,pec_precatorios,0.6732151225636833,0.6732151225636833,0.0005999400059994001,0.0005999400059994001,True,0.0,,
+F2 sem classificação manual,igualdade_salarial,0.17741315765466978,0.17741315765466978,0.0163983601639836,0.0163983601639836,True,0.0,,
+F2 sem classificação manual,marco_temporal,0.7741422964197899,0.7741422964197899,0.0005999400059994001,0.0005999400059994001,True,0.0,,
+F2 sem classificação manual,fim_escala_6x1,0.1198152729291764,0.11678376056822058,0.041195880411958805,0.058694130586941305,False,1.0,,
+F3 qualificada só Norma Jurídica,leg 55 faixa A,-0.018086238572835596,-0.013716710405147214,1.0,1.0,True,,,
+F3 qualificada só Norma Jurídica,leg 55 faixa B,0.0741905732132872,0.035138145894978455,1.0,1.0,True,,,
+F3 qualificada só Norma Jurídica,leg 55 faixa C,0.08716878637544453,0.15762685325895665,1.0,1.0,True,,,
+F3 qualificada só Norma Jurídica,leg 56 faixa A,-0.0494161446295855,-0.001878863016997292,1.0,1.0,True,,,
+F3 qualificada só Norma Jurídica,leg 56 faixa B,0.06682274224615956,-0.0037123161117026925,1.0,1.0,True,,,
+F3 qualificada só Norma Jurídica,leg 56 faixa C,-0.4413129502321308,-0.44238941027348766,0.48992986754133094,0.48243270427853596,True,,,
+F3 qualificada só Norma Jurídica,leg 57 faixa A,0.05457191440929394,0.0378504700072889,1.0,1.0,True,,,
+F3 qualificada só Norma Jurídica,leg 57 faixa B,0.10877635933999061,-0.03508431042647258,1.0,1.0,True,,,
+F3 qualificada só Norma Jurídica,leg 57 faixa C,0.15754198381252388,0.08414780463041255,1.0,1.0,True,,,
+Fidelidade só com orientação própria,leg 55 DEM,97.22222222222221,97.22222222222221,,,,,72.0,72.0
+Fidelidade só com orientação própria,leg 55 PCdoB,100.0,100.0,,,,,33.0,33.0
+Fidelidade só com orientação própria,leg 55 PDT,80.0,80.0,,,,,50.0,50.0
+Fidelidade só com orientação própria,leg 55 PEN,71.42857142857143,66.66666666666666,,,,,7.0,3.0
+Fidelidade só com orientação própria,leg 55 PHS,90.0,100.0,,,,,10.0,6.0
+Fidelidade só com orientação própria,leg 55 PMB,100.0,100.0,,,,,2.0,2.0
+Fidelidade só com orientação própria,leg 55 PMDB,88.95027624309392,87.93103448275862,,,,,181.0,58.0
+Fidelidade só com orientação própria,leg 55 PMN,100.0,,,,,,2.0,0.0
+Fidelidade só com orientação própria,leg 55 PP,91.33858267716536,,,,,,127.0,0.0
+Fidelidade só com orientação própria,leg 55 PPS,62.96296296296296,62.96296296296296,,,,,27.0,27.0
+Fidelidade só com orientação própria,leg 55 PR,89.7196261682243,89.7196261682243,,,,,107.0,107.0
+Fidelidade só com orientação própria,leg 55 PRB,91.80327868852459,87.8048780487805,,,,,61.0,41.0
+Fidelidade só com orientação própria,leg 55 PROS,52.17391304347826,61.111111111111114,,,,,23.0,18.0
+Fidelidade só com orientação própria,leg 55 PRP,100.0,100.0,,,,,4.0,1.0
+Fidelidade só com orientação própria,leg 55 PRTB,100.0,,,,,,1.0,0.0
+Fidelidade só com orientação própria,leg 55 PSB,54.761904761904766,54.761904761904766,,,,,84.0,84.0
+Fidelidade só com orientação própria,leg 55 PSC,85.71428571428571,80.0,,,,,28.0,10.0
+Fidelidade só com orientação própria,leg 55 PSD,91.91919191919192,91.91919191919192,,,,,99.0,99.0
+Fidelidade só com orientação própria,leg 55 PSDB,96.35036496350365,96.35036496350365,,,,,137.0,137.0
+Fidelidade só com orientação própria,leg 55 PSDC,100.0,,,,,,2.0,0.0
+Fidelidade só com orientação própria,leg 55 PSL,80.0,,,,,,5.0,0.0
+Fidelidade só com orientação própria,leg 55 PSOL,100.0,100.0,,,,,15.0,15.0
+Fidelidade só com orientação própria,leg 55 PT,99.41520467836257,99.41520467836257,,,,,171.0,171.0
+Fidelidade só com orientação própria,leg 55 PTB,84.21052631578947,,,,,,57.0,0.0
+Fidelidade só com orientação própria,leg 55 PTC,50.0,,,,,,2.0,0.0
+Fidelidade só com orientação própria,leg 55 PTN,70.37037037037037,,,,,,27.0,0.0
+Fidelidade só com orientação própria,leg 55 PTdoB,60.0,,,,,,10.0,0.0
+Fidelidade só com orientação própria,leg 55 PV,68.42105263157895,68.42105263157895,,,,,19.0,19.0
+Fidelidade só com orientação própria,leg 55 REDE,100.0,100.0,,,,,7.0,7.0
+Fidelidade só com orientação própria,leg 55 SD,79.06976744186046,79.06976744186046,,,,,43.0,43.0
+Fidelidade só com orientação própria,leg 56 AVANTE,73.33333333333333,73.33333333333333,,,,,15.0,15.0
+Fidelidade só com orientação própria,leg 56 CIDADANIA,86.66666666666667,86.66666666666667,,,,,15.0,15.0
+Fidelidade só com orientação própria,leg 56 DEM,96.42857142857143,96.42857142857143,,,,,56.0,56.0
+Fidelidade só com orientação própria,leg 56 MDB,78.68852459016394,55.172413793103445,,,,,61.0,29.0
+Fidelidade só com orientação própria,leg 56 NOVO,100.0,100.0,,,,,16.0,16.0
+Fidelidade só com orientação própria,leg 56 PATRIOTA,100.0,100.0,,,,,11.0,11.0
+Fidelidade só com orientação própria,leg 56 PCdoB,100.0,100.0,,,,,16.0,16.0
+Fidelidade só com orientação própria,leg 56 PDT,74.0,74.0,,,,,50.0,50.0
+Fidelidade só com orientação própria,leg 56 PL,95.0,95.0,,,,,80.0,80.0
+Fidelidade só com orientação própria,leg 56 PODE,76.19047619047619,76.19047619047619,,,,,21.0,21.0
+Fidelidade só com orientação própria,leg 56 PP,96.20253164556962,100.0,,,,,79.0,41.0
+Fidelidade só com orientação própria,leg 56 PRB,93.54838709677419,93.54838709677419,,,,,31.0,31.0
+Fidelidade só com orientação própria,leg 56 PROS,84.21052631578947,84.21052631578947,,,,,19.0,19.0
+Fidelidade só com orientação própria,leg 56 PSB,69.49152542372882,69.49152542372882,,,,,59.0,59.0
+Fidelidade só com orientação própria,leg 56 PSC,100.0,100.0,,,,,18.0,18.0
+Fidelidade só com orientação própria,leg 56 PSD,90.0,90.0,,,,,70.0,70.0
+Fidelidade só com orientação própria,leg 56 PSDB,80.32786885245902,80.32786885245902,,,,,61.0,61.0
+Fidelidade só com orientação própria,leg 56 PSL,97.0873786407767,97.0873786407767,,,,,103.0,103.0
+Fidelidade só com orientação própria,leg 56 PSOL,100.0,100.0,,,,,15.0,15.0
+Fidelidade só com orientação própria,leg 56 PT,100.0,100.0,,,,,101.0,101.0
+Fidelidade só com orientação própria,leg 56 PTB,95.45454545454545,90.0,,,,,22.0,10.0
+Fidelidade só com orientação própria,leg 56 REPUBLICANOS,100.0,100.0,,,,,30.0,30.0
+Fidelidade só com orientação própria,leg 56 SOLIDARIEDADE,96.29629629629629,96.29629629629629,,,,,27.0,27.0
+Fidelidade só com orientação própria,leg 57 AVANTE,82.35294117647058,100.0,,,,,17.0,5.0
+Fidelidade só com orientação própria,leg 57 CIDADANIA,71.42857142857143,,,,,,7.0,0.0
+Fidelidade só com orientação própria,leg 57 MDB,96.66666666666667,,,,,,60.0,0.0
+Fidelidade só com orientação própria,leg 57 NOVO,100.0,100.0,,,,,10.0,10.0
+Fidelidade só com orientação própria,leg 57 PATRIOTA,75.0,,,,,,8.0,0.0
+Fidelidade só com orientação própria,leg 57 PCdoB,100.0,,,,,,23.0,0.0
+Fidelidade só com orientação própria,leg 57 PDT,64.1025641025641,100.0,,,,,39.0,9.0
+Fidelidade só com orientação própria,leg 57 PL,94.21965317919076,94.21965317919076,,,,,173.0,173.0
+Fidelidade só com orientação própria,leg 57 PODE,93.93939393939394,,,,,,33.0,0.0
+Fidelidade só com orientação própria,leg 57 PP,94.78260869565217,,,,,,115.0,0.0
+Fidelidade só com orientação própria,leg 57 PSB,71.42857142857143,100.0,,,,,42.0,16.0
+Fidelidade só com orientação própria,leg 57 PSC,100.0,,,,,,2.0,0.0
+Fidelidade só com orientação própria,leg 57 PSD,97.14285714285714,,,,,,70.0,0.0
+Fidelidade só com orientação própria,leg 57 PSDB,95.1219512195122,,,,,,41.0,0.0
+Fidelidade só com orientação própria,leg 57 PSOL,100.0,,,,,,33.0,0.0
+Fidelidade só com orientação própria,leg 57 PT,99.4535519125683,,,,,,183.0,0.0
+Fidelidade só com orientação própria,leg 57 PV,94.11764705882352,,,,,,17.0,0.0
+Fidelidade só com orientação própria,leg 57 REDE,100.0,,,,,,6.0,0.0
+Fidelidade só com orientação própria,leg 57 REPUBLICANOS,100.0,,,,,,70.0,0.0
+Fidelidade só com orientação própria,leg 57 SOLIDARIEDADE,84.61538461538461,100.0,,,,,13.0,6.0
+Fidelidade só com orientação própria,leg 57 UNIÃO,95.41984732824427,,,,,,131.0,0.0

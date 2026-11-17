@@ -1,0 +1,196 @@
+chave_votacao,votacao,legislatura,partido,espectro,validos,n_evento,medida,pct,ic_inf,ic_sup,n_menor_5
+maioridade_penal,Redução da maioridade penal (2º turno),55,DEM,direita,20,1,% pró-pauta,5.0,0.8881448800795402,23.613119344674203,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PCdoB,esquerda,13,13,% pró-pauta,100.0,77.19046276458016,99.99999999999999,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PDT,esquerda,16,11,% pró-pauta,68.75,44.40435583474066,85.83535614521796,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PEN,direita,2,0,% pró-pauta,0.0,0.0,65.76197724933469,True
+maioridade_penal,Redução da maioridade penal (2º turno),55,PHS,direita,4,1,% pró-pauta,25.0,4.558726080970055,69.93581574175981,True
+maioridade_penal,Redução da maioridade penal (2º turno),55,PMDB,direita,60,13,% pró-pauta,21.666666666666668,13.123044048190307,33.62002757319478,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PMN,direita,2,0,% pró-pauta,0.0,0.0,65.76197724933469,True
+maioridade_penal,Redução da maioridade penal (2º turno),55,PP,direita,37,1,% pró-pauta,2.7027027027027026,0.4786974451940429,13.824069863730518,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PPS,centro,11,7,% pró-pauta,63.63636363636363,35.38011745078489,84.83352890463243,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PR,direita,32,1,% pró-pauta,3.125,0.5537860164003122,15.744263820012558,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PRB,direita,20,0,% pró-pauta,0.0,0.0,16.112515805281937,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PROS,direita,11,7,% pró-pauta,63.63636363636363,35.38011745078489,84.83352890463243,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PRP,direita,3,0,% pró-pauta,0.0,5.551115123125783e-15,56.14970317550454,True
+maioridade_penal,Redução da maioridade penal (2º turno),55,PRTB,direita,1,0,% pró-pauta,0.0,0.0,79.34506856227625,True
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSB,esquerda,27,12,% pró-pauta,44.44444444444444,27.585858177023002,62.68697548677552,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSC,direita,11,1,% pró-pauta,9.090909090909092,1.6232172885884855,37.73584364515957,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSD,direita,32,2,% pró-pauta,6.25,1.7310567031640967,20.14712314415458,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSDB,direita,47,4,% pró-pauta,8.51063829787234,3.359412345792552,19.931537786964586,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSDC,direita,2,0,% pró-pauta,0.0,0.0,65.76197724933469,True
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSL,direita,1,0,% pró-pauta,0.0,0.0,79.34506856227625,True
+maioridade_penal,Redução da maioridade penal (2º turno),55,PSOL,esquerda,4,4,% pró-pauta,100.0,51.01091635454027,100.0,True
+maioridade_penal,Redução da maioridade penal (2º turno),55,PT,esquerda,61,60,% pró-pauta,98.36065573770492,91.28113995535841,99.71002692007002,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PTB,direita,22,4,% pró-pauta,18.181818181818183,7.306884583422052,38.516607437126545,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,PTC,direita,2,1,% pró-pauta,50.0,9.453120573423075,90.54687942657694,True
+maioridade_penal,Redução da maioridade penal (2º turno),55,PTN,direita,4,2,% pró-pauta,50.0,15.003898915214947,84.99610108478505,True
+maioridade_penal,Redução da maioridade penal (2º turno),55,PTdoB,direita,2,0,% pró-pauta,0.0,0.0,65.76197724933469,True
+maioridade_penal,Redução da maioridade penal (2º turno),55,PV,centro,8,4,% pró-pauta,50.0,21.521606221387756,78.47839377861224,False
+maioridade_penal,Redução da maioridade penal (2º turno),55,SD,direita,17,3,% pró-pauta,17.647058823529413,6.1911266376209975,41.02945856883412,False
+teto_gastos,Teto de gastos (2º turno),55,DEM,direita,23,1,% pró-pauta,4.3478260869565215,0.7716666143453149,20.991155070258877,False
+teto_gastos,Teto de gastos (2º turno),55,PCdoB,esquerda,11,11,% pró-pauta,100.0,74.11670330319684,100.0,False
+teto_gastos,Teto de gastos (2º turno),55,PDT,esquerda,18,14,% pró-pauta,77.77777777777779,54.785415683787384,90.9990718913983,False
+teto_gastos,Teto de gastos (2º turno),55,PEN,direita,2,1,% pró-pauta,50.0,9.453120573423075,90.54687942657694,True
+teto_gastos,Teto de gastos (2º turno),55,PHS,direita,6,0,% pró-pauta,0.0,2.7755575615628914e-15,39.033428790216526,False
+teto_gastos,Teto de gastos (2º turno),55,PMB,direita,1,1,% pró-pauta,100.0,20.654931437723747,100.0,True
+teto_gastos,Teto de gastos (2º turno),55,PMDB,direita,63,0,% pró-pauta,0.0,3.469446951953614e-16,5.747119958885172,False
+teto_gastos,Teto de gastos (2º turno),55,PP,direita,46,1,% pró-pauta,2.1739130434782608,0.3847854258050287,11.335294521511354,False
+teto_gastos,Teto de gastos (2º turno),55,PPS,centro,7,3,% pró-pauta,42.857142857142854,15.821985525146975,74.95416354723427,False
+teto_gastos,Teto de gastos (2º turno),55,PR,direita,40,3,% pró-pauta,7.5,2.58360257745882,19.864233524310542,False
+teto_gastos,Teto de gastos (2º turno),55,PRB,direita,22,1,% pró-pauta,4.545454545454546,0.8069427621263849,21.79804583865733,False
+teto_gastos,Teto de gastos (2º turno),55,PROS,direita,7,3,% pró-pauta,42.857142857142854,15.821985525146975,74.95416354723427,False
+teto_gastos,Teto de gastos (2º turno),55,PRP,direita,1,0,% pró-pauta,0.0,0.0,79.34506856227625,True
+teto_gastos,Teto de gastos (2º turno),55,PSB,esquerda,27,9,% pró-pauta,33.33333333333333,18.643261498715642,52.175239492679914,False
+teto_gastos,Teto de gastos (2º turno),55,PSC,direita,7,1,% pró-pauta,14.285714285714285,2.5679624344743552,51.31278292743189,False
+teto_gastos,Teto de gastos (2º turno),55,PSD,direita,33,1,% pró-pauta,3.0303030303030303,0.536941053687183,15.31872538211892,False
+teto_gastos,Teto de gastos (2º turno),55,PSDB,direita,46,0,% pró-pauta,0.0,0.0,7.7073563085580385,False
+teto_gastos,Teto de gastos (2º turno),55,PSL,direita,2,0,% pró-pauta,0.0,0.0,65.76197724933469,True
+teto_gastos,Teto de gastos (2º turno),55,PSOL,esquerda,5,5,% pró-pauta,100.0,56.551753521682514,100.0,False
+teto_gastos,Teto de gastos (2º turno),55,PT,esquerda,54,54,% pró-pauta,100.0,93.35864119091038,100.00000000000003,False
+teto_gastos,Teto de gastos (2º turno),55,PTB,direita,18,1,% pró-pauta,5.555555555555555,0.9875190978303097,25.757300781872594,False
+teto_gastos,Teto de gastos (2º turno),55,PTN,direita,11,1,% pró-pauta,9.090909090909092,1.6232172885884855,37.73584364515957,False
+teto_gastos,Teto de gastos (2º turno),55,PTdoB,direita,4,1,% pró-pauta,25.0,4.558726080970055,69.93581574175981,True
+teto_gastos,Teto de gastos (2º turno),55,PV,centro,5,0,% pró-pauta,0.0,0.0,43.44824647831748,False
+teto_gastos,Teto de gastos (2º turno),55,REDE,centro,3,3,% pró-pauta,100.0,43.85029682449546,100.0,True
+teto_gastos,Teto de gastos (2º turno),55,SD,direita,13,1,% pró-pauta,7.6923076923076925,1.3710421242556587,33.31395092109959,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,DEM,direita,29,0,% pró-pauta,0.0,0.0,11.696979849974074,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PCdoB,esquerda,9,9,% pró-pauta,100.0,70.08549515804559,100.0,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PDT,esquerda,16,15,% pró-pauta,93.75,71.67126242970106,98.88806552353576,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PEN,direita,3,1,% pró-pauta,33.33333333333333,6.149194472039621,79.23403991979522,True
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PHS,direita,6,4,% pró-pauta,66.66666666666666,29.999331513839202,90.32285888942195,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PMB,direita,1,1,% pró-pauta,100.0,20.654931437723747,100.0,True
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PMDB,direita,58,7,% pró-pauta,12.068965517241379,5.97096604824072,22.879354045960884,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PP,direita,44,9,% pró-pauta,20.454545454545457,11.153253070081293,34.500578061101656,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PPS,centro,9,3,% pró-pauta,33.33333333333333,12.05838183869109,64.57978644196037,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PR,direita,35,7,% pró-pauta,20.0,10.042446473798625,35.89161306566562,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PRB,direita,19,4,% pró-pauta,21.052631578947366,8.507676632916253,43.33427844381417,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PROS,direita,5,4,% pró-pauta,80.0,37.55346297625253,96.37758913675698,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PRP,direita,1,0,% pró-pauta,0.0,0.0,79.34506856227625,True
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSB,esquerda,30,16,% pró-pauta,53.333333333333336,36.1422996198733,69.76761109230026,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSC,direita,10,2,% pró-pauta,20.0,5.668215145437519,50.983752846335825,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSD,direita,34,5,% pró-pauta,14.705882352941178,6.449441444782457,30.12805649545216,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSDB,direita,44,1,% pró-pauta,2.272727272727273,0.4023252060053224,11.807709698213287,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSL,direita,2,1,% pró-pauta,50.0,9.453120573423075,90.54687942657694,True
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PSOL,esquerda,6,6,% pró-pauta,100.0,60.96657120978346,100.0,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PT,esquerda,56,56,% pró-pauta,100.0,93.58060632812366,100.0,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PTB,direita,17,4,% pró-pauta,23.52941176470588,9.555044322080116,47.26179811956498,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PTN,direita,12,5,% pró-pauta,41.66666666666667,19.326031365875664,68.04886874504503,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PTdoB,direita,4,3,% pró-pauta,75.0,30.064184258240186,95.44127391902994,True
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,PV,centro,6,2,% pró-pauta,33.33333333333333,9.677141110578042,70.0006684861608,False
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,REDE,centro,4,4,% pró-pauta,100.0,51.01091635454027,100.0,True
+reforma_trabalhista,Reforma Trabalhista (texto-base),55,SD,direita,13,8,% pró-pauta,61.53846153846154,35.5228915126657,82.29029220223742,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,AVANTE,direita,7,2,% pró-pauta,28.57142857142857,8.221892400405679,64.10655481673808,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,CIDADANIA,centro,8,0,% pró-pauta,0.0,0.0,32.440756488388026,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,DEM,direita,30,0,% pró-pauta,0.0,0.0,11.351339317396876,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,MDB,direita,32,0,% pró-pauta,0.0,0.0,10.71791982550706,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,NOVO,direita,8,0,% pró-pauta,0.0,0.0,32.440756488388026,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PATRIOTA,direita,5,0,% pró-pauta,0.0,0.0,43.44824647831748,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PCdoB,esquerda,8,8,% pró-pauta,100.0,67.55924351161198,100.0,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PDT,esquerda,26,18,% pró-pauta,69.23076923076923,50.01174167780164,83.49868440453623,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PHS,direita,1,0,% pró-pauta,0.0,0.0,79.34506856227625,True
+reforma_previdencia,Reforma da Previdência (2º turno),56,PL,direita,37,2,% pró-pauta,5.405405405405405,1.4950976833157672,17.704654350813104,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PMN,direita,1,1,% pró-pauta,100.0,20.654931437723747,100.0,True
+reforma_previdencia,Reforma da Previdência (2º turno),56,PODE,direita,11,1,% pró-pauta,9.090909090909092,1.6232172885884855,37.73584364515957,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PP,direita,38,3,% pró-pauta,7.894736842105263,2.721459550698772,20.799371457771453,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PRB,direita,31,2,% pró-pauta,6.451612903225806,1.7874783521914572,20.718636736298127,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PROS,direita,10,3,% pró-pauta,30.0,10.7791267406301,60.322185253885465,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PSB,esquerda,30,20,% pró-pauta,66.66666666666666,48.780051644543846,80.76950191632386,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PSC,direita,7,0,% pró-pauta,0.0,5.551115123125783e-15,35.433043506668746,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PSD,direita,35,2,% pró-pauta,5.714285714285714,1.5813161857108655,18.60705742016492,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PSDB,direita,29,1,% pró-pauta,3.4482758620689653,0.6113214292762653,17.17552187932029,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PSL,direita,51,0,% pró-pauta,0.0,0.0,7.004661989853143,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PSOL,esquerda,8,8,% pró-pauta,100.0,67.55924351161198,100.0,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PT,esquerda,49,49,% pró-pauta,100.0,92.73021807795035,99.99999999999999,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PTB,direita,12,0,% pró-pauta,0.0,2.7755575615628914e-15,24.249400665524085,False
+reforma_previdencia,Reforma da Previdência (2º turno),56,PV,centro,4,2,% pró-pauta,50.0,15.003898915214947,84.99610108478505,True
+reforma_previdencia,Reforma da Previdência (2º turno),56,REDE,centro,1,1,% pró-pauta,100.0,20.654931437723747,100.0,True
+reforma_previdencia,Reforma da Previdência (2º turno),56,S.PART.,,1,0,% pró-pauta,0.0,0.0,79.34506856227625,True
+reforma_previdencia,Reforma da Previdência (2º turno),56,SOLIDARIEDADE,direita,14,1,% pró-pauta,7.142857142857142,1.272221524789094,31.468704424151117,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,AVANTE,direita,8,6,% Sim,75.0,40.92754303101688,92.8520787247891,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,CIDADANIA,centro,7,2,% Sim,28.57142857142857,8.221892400405679,64.10655481673808,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,DEM,direita,26,24,% Sim,92.3076923076923,75.85844622837095,97.86449115277239,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,MDB,direita,29,13,% Sim,44.827586206896555,28.413168023037194,62.45203678902909,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,NOVO,direita,8,0,% Sim,0.0,0.0,32.440756488388026,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PATRIOTA,direita,6,6,% Sim,100.0,60.96657120978346,100.0,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PCdoB,esquerda,8,0,% Sim,0.0,0.0,32.440756488388026,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PDT,esquerda,24,5,% Sim,20.833333333333336,9.244825352851857,40.470453253188666,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PL,direita,43,41,% Sim,95.34883720930233,84.54450199593603,98.71507399056198,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PODE,direita,10,4,% Sim,40.0,16.818032970623616,68.73262302663417,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PP,direita,41,41,% Sim,100.0,91.4332429815568,99.99999999999999,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PROS,direita,9,9,% Sim,100.0,70.08549515804559,100.0,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PSB,esquerda,29,8,% Sim,27.586206896551722,14.698755102087954,45.71713241686594,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PSC,direita,11,11,% Sim,100.0,74.11670330319684,100.0,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PSD,direita,35,30,% Sim,85.71428571428571,70.62444591340484,93.73976892056628,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PSDB,direita,32,21,% Sim,65.625,48.31108797896222,79.58956207556682,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PSL,direita,52,49,% Sim,94.23076923076923,84.35748863103923,98.01858278877295,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PSOL,esquerda,7,0,% Sim,0.0,5.551115123125783e-15,35.433043506668746,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PT,esquerda,52,0,% Sim,0.0,0.0,6.879223612386235,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PTB,direita,10,9,% Sim,90.0,59.58499732047615,98.21237869049271,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,PV,centro,4,1,% Sim,25.0,4.558726080970055,69.93581574175981,True
+pec_precatorios,PEC dos Precatórios (2º turno),56,REPUBLICANOS,direita,30,30,% Sim,100.0,88.64866068260312,99.99999999999999,False
+pec_precatorios,PEC dos Precatórios (2º turno),56,S.PART.,,1,0,% Sim,0.0,0.0,79.34506856227625,True
+pec_precatorios,PEC dos Precatórios (2º turno),56,SOLIDARIEDADE,direita,13,13,% Sim,100.0,77.19046276458016,99.99999999999999,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,AVANTE,direita,5,5,% pró-pauta,100.0,56.551753521682514,100.0,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,CIDADANIA,centro,3,2,% pró-pauta,66.66666666666666,20.76596008020477,93.85080552796038,True
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,MDB,direita,25,25,% pró-pauta,100.0,86.68077490609515,99.99999999999999,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,NOVO,direita,3,0,% pró-pauta,0.0,5.551115123125783e-15,56.14970317550454,True
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PATRIOTA,direita,4,4,% pró-pauta,100.0,51.01091635454027,100.0,True
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PCdoB,esquerda,6,6,% pró-pauta,100.0,60.96657120978346,100.0,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PDT,esquerda,15,15,% pró-pauta,100.0,79.61166989641515,100.0,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PL,direita,70,46,% pró-pauta,65.71428571428571,54.03954969794421,75.75401119773312,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PODE,direita,6,4,% pró-pauta,66.66666666666666,29.999331513839202,90.32285888942195,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PP,direita,33,32,% pró-pauta,96.96969696969697,84.6812746178811,99.46305894631283,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PSB,esquerda,11,11,% pró-pauta,100.0,74.11670330319684,100.0,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PSC,direita,2,2,% pró-pauta,100.0,34.2380227506653,100.0,True
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PSD,direita,28,27,% pró-pauta,96.42857142857143,82.28780225664669,99.36674801509623,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PSDB,direita,13,13,% pró-pauta,100.0,77.19046276458016,99.99999999999999,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PSOL,esquerda,9,9,% pró-pauta,100.0,70.08549515804559,100.0,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PT,esquerda,53,52,% pró-pauta,98.11320754716981,90.05708794749876,99.66615466117361,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,PV,centro,5,5,% pró-pauta,100.0,56.551753521682514,100.0,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,REDE,centro,1,1,% pró-pauta,100.0,20.654931437723747,100.0,True
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,REPUBLICANOS,direita,31,31,% pró-pauta,100.0,88.97446045395641,100.0,False
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,S.PART.,,1,1,% pró-pauta,100.0,20.654931437723747,100.0,True
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,SOLIDARIEDADE,direita,4,4,% pró-pauta,100.0,51.01091635454027,100.0,True
+igualdade_salarial,Igualdade salarial entre mulheres e homens,57,UNIÃO,direita,33,30,% pró-pauta,90.9090909090909,76.42739435353026,96.85960584754184,False
+marco_temporal,Marco temporal das terras indígenas,57,AVANTE,direita,7,3,% pró-pauta,42.857142857142854,15.821985525146975,74.95416354723427,False
+marco_temporal,Marco temporal das terras indígenas,57,CIDADANIA,centro,3,1,% pró-pauta,33.33333333333333,6.149194472039621,79.23403991979522,True
+marco_temporal,Marco temporal das terras indígenas,57,MDB,direita,30,8,% pró-pauta,26.666666666666668,14.182663319596317,44.44796169518888,False
+marco_temporal,Marco temporal das terras indígenas,57,NOVO,direita,3,0,% pró-pauta,0.0,5.551115123125783e-15,56.14970317550454,True
+marco_temporal,Marco temporal das terras indígenas,57,PATRIOTA,direita,4,2,% pró-pauta,50.0,15.003898915214947,84.99610108478505,True
+marco_temporal,Marco temporal das terras indígenas,57,PCdoB,esquerda,6,6,% pró-pauta,100.0,60.96657120978346,100.0,False
+marco_temporal,Marco temporal das terras indígenas,57,PDT,esquerda,15,14,% pró-pauta,93.33333333333333,70.18347012621999,98.81331045067316,False
+marco_temporal,Marco temporal das terras indígenas,57,PL,direita,83,1,% pró-pauta,1.2048192771084338,0.21299774281082692,6.513580668032404,False
+marco_temporal,Marco temporal das terras indígenas,57,PODE,direita,10,3,% pró-pauta,30.0,10.7791267406301,60.322185253885465,False
+marco_temporal,Marco temporal das terras indígenas,57,PP,direita,41,4,% pró-pauta,9.75609756097561,3.859708489808934,22.547681305523387,False
+marco_temporal,Marco temporal das terras indígenas,57,PSB,esquerda,15,12,% pró-pauta,80.0,54.81455128483065,92.95245065301843,False
+marco_temporal,Marco temporal das terras indígenas,57,PSC,direita,2,0,% pró-pauta,0.0,0.0,65.76197724933469,True
+marco_temporal,Marco temporal das terras indígenas,57,PSD,direita,33,8,% pró-pauta,24.242424242424242,12.83171337717501,41.024619829557366,False
+marco_temporal,Marco temporal das terras indígenas,57,PSDB,direita,12,2,% pró-pauta,16.666666666666664,4.696514218385378,44.80308622529734,False
+marco_temporal,Marco temporal das terras indígenas,57,PSOL,esquerda,12,12,% pró-pauta,100.0,75.75059933447592,100.0,False
+marco_temporal,Marco temporal das terras indígenas,57,PT,esquerda,65,65,% pró-pauta,100.0,94.41984686771431,100.0,False
+marco_temporal,Marco temporal das terras indígenas,57,PV,centro,6,5,% pró-pauta,83.33333333333334,43.64971778135299,96.99466302516934,False
+marco_temporal,Marco temporal das terras indígenas,57,REDE,centro,1,1,% pró-pauta,100.0,20.654931437723747,100.0,True
+marco_temporal,Marco temporal das terras indígenas,57,REPUBLICANOS,direita,37,4,% pró-pauta,10.81081081081081,4.285189940411473,24.70853154412603,False
+marco_temporal,Marco temporal das terras indígenas,57,SOLIDARIEDADE,direita,3,2,% pró-pauta,66.66666666666666,20.76596008020477,93.85080552796038,True
+marco_temporal,Marco temporal das terras indígenas,57,UNIÃO,direita,50,2,% pró-pauta,4.0,1.1038884327619805,13.46009068750702,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,AVANTE,direita,5,5,% pró-pauta,100.0,56.551753521682514,100.0,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,CIDADANIA,centro,1,1,% pró-pauta,100.0,20.654931437723747,100.0,True
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,MDB,direita,35,33,% pró-pauta,94.28571428571428,81.39294257983506,98.41868381428912,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,MISSÃO,direita,1,0,% pró-pauta,0.0,0.0,79.34506856227625,True
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,NOVO,direita,4,0,% pró-pauta,0.0,0.0,48.98908364545973,True
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PCdoB,esquerda,11,11,% pró-pauta,100.0,74.11670330319684,100.0,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PDT,esquerda,9,9,% pró-pauta,100.0,70.08549515804559,100.0,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PL,direita,90,81,% pró-pauta,90.0,82.07582512456635,94.64932483028751,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PODE,direita,27,27,% pró-pauta,100.0,87.54449702581329,99.99999999999997,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PP,direita,41,40,% pró-pauta,97.5609756097561,87.40493794422576,99.56814684310874,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PRD,direita,2,2,% pró-pauta,100.0,34.2380227506653,100.0,True
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PSB,esquerda,16,16,% pró-pauta,100.0,80.63923194655636,100.00000000000003,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PSD,direita,42,41,% pró-pauta,97.61904761904762,87.67879842623334,99.57845958655673,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PSDB,direita,16,16,% pró-pauta,100.0,80.63923194655636,100.00000000000003,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PSOL,esquerda,12,12,% pró-pauta,100.0,75.75059933447592,100.0,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PT,esquerda,65,65,% pró-pauta,100.0,94.41984686771431,100.0,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,PV,centro,6,6,% pró-pauta,100.0,60.96657120978346,100.0,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,REDE,centro,4,4,% pró-pauta,100.0,51.01091635454027,100.0,True
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,REPUBLICANOS,direita,39,39,% pró-pauta,100.0,91.03331462924287,100.0,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,SOLIDARIEDADE,direita,6,6,% pró-pauta,100.0,60.96657120978346,100.0,False
+fim_escala_6x1,PEC do fim da escala 6x1 (2º turno),57,UNIÃO,direita,48,47,% pró-pauta,97.91666666666666,89.10078200474814,99.63128890224893,False

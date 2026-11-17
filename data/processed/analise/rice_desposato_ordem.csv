@@ -1,0 +1,9 @@
+chave_votacao,n_partidos,tau_kendall,partidos_que_mudam_de_posto,maior_salto_de_posto
+maioridade_penal,17,1.0,0,0.0
+teto_gastos,20,1.0,0,0.0
+reforma_trabalhista,20,0.9086744191268072,10,3.0
+reforma_previdencia,22,0.9174772031921674,15,5.0
+pec_precatorios,22,0.9556472407460401,14,4.5
+igualdade_salarial,15,0.8853422931715315,11,3.5
+marco_temporal,15,0.9854713827168429,5,1.0
+fim_escala_6x1,16,1.0,0,0.0

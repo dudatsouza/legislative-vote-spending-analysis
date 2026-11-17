@@ -1,0 +1,53 @@
+1 - Aumentar o número de votações, atualmente termos 3 que cobrem apenas 3 legislaturas (2015,2017 e 2026)
+
+2 - Analisar melhor a correlaçao gasto x produtividdade, fazendo uma divisão por tempo de mandato talvez. Separar os deputados por tempo e compartilhar entre eles mesmo usando box plots e analisando se temos outliers que tem pouco tempo e se comparam a pessoas que tem muito tempo de mandato. 
+
+3 - A produtividade é a contagem total na legistatura, sem normalização. Enquanto o gasto é médio mensal, normalizado. 
+
+4 - Analisar como será feita a produtividade qualificada por conta do jeito que ela é calculada. 
+
+5 - A cota da CEAP varia por UF, então podemos separar as análises por deputados, fazendo uma análise e mostrando um mapa do brasil com os deputados que mais gastam por estado, considerando também o tempo de legislatura, talvez deputados que tenham uma legislatura completa para a comparação ficar justa. 
+
+6 - Definir de maneira mais fidedigna o alinhamento partidário. Atualmente o código usa a coesão de Rice e uma tabela de partido x voto. O coeficiente de rice mede se o partido votou unido, mas não para qual lado votou. Classificar por espectro ideológico ou fidelidade à orientação da bancada. 
+
+7 - Partidos inconsistentes entre bases, a base de votos calcula o partido no momento da votação, a base por legislatura registra a ultima filiação registrada, ou seja, ocorre divergência entre as bases para alguns parlamentares.
+
+8 - A produtividade bruta mistura indicações ou requerimentos, possuindo o mesmo peso que uma PEC por exemplo, estando sendo somadas a produtividade legislativa
+
+9 - Melhorar a representação de gráficos
+
+
+
+
+
+O QUE FALTA FAZER: 
+
+ - Definir os critérios de seleção de votações
+ - Ampliar as votações para cobrir as 7 legislaturas
+ - Operacionalizar o alinhamento: coletar e calular, por deputado e partido, a taxa de fidelidade à orientação da bancada e a taxa de alinhamento ao governo
+ - Classificação ideológica dos partidos
+ - campo voto_por_pauta por votação
+ - teste partido x voto
+ - Rever as questoes de produtividade: - separar a producao normativa dos requerimentos e indicacoes, normalizar por mes de mandato, fazer o spearman e os quadrantes só com quem tem mais de 36 meses de mandato, ou usar a producao mensal
+ - Produtividade qualificada: redefinir com uma medida que não dependa da idade da proposição. Exemplos: porcentagem transformada em norma jurídica, porcentagem aprovada em pelo menos uma comissão ou no plenário, ou comparar só dentro da mesma legislatura e delcarar que não se compara entre legislaturas
+ - Gasto relativo à cota da UF: porcentagem do teto usado ou ranks dentro da UF
+ Partido único por deputado e legislatura, ficando o partido em que passou mais tempo
+ - Spearman controlado por partido
+
+
+
+
+DEFINIÇÕES:
+
+- Janela temporal 2015 à 2026
+- Votações utilizadas:
+    - Maioridade penal
+    - Teto de gastos
+    - Reforma Trabalhista
+    - Reforma da previdência
+    - Pec dos Precatórios
+    - Marco temporal
+    - Igualdade Salarial
+    - PEC 6X1  
+
+

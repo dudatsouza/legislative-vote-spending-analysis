@@ -1,0 +1,9 @@
+familia,chave_votacao,n_sim,n_nao,mediana_sim,mediana_nao,direcao_pro_pauta,estatistica,p_valor,metodo,efeito,valor_efeito,rb_pro_pauta,magnitude,p_holm,significativo
+F4,maioridade_penal,319,150,0.3125,0.2708,Não,25192.5,0.3545946729029231,Mann-Whitney,rank-bisserial (Sim − Não),0.05297805642633224,-0.05297805642633224,desprezível,1.0,False
+F4,teto_gastos,356,114,0.2917,0.3125,Não,20424.5,0.9166837846668455,Mann-Whitney,rank-bisserial (Sim − Não),0.006529666863788641,-0.006529666863788641,desprezível,1.0,False
+F4,reforma_trabalhista,293,175,0.2708,0.3125,Não,24144.0,0.2914731222276715,Mann-Whitney,rank-bisserial (Sim − Não),-0.05825450999512438,0.05825450999512438,desprezível,1.0,False
+F4,reforma_previdencia,368,123,0.42869999999999997,0.6458,Não,18350.0,0.0016712726454100586,Mann-Whitney,rank-bisserial (Sim − Não),-0.1892011311417462,0.1892011311417462,pequeno,0.010027635872460352,True
+F4,pec_precatorios,318,172,0.40180000000000005,0.6146,,22115.5,0.0004692827182834497,Mann-Whitney,rank-bisserial (Sim − Não),-0.19133026181073576,,pequeno,0.0037542617462675977,True
+F4,igualdade_salarial,324,35,0.5843,0.9407,Sim,3650.0,0.0005349066648523174,Mann-Whitney,rank-bisserial (Sim − Não),-0.3562610229276896,-0.3562610229276896,médio,0.0037542617462675977,True
+F4,marco_temporal,279,154,0.6281,0.5881000000000001,Não,21480.5,0.9987197922504835,Mann-Whitney,rank-bisserial (Sim − Não),-0.00011637108411299835,0.00011637108411299835,desprezível,1.0,False
+F4,fim_escala_6x1,442,18,0.603,1.19965,Sim,2670.0,0.018020889980024577,Mann-Whitney,rank-bisserial (Sim − Não),-0.32880844645550533,-0.32880844645550533,médio,0.09010444990012288,False

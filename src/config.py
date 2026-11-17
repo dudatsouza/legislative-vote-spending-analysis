@@ -397,17 +397,3 @@ FORMATOS_FIGURA = ("pdf", "png")
 DPI_PNG = 600
 COLORMAP_SEQUENCIAL = "cividis"
 COLORMAP_DIVERGENTE = "PuOr"  # neutro: evita o par vermelho/azul partidário
-
-# ===========================================================================
-# Compatibilidade temporária
-# Nomes usados pelas etapas atuais do pipeline (tratar/analisar), que ainda
-# serão reescritas. Remover quando cada etapa for atualizada.
-# ===========================================================================
-VOTOS_RICE = {"Sim", "Não"}
-TIPOS_PROPOSICAO = list(TIPOS_NORMATIVOS)
-SITUACOES_NAO_AVANCOU = {  # regra antiga do D14, substituída por SITUACOES_APROVADA_CAMARA
-    "Arquivada",
-    "Retirado pelo(a) Autor(a)",
-    "Devolvida ao(à) Autor(a)",
-    "Perdeu a Eficácia",
-}
