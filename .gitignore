@@ -1,12 +1,23 @@
-# Dados brutos baixados da API/arquivos da Câmara não são versionados (Seção 7)
+# Dados brutos (~1,4 GB): não versionados; o manifesto em data/processed/ registra o sha256 de cada um.
 data/raw/*
 !data/raw/.gitkeep
+data/raw_ate_*/
+*.part
 
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
 .venv/
-.ipynb_checkpoints/
+.venv_perfil/
 
-# macOS
+# Execução
+logs/
+
+# Streamlit (config.toml é versionado; segredos não)
+.streamlit/secrets.toml
+
+# Sistema e editores
 .DS_Store
+.claude/
+.vscode/
+.idea/

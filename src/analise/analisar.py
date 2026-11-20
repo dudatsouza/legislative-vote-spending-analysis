@@ -1,41 +1,20 @@
-"""Etapa 3 — Análise estatística (D6, D10, D11, D16, D18).
+"""Etapa 3: análise estatística.
 
-Uso:
     python -m src.analise.analisar
 
-Lê as saídas de src.tratamento.tratar (votos, coesao_rice,
-base_deputado_legislatura) e grava em data/processed/analise/:
-
-Descritivas
-    populacao_resumo.csv           população do D3 por legislatura × faixa e excluídos (< 12 meses)
-    votacao_resumo.csv             registros, válidos, ausentes e amostras de cada votação
-    tabulacao_partido_voto.csv     partido × voto_original por votação
-    pro_pauta_partido_votacao.csv  % pró-pauta (ou % Sim nos Precatórios) por partido × votação  [V1]
-    pro_pauta_grupo_legislatura.csv índice pró-pauta por espectro e família × legislatura      [V4]
-    indice_pro_pauta_deputado.csv  índice pró-pauta por deputado × legislatura (D6)
-    rice_agregado.csv              Rice ponderado por votação, legislatura e partido × legislatura (D10)
-    rice_desposato.csv             Rice bruto × corrigido (Desposato, 2005) por partido × votação
-    rice_desposato_ordem.csv       a ordenação dos partidos muda com a correção?
-    fidelidade_deputado.csv        fidelidade ao partido e alinhamento ao Governo por deputado (D11)
-    fidelidade_grupo.csv           idem por partido e espectro × legislatura, separado por fonte
-    composicao_quadrante.csv       % de cada partido e espectro no quadrante de interesse      [V8]
-
-Testes (D18; Holm dentro de cada família)
-    f1_partido_voto.csv            qui-quadrado partido × voto por votação, V de Cramér
-    f2_espectro_voto.csv           qui-quadrado espectro × voto por votação, V de Cramér
-    f3_spearman.csv                Spearman gasto relativo × produtividade por legislatura × faixa [V7]
-    f4_produtividade_voto.csv      Mann-Whitney da produtividade mensal entre Sim e Não
-    f5_quadrante_voto.csv          quadrante de interesse × voto (2×2), razão de chances         [V10]
-    testes_resumo.csv              as cinco famílias numa tabela só
-    robustez.csv                   F2 sem classificação manual; F3 com "só Norma Jurídica";
-                                   fidelidade só com orientação própria do partido
-
-Tudo é associação, nunca causalidade (D18.9).
+Lê as saídas do tratamento e grava descritivas, testes (famílias F1 a F5,
+com Holm dentro de cada família), controles pelo espectro (F4E, F5E),
+regressão logística e robustez em data/processed/analise/.
 """
+import warnings
+
 import numpy as np
 import pandas as pd
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
 from scipy import stats
 from scipy.stats.contingency import odds_ratio
+from statsmodels.stats.contingency_tables import StratifiedTable
 
 from src import config
 
@@ -45,18 +24,13 @@ OUT = DADOS / "analise"
 VOTOS_VALIDOS = ("Sim", "Não")
 Z = stats.norm.ppf(0.5 + config.NIVEL_CONFIANCA / 2)
 
-# Convenção de Cohen (1988) para r, ρ, V de Cramér com gl* = 1 e rank-bisserial.
-CORTES_COHEN_R = (0.1, 0.3, 0.5)
-# Razão de chances: equivalentes aos d de Cohen 0,2 / 0,5 / 0,8
-# (Chen, Cohen e Chen, 2010, Commun. Stat. Simul. Comput.).
-CORTES_OR = (1.68, 3.47, 6.71)
+CORTES_COHEN_R = (0.1, 0.3, 0.5)   # Cohen (1988)
+CORTES_OR = (1.68, 3.47, 6.71)     # Chen, Cohen e Chen (2010)
 
 
-# ===========================================================================
-# Utilitários estatísticos
-# ===========================================================================
+# --- Utilitários estatísticos --------------------------------------------------
 def wilson(k, n):
-    """IC de Wilson (D18.7) para k sucessos em n; aceita escalares ou arrays."""
+    """IC de Wilson para k sucessos em n."""
     k = np.asarray(k, dtype=float)
     n = np.asarray(n, dtype=float)
     with np.errstate(invalid="ignore", divide="ignore"):
@@ -68,7 +42,7 @@ def wilson(k, n):
 
 
 def holm(p):
-    """p-valores ajustados por Holm (1979); NaN fica de fora e continua NaN."""
+    """p-valores ajustados por Holm (1979); NaN continua NaN."""
     p = np.asarray(p, dtype=float)
     ajust = np.full_like(p, np.nan)
     ok = ~np.isnan(p)
@@ -95,8 +69,7 @@ def magnitude(valor, cortes=CORTES_COHEN_R) -> str | None:
 
 
 def _qui2_de_contagens(sim_por_grupo, n_grupo, n_sim, n):
-    """Qui-quadrado de Pearson de uma tabela grupo × {Sim, Não}, vetorizado na
-    primeira dimensão de `sim_por_grupo` (permutações)."""
+    """Qui-quadrado de uma tabela grupo × {Sim, Não}, vetorizado nas permutações."""
     e_sim = n_grupo * n_sim / n
     e_nao = n_grupo * (n - n_sim) / n
     nao = n_grupo - sim_por_grupo
@@ -105,15 +78,8 @@ def _qui2_de_contagens(sim_por_grupo, n_grupo, n_sim, n):
 
 
 def qui2_grupo_voto(grupo: pd.Series, voto: pd.Series) -> dict:
-    """Independência grupo × voto (Sim/Não) numa tabela r×2.
-
-    Se a menor frequência esperada for < FREQ_ESPERADA_MIN, o p-valor reportado
-    é o de permutação de Monte Carlo (D18.4): os votos são embaralhados entre
-    os deputados, mantendo as margens, e o p-valor é (b + 1) / (B + 1). Cada
-    teste usa um gerador novo com a SEMENTE (D18.8), para que o p-valor não
-    dependa da ordem em que os testes rodam e a robustez seja pareada.
-    Efeito: V de Cramér (com 2 colunas, gl* = 1).
-    """
+    """Qui-quadrado grupo × voto (r×2) e V de Cramér. Com esperado pequeno,
+    p-valor por permutação de Monte Carlo (semente fixa em cada teste)."""
     codigos, niveis = pd.factorize(grupo, sort=True)
     y = (voto.to_numpy() == "Sim").astype(np.int8)
     n, r = len(y), len(niveis)
@@ -137,7 +103,7 @@ def qui2_grupo_voto(grupo: pd.Series, voto: pd.Series) -> dict:
         p, metodo = (b + 1) / (config.N_PERMUTACOES + 1), "permutação Monte Carlo"
     else:
         p, metodo = p_assint, "qui-quadrado"
-    v = np.sqrt(chi2 / n)  # min(r, 2) − 1 = 1
+    v = np.sqrt(chi2 / n)
     return base | {"estatistica": chi2, "gl": gl, "menor_esperado": menor_esp,
                    "p_assintotico": p_assint, "metodo": metodo, "p_valor": p,
                    "efeito": "V de Cramér", "valor_efeito": v,
@@ -145,8 +111,7 @@ def qui2_grupo_voto(grupo: pd.Series, voto: pd.Series) -> dict:
 
 
 def ic_spearman(rho, n):
-    """IC de ρ pela transformação de Fisher com o erro-padrão de Bonett e
-    Wright (2000), indicado para Spearman: sqrt((1 + ρ²/2) / (n − 3))."""
+    """IC de ρ (Fisher com o erro-padrão de Bonett e Wright, 2000)."""
     if n < 4 or np.isnan(rho) or abs(rho) >= 1:
         return np.nan, np.nan
     z = np.arctanh(rho)
@@ -161,9 +126,7 @@ def _aplicar_holm(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-# ===========================================================================
-# Leitura
-# ===========================================================================
+# --- Leitura -------------------------------------------------------------------
 def carregar():
     votos = pd.read_csv(DADOS / "votos.csv")
     rice = pd.read_csv(DADOS / "coesao_rice.csv")
@@ -180,18 +143,24 @@ def _validos(votos: pd.DataFrame) -> pd.DataFrame:
     return votos[votos["voto_valido"].isin(VOTOS_VALIDOS)].copy()
 
 
+def _rotulos(df: pd.DataFrame, chaves, por: str | None = None) -> pd.Series:
+    """Sigla exibida de cada partido_id: a mais recente (com `por`) ou a mais
+    frequente. Evita que PMDB e MDB virem dois grupos."""
+    d = df[df["partido_id"].notna()]
+    if por is not None:
+        return d.sort_values(por, kind="stable").groupby(chaves)["partido"].last()
+    return d.groupby(chaves)["partido"].agg(lambda s: s.mode().iat[0])
+
+
 def _com_pop_d3(validos: pd.DataFrame, base: pd.DataFrame, colunas) -> tuple[pd.DataFrame, int]:
-    """Votos válidos de quem está na população do D3 (≥ 12 meses e com gasto);
-    devolve também quantos votos válidos ficaram de fora."""
+    """Votos válidos da população (≥ 12 meses e com gasto) e quantos ficaram de fora."""
     pop = base[base["no_quadrante_interesse"].notna()]
     df = validos.merge(pop[["id_deputado", "legislatura", *colunas]],
                        on=["id_deputado", "legislatura"], how="inner")
     return df, len(validos) - len(df)
 
 
-# ===========================================================================
-# Descritivas
-# ===========================================================================
+# --- Descritivas ---------------------------------------------------------------
 def resumo_populacao(base: pd.DataFrame) -> pd.DataFrame:
     linhas = []
     for leg, g in base.groupby("legislatura"):
@@ -243,8 +212,7 @@ def tabulacao_partido_voto(votos, ordem) -> pd.DataFrame:
 
 
 def _evento_pro(validos: pd.DataFrame) -> pd.Series:
-    """True quando o voto é pró-pauta (D6); nos Precatórios (direção ambígua),
-    True quando é Sim, para as análises por votação."""
+    """Voto pró-pauta; nos Precatórios (direção ambígua), voto Sim."""
     return validos["pro_pauta"].where(validos["direcao_pro_pauta"].notna(),
                                       validos["voto_valido"] == "Sim").astype(bool)
 
@@ -267,9 +235,7 @@ def _chaves_sem_direcao():
 
 
 def indice_pro_pauta(validos) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """D6: índice = votos pró-pauta / votos válidos nas votações com direção
-    definida (Precatórios fora). Por deputado × legislatura e, somando os votos,
-    por espectro e por família × legislatura (D8-ii: família só no temporal)."""
+    """Índice pró-pauta por deputado e por espectro/família × legislatura."""
     df = validos[validos["direcao_pro_pauta"].notna()].copy()
     df["pro_pauta"] = df["pro_pauta"].astype(bool)
     dep = (df.groupby(["id_deputado", "legislatura"])
@@ -293,29 +259,28 @@ def indice_pro_pauta(validos) -> tuple[pd.DataFrame, pd.DataFrame]:
     return dep, grp
 
 
-# ===========================================================================
-# D10 — Rice agregado e correção de Desposato
-# ===========================================================================
-def rice_agregado(rice: pd.DataFrame) -> pd.DataFrame:
-    r = rice[rice["rice"].notna() & ~rice["partido"].isin(config.SEM_PARTIDO)]
+# --- Rice agregado e correção de Desposato -------------------------------------
+def rice_agregado(rice: pd.DataFrame, ordem: dict) -> pd.DataFrame:
+    r = rice[rice["rice"].notna() & ~rice["partido"].isin(config.SEM_PARTIDO)].copy()
+    r["_ordem"] = r["chave_votacao"].map(ordem)
     partes = []
     for nivel, chaves in (("votacao", ["chave_votacao", "legislatura"]),
                           ("legislatura", ["legislatura"]),
-                          ("partido_legislatura", ["legislatura", "partido"])):
+                          ("partido_legislatura", ["legislatura", "partido_id"])):
         g = (r.groupby(chaves)
              .apply(lambda x: pd.Series({
                  "rice_ponderado": np.average(x["rice"], weights=x["validos"]),
                  "validos": x["validos"].sum(), "n_pares": len(x)}), include_groups=False)
              .reset_index())
+        if "partido_id" in chaves:
+            g = g.merge(_rotulos(r, chaves, por="_ordem").rename("partido").reset_index(), on=chaves)
         g.insert(0, "nivel", nivel)
         partes.append(g)
     return pd.concat(partes, ignore_index=True)
 
 
 def _rice_esperado_subamostra(sim: int, validos: int, k: int) -> float:
-    """E[Rice] numa subamostra de k deputados sorteados sem reposição do
-    partido (hipergeométrica). É a correção de Desposato (2005) por
-    reamostragem até o tamanho do menor grupo, calculada de forma exata."""
+    """E[Rice] numa subamostra de k deputados (correção de Desposato, exata)."""
     x = np.arange(max(0, k - (validos - sim)), min(k, sim) + 1)
     pmf = stats.hypergeom.pmf(x, validos, sim, k)
     return float((pmf * np.abs(2 * x - k) / k).sum() * 100)
@@ -340,9 +305,7 @@ def rice_desposato(rice: pd.DataFrame, ordem_vot: dict) -> tuple[pd.DataFrame, p
     return r[cols], pd.DataFrame(ordem)
 
 
-# ===========================================================================
-# D11 — Fidelidade à orientação e alinhamento ao Governo
-# ===========================================================================
+# --- Fidelidade à orientação e alinhamento ao Governo --------------------------
 def _taxa(df: pd.DataFrame, chaves, coluna: str) -> pd.DataFrame:
     d = df[df[coluna].notna()]
     g = (d.groupby(chaves, dropna=False)[coluna]
@@ -354,47 +317,52 @@ def _taxa(df: pd.DataFrame, chaves, coluna: str) -> pd.DataFrame:
 
 
 def fidelidade(validos: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Por deputado × legislatura e por partido/espectro × legislatura.
-
-    `fonte`: "todas" (orientação do partido ou herdada do bloco), "partido"
-    (só orientação própria; robustez) e "bloco" (só herdada). Alinhamento ao
-    Governo não depende da fonte e aparece só em "todas".
-    """
+    """Fidelidade ao partido e alinhamento ao Governo, por deputado e por grupo.
+    `fonte`: todas, só orientação do partido, ou só herdada do bloco."""
     recortes = {"todas": validos,
                 "partido": validos[validos["fonte_orientacao"] == "partido"],
                 "bloco": validos[validos["fonte_orientacao"] == "bloco"]}
+    rotulo = _rotulos(validos, ["legislatura", "partido_id"], por="data")
+    niveis = {"partido": "partido_id", "espectro": "espectro"}
+
+    def _por_grupo(d, coluna, **extra):
+        out = []
+        for nivel, col in niveis.items():
+            g = _taxa(d, ["legislatura", col], coluna).rename(columns={col: "grupo"})
+            g["rotulo"] = (g.set_index(["legislatura", "grupo"]).index.map(rotulo.get) if nivel == "partido"
+                           else g["grupo"])
+            out.append(g.assign(nivel=nivel, **extra))
+        return out
+
     dep, grp = [], []
     for fonte, d in recortes.items():
         f = _taxa(d, ["id_deputado", "legislatura"], "fiel_partido").assign(medida="fidelidade_partido")
         dep.append(f.assign(fonte=fonte))
-        for nivel in ("partido", "espectro"):
-            g = _taxa(d, ["legislatura", nivel], "fiel_partido").rename(columns={nivel: "grupo"})
-            grp.append(g.assign(nivel=nivel, medida="fidelidade_partido", fonte=fonte))
+        grp += _por_grupo(d, "fiel_partido", medida="fidelidade_partido", fonte=fonte)
     dep.append(_taxa(validos, ["id_deputado", "legislatura"], "alinhado_governo")
                .assign(medida="alinhamento_governo", fonte="todas"))
-    for nivel in ("partido", "espectro"):
-        g = _taxa(validos, ["legislatura", nivel], "alinhado_governo").rename(columns={nivel: "grupo"})
-        grp.append(g.assign(nivel=nivel, medida="alinhamento_governo", fonte="todas"))
+    grp += _por_grupo(validos, "alinhado_governo", medida="alinhamento_governo", fonte="todas")
     nomes = validos.groupby(["id_deputado", "legislatura"]).agg(
         nome=("nome", "first"), partido_ultimo_voto=("partido", "last")).reset_index()
     dep = pd.concat(dep, ignore_index=True).merge(nomes, on=["id_deputado", "legislatura"])
     dep = dep[["id_deputado", "legislatura", "nome", "partido_ultimo_voto", "medida", "fonte",
                "n", "k", "taxa", "ic_inf", "ic_sup"]]
-    grp = pd.concat(grp, ignore_index=True)[["legislatura", "nivel", "grupo", "medida", "fonte",
+    grp = pd.concat(grp, ignore_index=True)[["legislatura", "nivel", "grupo", "rotulo", "medida", "fonte",
                                              "n", "k", "taxa", "ic_inf", "ic_sup"]]
     return dep, grp
 
 
-# ===========================================================================
-# D16 — Composição do quadrante de interesse
-# ===========================================================================
+# --- Composição do quadrante de interesse --------------------------------------
 def composicao_quadrante(base: pd.DataFrame) -> pd.DataFrame:
     pop = base[base["no_quadrante_interesse"].notna()].copy()
     pop["q"] = pop["no_quadrante_interesse"].astype(bool)
+    rotulo = _rotulos(pop, ["legislatura", "partido_id"])
     partes = []
-    for nivel in ("partido", "espectro"):
-        g = (pop.groupby(["legislatura", nivel])["q"].agg(n_amostra="size", n_quadrante="sum")
-             .reset_index().rename(columns={nivel: "grupo"}))
+    for nivel, col in (("partido", "partido_id"), ("espectro", "espectro")):
+        g = (pop.groupby(["legislatura", col])["q"].agg(n_amostra="size", n_quadrante="sum")
+             .reset_index().rename(columns={col: "grupo"}))
+        g["rotulo"] = (g.set_index(["legislatura", "grupo"]).index.map(rotulo.get) if nivel == "partido"
+                       else g["grupo"])
         tot = g.groupby("legislatura")[["n_amostra", "n_quadrante"]].transform("sum")
         g["pct_da_amostra"] = g["n_amostra"] / tot["n_amostra"] * 100
         g["pct_do_quadrante"] = g["n_quadrante"] / tot["n_quadrante"] * 100
@@ -406,12 +374,9 @@ def composicao_quadrante(base: pd.DataFrame) -> pd.DataFrame:
     return pd.concat(partes, ignore_index=True)
 
 
-# ===========================================================================
-# Testes (D18)
-# ===========================================================================
+# --- Testes --------------------------------------------------------------------
 def f1_partido_voto(validos, ordem) -> pd.DataFrame:
-    """F1: partido (vigente na data) × voto, só partidos com ≥ 5 válidos e sem
-    S.PART. (D18.5, mesmo filtro do D10)."""
+    """F1: partido × voto, só partidos com ≥ 5 votos válidos."""
     linhas = []
     for chave in sorted(validos["chave_votacao"].unique(), key=ordem.get):
         g = validos[(validos["chave_votacao"] == chave) & ~validos["partido"].isin(config.SEM_PARTIDO)]
@@ -437,7 +402,7 @@ def f2_espectro_voto(validos, ordem, familia="F2") -> pd.DataFrame:
 
 
 def f3_spearman(base, metricas=("prod_bruta_mensal", "prod_qualificada"), familia="F3") -> pd.DataFrame:
-    """F3: gasto relativo × produtividade dentro de legislatura × faixa (D3)."""
+    """F3: gasto relativo × produtividade em cada legislatura × faixa."""
     pop = base[base["no_quadrante_interesse"].notna()]
     linhas = []
     for (leg, faixa), g in pop.groupby(["legislatura", "faixa"]):
@@ -457,22 +422,21 @@ def f3_spearman(base, metricas=("prod_bruta_mensal", "prod_qualificada"), famili
     return _aplicar_holm(pd.DataFrame(linhas))
 
 
-def f4_produtividade_voto(validos, base, ordem) -> tuple[pd.DataFrame, int]:
-    """F4: produtividade bruta mensal de quem votou Sim × quem votou Não, só
-    com a população do D3. rank-bisserial > 0 ⇒ Sim tem produtividade maior;
-    `rb_pro_pauta` reorienta para pró-pauta (> 0 ⇒ pró-pauta maior)."""
-    df, fora = _com_pop_d3(validos, base, ["prod_bruta_mensal"])
+def f4_produtividade_voto(validos, base, ordem, coluna="prod_bruta_mensal",
+                          familia="F4") -> tuple[pd.DataFrame, int]:
+    """F4: produtividade de quem votou Sim × Não. `rb_pro_pauta` > 0 ⇒ pró-pauta produz mais."""
+    df, fora = _com_pop_d3(validos, base, [coluna])
     direcao = {v["chave"]: v["direcao_pro_pauta"] for v in config.VOTACOES}
     linhas = []
     for chave in sorted(df["chave_votacao"].unique(), key=ordem.get):
         g = df[df["chave_votacao"] == chave]
-        x = g.loc[g["voto_valido"] == "Sim", "prod_bruta_mensal"]
-        y = g.loc[g["voto_valido"] == "Não", "prod_bruta_mensal"]
+        x = g.loc[g["voto_valido"] == "Sim", coluna]
+        y = g.loc[g["voto_valido"] == "Não", coluna]
         u = stats.mannwhitneyu(x, y, alternative="two-sided")
         rb = 2 * u.statistic / (len(x) * len(y)) - 1
         d = direcao[chave]
         rb_pro = rb if d == "Sim" else (-rb if d == "Não" else np.nan)
-        linhas.append({"familia": "F4", "chave_votacao": chave, "n_sim": len(x), "n_nao": len(y),
+        linhas.append({"familia": familia, "chave_votacao": chave, "n_sim": len(x), "n_nao": len(y),
                        "mediana_sim": x.median(), "mediana_nao": y.median(),
                        "direcao_pro_pauta": d, "estatistica": u.statistic,
                        "p_valor": u.pvalue, "metodo": "Mann-Whitney",
@@ -481,12 +445,8 @@ def f4_produtividade_voto(validos, base, ordem) -> tuple[pd.DataFrame, int]:
     return _aplicar_holm(pd.DataFrame(linhas)), fora
 
 
-def f5_quadrante_voto(validos, base, ordem) -> tuple[pd.DataFrame, int]:
-    """F5: (no quadrante de interesse?) × (voto pró-pauta?) em 2×2, todos os
-    deputados da votação num teste só (D16). Nos Precatórios, o evento é "Sim".
-    Pearson sem correção de Yates; Fisher se o menor esperado < 5 (D18.3).
-    Razão de chances condicional (a do Fisher), IC exato:
-    OR > 1 ⇒ quem está no quadrante tem mais chance do evento."""
+def f5_quadrante_voto(validos, base, ordem, familia="F5") -> tuple[pd.DataFrame, int]:
+    """F5: quadrante × voto pró-pauta (2×2). OR > 1 ⇒ o quadrante vota mais pró-pauta."""
     df, fora = _com_pop_d3(validos, base, ["no_quadrante_interesse"])
     df["evento"] = _evento_pro(df)
     df["q"] = df["no_quadrante_interesse"].astype(bool)
@@ -504,7 +464,7 @@ def f5_quadrante_voto(validos, base, ordem) -> tuple[pd.DataFrame, int]:
             p, est, metodo = c.pvalue, c.statistic, "qui-quadrado"
         orr = odds_ratio(tab)
         ic = orr.confidence_interval(confidence_level=config.NIVEL_CONFIANCA)
-        linhas.append({"familia": "F5", "chave_votacao": chave,
+        linhas.append({"familia": familia, "chave_votacao": chave,
                        "evento": "Sim" if chave in sem_dir else "pró-pauta",
                        "n": int(tab.sum()), "n_quadrante": int(tab[0].sum()),
                        "pct_evento_quadrante": tab[0, 0] / tab[0].sum() * 100,
@@ -516,6 +476,145 @@ def f5_quadrante_voto(validos, base, ordem) -> tuple[pd.DataFrame, int]:
     return _aplicar_holm(pd.DataFrame(linhas)), fora
 
 
+# --- Controle pelo espectro (F4E, F5E) e modelo logístico ----------------------
+def _van_elteren(estratos) -> tuple[float, float, float]:
+    """Mann-Whitney estratificado (van Elteren, 1960). Devolve (Z, p, rank-bisserial ponderado)."""
+    t = v = soma_rb = soma_w = 0.0
+    for x, y in estratos:
+        n1, n2 = len(x), len(y)
+        if n1 == 0 or n2 == 0:
+            continue
+        n = n1 + n2
+        z = np.concatenate([x, y])
+        postos = stats.rankdata(z)
+        w_soma = postos[:n1].sum()
+        _, empates = np.unique(z, return_counts=True)
+        var = n1 * n2 * (n + 1) / 12 - n1 * n2 * (empates**3 - empates).sum() / (12 * n * (n - 1))
+        peso = 1 / (n + 1)
+        t += peso * (w_soma - n1 * (n + 1) / 2)
+        v += peso**2 * var
+        u = w_soma - n1 * (n1 + 1) / 2
+        soma_rb += (2 * u / (n1 * n2) - 1) * n1 * n2
+        soma_w += n1 * n2
+    if v <= 0:
+        return np.nan, np.nan, np.nan
+    zstat = t / np.sqrt(v)
+    return float(zstat), float(2 * stats.norm.sf(abs(zstat))), soma_rb / soma_w
+
+
+def f4e_produtividade_voto_espectro(validos, base, ordem, coluna="prod_bruta_mensal",
+                                    familia="F4E") -> pd.DataFrame:
+    """F4E: a F4 dentro de cada espectro."""
+    df, _ = _com_pop_d3(validos, base, [coluna])
+    df = df[df["espectro"].notna()]
+    direcao = {v["chave"]: v["direcao_pro_pauta"] for v in config.VOTACOES}
+    linhas = []
+    for chave in sorted(df["chave_votacao"].unique(), key=ordem.get):
+        g = df[df["chave_votacao"] == chave]
+        estratos = [(e.loc[e["voto_valido"] == "Sim", coluna].to_numpy(),
+                     e.loc[e["voto_valido"] == "Não", coluna].to_numpy()) for _, e in g.groupby("espectro")]
+        zstat, p, rb = _van_elteren(estratos)
+        d = direcao[chave]
+        linhas.append({"familia": familia, "chave_votacao": chave, "n": len(g),
+                       "n_estratos_informativos": sum(1 for x, y in estratos if len(x) and len(y)),
+                       "estatistica": zstat, "p_valor": p, "metodo": "van Elteren (estratos: espectro)",
+                       "efeito": "rank-bisserial ponderado (Sim − Não)", "valor_efeito": rb,
+                       "rb_pro_pauta": rb if d == "Sim" else (-rb if d == "Não" else np.nan),
+                       "magnitude": magnitude(rb)})
+    return _aplicar_holm(pd.DataFrame(linhas))
+
+
+def f5e_quadrante_voto_espectro(validos, base, ordem, familia="F5E") -> pd.DataFrame:
+    """F5E: a F5 dentro de cada espectro (Mantel-Haenszel; Breslow-Day para homogeneidade)."""
+    df, _ = _com_pop_d3(validos, base, ["no_quadrante_interesse"])
+    df = df[df["espectro"].notna()].copy()
+    df["evento"] = _evento_pro(df)
+    df["q"] = df["no_quadrante_interesse"].astype(bool)
+    sem_dir = _chaves_sem_direcao()
+    linhas = []
+    for chave in sorted(df["chave_votacao"].unique(), key=ordem.get):
+        g = df[df["chave_votacao"] == chave]
+        tabelas = []
+        for _, e in g.groupby("espectro"):
+            tab = np.array([[(e.q & e.evento).sum(), (e.q & ~e.evento).sum()],
+                            [(~e.q & e.evento).sum(), (~e.q & ~e.evento).sum()]], dtype=float)
+            if (tab.sum(axis=1) > 0).all() and (tab.sum(axis=0) > 0).all():
+                tabelas.append(tab)
+        base_linha = {"familia": familia, "chave_votacao": chave,
+                      "evento": "Sim" if chave in sem_dir else "pró-pauta", "n": len(g),
+                      "n_estratos_informativos": len(tabelas),
+                      "metodo": "Cochran-Mantel-Haenszel (estratos: espectro)",
+                      "efeito": "razão de chances de Mantel-Haenszel"}
+        if not tabelas:
+            linhas.append(base_linha)
+            continue
+        st_ = StratifiedTable(tabelas)
+        teste = st_.test_null_odds(correction=False)
+        lo, hi = st_.oddsratio_pooled_confint(alpha=1 - config.NIVEL_CONFIANCA)
+        homog = st_.test_equal_odds(adjust=True).pvalue if len(tabelas) > 1 else np.nan
+        orr = float(st_.oddsratio_pooled)
+        linhas.append(base_linha | {"estatistica": float(teste.statistic), "p_valor": float(teste.pvalue),
+                                    "valor_efeito": orr, "ic_inf": float(lo), "ic_sup": float(hi),
+                                    "p_homogeneidade": homog, "magnitude": magnitude(orr, CORTES_OR)})
+    return _aplicar_holm(pd.DataFrame(linhas))
+
+
+def modelo_logistico(validos, base) -> pd.DataFrame:
+    """Logística do voto pró-pauta com erro-padrão agrupado por deputado.
+
+    M1  pró ~ quadrante + votação
+    M2  pró ~ quadrante + votação × espectro
+    M3  pró ~ log(produtividade) + gasto + votação × espectro
+
+    Células votação × espectro sem variação no voto ficam de fora (M2, M3)."""
+    cols = ["no_quadrante_interesse", "prod_bruta_mensal", "gasto_relativo"]
+    df, _ = _com_pop_d3(validos, base, cols)
+    df = df[df["pro_pauta"].notna() & df["espectro"].notna()].copy()
+    df["pro"] = df["pro_pauta"].astype(bool).astype(int)
+    df["quadrante"] = df["no_quadrante_interesse"].astype(bool).astype(int)
+    df["log_prod"] = np.log1p(df["prod_bruta_mensal"])
+    df["gasto_10pp"] = df["gasto_relativo"] * 10
+    df["celula"] = df["chave_votacao"] + ":" + df["espectro"]
+    variacao = df.groupby("celula")["pro"].transform(lambda s: 0 < s.mean() < 1)
+    especificacoes = [
+        ("M1 sem controle", "pro ~ quadrante + C(chave_votacao)", df, ["quadrante"]),
+        ("M2 controle do espectro", "pro ~ quadrante + C(celula)", df[variacao], ["quadrante"]),
+        ("M3 contínuas + espectro", "pro ~ log_prod + gasto_10pp + C(celula)", df[variacao],
+         ["log_prod", "gasto_10pp"]),
+    ]
+    linhas = []
+    for nome, formula, d, termos in especificacoes:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            ajuste = smf.glm(formula, data=d, family=sm.families.Binomial()).fit(
+                cov_type="cluster", cov_kwds={"groups": d["id_deputado"].to_numpy()})
+        ic = ajuste.conf_int(alpha=1 - config.NIVEL_CONFIANCA)
+        pseudo_r2 = 1 - ajuste.deviance / ajuste.null_deviance
+        for termo in termos:
+            linhas.append({"modelo": nome, "formula": formula, "termo": termo,
+                           "coeficiente": ajuste.params[termo], "erro_padrao": ajuste.bse[termo],
+                           "razao_chances": np.exp(ajuste.params[termo]),
+                           "ic_inf": np.exp(ic.loc[termo, 0]), "ic_sup": np.exp(ic.loc[termo, 1]),
+                           "p_valor": ajuste.pvalues[termo], "n_votos": int(ajuste.nobs),
+                           "n_deputados": d["id_deputado"].nunique(),
+                           "votos_fora_celulas_sem_variacao": len(df) - len(d),
+                           "pseudo_r2_deviance": pseudo_r2})
+    return pd.DataFrame(linhas)
+
+
+def _com_quadrante_de(base: pd.DataFrame, coluna: str) -> pd.DataFrame:
+    """Base com o quadrante recalculado a partir de outra coluna de produtividade."""
+    b = base.copy()
+    pop = b["no_quadrante_interesse"].notna()
+    estrato = b[pop].groupby(["legislatura", "faixa"])
+    med_g = estrato["gasto_relativo"].transform("median")
+    med_p = estrato[coluna].transform("median")
+    q = (b.loc[pop, "gasto_relativo"] > med_g) & ~(b.loc[pop, coluna] > med_p)
+    b["no_quadrante_interesse"] = pd.array([pd.NA] * len(b), dtype="boolean")
+    b.loc[pop, "no_quadrante_interesse"] = q.to_numpy()
+    return b
+
+
 def resumo_testes(*familias: pd.DataFrame) -> pd.DataFrame:
     cols = ["familia", "chave_votacao", "legislatura", "faixa", "produtividade", "n", "metodo",
             "estatistica", "p_valor", "p_holm", "significativo", "efeito", "valor_efeito",
@@ -523,13 +622,25 @@ def resumo_testes(*familias: pd.DataFrame) -> pd.DataFrame:
     return pd.concat([f.reindex(columns=cols) for f in familias], ignore_index=True)
 
 
-# ===========================================================================
-# Robustez
-# ===========================================================================
-def robustez(validos, base, espectro_ref, f2, f3, ordem, fid_grp) -> pd.DataFrame:
+# --- Robustez ------------------------------------------------------------------
+def _comparar(linhas, teste, a, b, recorte) -> None:
+    """Uma linha por teste pareado (principal × robustez)."""
+    a, b = a.reset_index(drop=True), b.reset_index(drop=True)
+    for i in range(len(a)):
+        linhas.append({"teste": teste, "recorte": recorte(a.iloc[i]),
+                       "efeito_principal": a.at[i, "valor_efeito"], "efeito_robustez": b.at[i, "valor_efeito"],
+                       "p_holm_principal": a.at[i, "p_holm"], "p_holm_robustez": b.at[i, "p_holm"],
+                       "conclusao_mantida": bool(a.at[i, "significativo"] == b.at[i, "significativo"]),
+                       "n_principal": a.at[i, "n"] if "n" in a else np.nan,
+                       "n_robustez": b.at[i, "n"] if "n" in b else np.nan})
+
+
+def robustez(validos, base, espectro_ref, f2, f3, f4, f5, f4e, f5e, ordem, fid_grp) -> pd.DataFrame:
     """Compara cada teste principal com a sua versão de robustez."""
     linhas = []
-    # (1) F2 sem os partidos classificados manualmente (D9)
+    por_votacao = lambda r: r["chave_votacao"]
+    por_estrato = lambda r: f"leg {r['legislatura']} faixa {r['faixa']}"
+    # F2 sem os partidos classificados manualmente
     manuais = set(espectro_ref.loc[espectro_ref["metodo"] == "manual", "partido_id"])
     v2 = validos.copy()
     v2.loc[v2["partido_id"].isin(manuais), "espectro"] = np.nan
@@ -541,7 +652,7 @@ def robustez(validos, base, espectro_ref, f2, f3, ordem, fid_grp) -> pd.DataFram
                        "p_holm_principal": a["p_holm"], "p_holm_robustez": b["p_holm"],
                        "conclusao_mantida": a["significativo"] == b["significativo"],
                        "n_afetados": int(afetados.get(a["chave_votacao"], 0))})
-    # (2) F3 com "só Norma Jurídica" no lugar de "aprovada na Câmara" (D14)
+    # F3 com "só Norma Jurídica"
     f3r = f3_spearman(base, metricas=("prod_bruta_mensal", "prod_qualificada_norma"),
                       familia="F3-norma")
     a = f3[f3["produtividade"] == "prod_qualificada"].reset_index(drop=True)
@@ -552,23 +663,43 @@ def robustez(validos, base, espectro_ref, f2, f3, ordem, fid_grp) -> pd.DataFram
                        "efeito_principal": a.at[i, "valor_efeito"], "efeito_robustez": b.at[i, "valor_efeito"],
                        "p_holm_principal": a.at[i, "p_holm"], "p_holm_robustez": b.at[i, "p_holm"],
                        "conclusao_mantida": a.at[i, "significativo"] == b.at[i, "significativo"]})
-    # (3) Fidelidade por partido só com orientação própria (D11)
+    # F3 qualificada com denominador mínimo
+    b_min = base.copy()
+    b_min.loc[b_min["n_com_situacao"] < config.PROD_QUALIFICADA_MIN_PROPOSICOES, "prod_qualificada"] = np.nan
+    f3m = f3_spearman(b_min, metricas=("prod_bruta_mensal", "prod_qualificada"), familia="F3-min")
+    _comparar(linhas, f"F3 qualificada com ≥ {config.PROD_QUALIFICADA_MIN_PROPOSICOES} proposições",
+              f3[f3["produtividade"] == "prod_qualificada"], f3m[f3m["produtividade"] == "prod_qualificada"],
+              por_estrato)
+    # Produtividade sem PDL: F3, F4 e F5
+    b_sem = base.assign(prod_bruta_mensal=base["prod_bruta_mensal_sem_pdl"])
+    f3s = f3_spearman(b_sem, metricas=("prod_bruta_mensal", "prod_qualificada"), familia="F3-sem-PDL")
+    _comparar(linhas, "F3 produtividade bruta sem PDL", f3[f3["produtividade"] == "prod_bruta_mensal"],
+              f3s[f3s["produtividade"] == "prod_bruta_mensal"], por_estrato)
+    f4s, _ = f4_produtividade_voto(validos, base, ordem, coluna="prod_bruta_mensal_sem_pdl", familia="F4-sem-PDL")
+    _comparar(linhas, "F4 produtividade sem PDL", f4.assign(n=f4["n_sim"] + f4["n_nao"]),
+              f4s.assign(n=f4s["n_sim"] + f4s["n_nao"]), por_votacao)
+    f5s, _ = f5_quadrante_voto(validos, _com_quadrante_de(base, "prod_bruta_mensal_sem_pdl"), ordem,
+                               familia="F5-sem-PDL")
+    _comparar(linhas, "F5 quadrante sem PDL", f5, f5s, por_votacao)
+    # F4 e F5 controladas pelo espectro
+    _comparar(linhas, "F4 controlada pelo espectro (van Elteren)", f4.assign(n=f4["n_sim"] + f4["n_nao"]),
+              f4e, por_votacao)
+    _comparar(linhas, "F5 controlada pelo espectro (Mantel-Haenszel)", f5, f5e, por_votacao)
+    # Fidelidade só com orientação própria do partido
     fp = fid_grp[(fid_grp["nivel"] == "partido") & (fid_grp["medida"] == "fidelidade_partido")]
     todas = fp[fp["fonte"] == "todas"].set_index(["legislatura", "grupo"])
     propria = fp[fp["fonte"] == "partido"].set_index(["legislatura", "grupo"])
     for (leg, part), row in todas.iterrows():
         alt = propria.loc[(leg, part)] if (leg, part) in propria.index else None
         linhas.append({"teste": "Fidelidade só com orientação própria",
-                       "recorte": f"leg {leg} {part}",
+                       "recorte": f"leg {leg} {row['rotulo']}",
                        "efeito_principal": row["taxa"],
                        "efeito_robustez": alt["taxa"] if alt is not None else np.nan,
                        "n_principal": row["n"], "n_robustez": alt["n"] if alt is not None else 0})
     return pd.DataFrame(linhas)
 
 
-# ===========================================================================
-# Execução
-# ===========================================================================
+# --- Execução ------------------------------------------------------------------
 def _gravar(df: pd.DataFrame, nome: str) -> None:
     df.to_csv(OUT / nome, index=False)
 
@@ -591,7 +722,7 @@ if __name__ == "__main__":
     dep, grp = indice_pro_pauta(validos)
     _gravar(dep, "indice_pro_pauta_deputado.csv")
     _gravar(grp, "pro_pauta_grupo_legislatura.csv")
-    _gravar(rice_agregado(rice), "rice_agregado.csv")
+    _gravar(rice_agregado(rice, ordem), "rice_agregado.csv")
     rd, rd_ordem = rice_desposato(rice, ordem)
     _gravar(rd, "rice_desposato.csv")
     _gravar(rd_ordem, "rice_desposato_ordem.csv")
@@ -605,22 +736,39 @@ if __name__ == "__main__":
     f3 = f3_spearman(base)
     f4, fora4 = f4_produtividade_voto(validos, base, ordem)
     f5, fora5 = f5_quadrante_voto(validos, base, ordem)
+    f4e = f4e_produtividade_voto_espectro(validos, base, ordem)
+    f5e = f5e_quadrante_voto_espectro(validos, base, ordem)
     for df, nome in ((f1, "f1_partido_voto"), (f2, "f2_espectro_voto"), (f3, "f3_spearman"),
-                     (f4, "f4_produtividade_voto"), (f5, "f5_quadrante_voto")):
+                     (f4, "f4_produtividade_voto"), (f5, "f5_quadrante_voto"),
+                     (f4e, "f4e_produtividade_voto_espectro"), (f5e, "f5e_quadrante_voto_espectro")):
         _gravar(df, f"{nome}.csv")
-    _gravar(resumo_testes(f1, f2, f3, f4, f5), "testes_resumo.csv")
-    _gravar(robustez(validos, base, espectro_ref, f2, f3, ordem, fid_grp), "robustez.csv")
+    _gravar(resumo_testes(f1, f2, f3, f4, f5, f4e, f5e), "testes_resumo.csv")
+    logit = modelo_logistico(validos, base)
+    _gravar(logit, "modelo_logistico.csv")
+    rob = robustez(validos, base, espectro_ref, f2, f3, f4, f5, f4e, f5e, ordem, fid_grp)
+    _gravar(rob, "robustez.csv")
 
-    _imprimir("População (D3)", pop, list(pop.columns))
+    _imprimir("População", pop, list(pop.columns))
     cols_q = ["chave_votacao", "n", "n_grupos", "metodo", "p_valor", "p_holm", "valor_efeito", "magnitude"]
     _imprimir("F1 partido × voto", f1, cols_q)
     _imprimir("F2 espectro × voto", f2, cols_q)
     _imprimir("F3 Spearman gasto × produtividade", f3,
               ["legislatura", "faixa", "produtividade", "n", "estatistica", "ic_inf", "ic_sup", "p_holm"])
-    _imprimir(f"F4 produtividade × voto ({fora4} votos válidos fora da população do D3)", f4,
+    _imprimir(f"F4 produtividade × voto ({fora4} votos válidos fora da população)", f4,
               ["chave_votacao", "n_sim", "n_nao", "mediana_sim", "mediana_nao", "p_holm", "rb_pro_pauta"])
-    _imprimir(f"F5 quadrante × voto ({fora5} votos válidos fora da população do D3)", f5,
+    _imprimir(f"F5 quadrante × voto ({fora5} votos válidos fora da população)", f5,
               ["chave_votacao", "n", "pct_evento_quadrante", "pct_evento_fora", "metodo",
                "p_holm", "valor_efeito", "ic_inf", "ic_sup"])
+    _imprimir("F4E produtividade × voto, controlada pelo espectro", f4e,
+              ["chave_votacao", "n", "n_estratos_informativos", "p_holm", "rb_pro_pauta"])
+    _imprimir("F5E quadrante × voto, controlada pelo espectro", f5e,
+              ["chave_votacao", "n", "n_estratos_informativos", "p_holm", "valor_efeito", "ic_inf", "ic_sup",
+               "p_homogeneidade"])
+    _imprimir("Regressão logística do voto pró-pauta (OR, erro-padrão por deputado)", logit,
+              ["modelo", "termo", "razao_chances", "ic_inf", "ic_sup", "p_valor", "n_votos"])
+    r = rob.dropna(subset=["conclusao_mantida"]).assign(
+        conclusao_mantida=lambda d: d["conclusao_mantida"].astype(bool).astype(int))
+    resumo_rob = r.groupby("teste")["conclusao_mantida"].agg(mantidas="sum", total="size").reset_index()
+    _imprimir("Robustez: conclusões mantidas", resumo_rob, ["teste", "mantidas", "total"])
     _imprimir("Desposato: a ordem dos partidos muda?", rd_ordem, list(rd_ordem.columns))
     print("\nResultados gravados em", OUT)

@@ -1,0 +1,9 @@
+familia,chave_votacao,n,n_estratos_informativos,estatistica,p_valor,metodo,efeito,valor_efeito,rb_pro_pauta,magnitude,p_holm,significativo
+F4E,maioridade_penal,469,3,1.290516358379505,0.1968714358543694,van Elteren (estratos: espectro),rank-bisserial ponderado (Sim − Não),0.03059109427489103,-0.03059109427489103,desprezível,0.6151498032981363,False
+F4E,teto_gastos,470,3,-0.3993201369358388,0.6896573313668066,van Elteren (estratos: espectro),rank-bisserial ponderado (Sim − Não),-0.10071448200054957,0.10071448200054957,pequeno,0.8222927964233431,False
+F4E,reforma_trabalhista,468,3,-1.6537099354327323,0.09818646296784134,van Elteren (estratos: espectro),rank-bisserial ponderado (Sim − Não),-0.11865206226088774,0.11865206226088774,pequeno,0.4909323148392067,False
+F4E,reforma_previdencia,490,3,-1.4262802927650073,0.15378745082453407,van Elteren (estratos: espectro),rank-bisserial ponderado (Sim − Não),-0.14294678714859435,0.14294678714859435,pequeno,0.6151498032981363,False
+F4E,pec_precatorios,489,3,-2.0281749875011585,0.04254239175144839,van Elteren (estratos: espectro),rank-bisserial ponderado (Sim − Não),-0.1563267310525454,,pequeno,0.25525435050869033,False
+F4E,igualdade_salarial,359,3,-3.5632125456422923,0.0003663438203495323,van Elteren (estratos: espectro),rank-bisserial ponderado (Sim − Não),-0.3974530831099196,-0.3974530831099196,médio,0.0029307505627962586,True
+F4E,marco_temporal,433,3,-0.8218778892136389,0.41114639821167154,van Elteren (estratos: espectro),rank-bisserial ponderado (Sim − Não),-0.07451967916433501,0.07451967916433501,desprezível,0.8222927964233431,False
+F4E,fim_escala_6x1,460,1,-2.290720061996504,0.02197960954299463,van Elteren (estratos: espectro),rank-bisserial ponderado (Sim − Não),-0.3206837606837607,-0.3206837606837607,médio,0.1538572668009624,False

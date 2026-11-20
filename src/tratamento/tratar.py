@@ -1,17 +1,10 @@
-"""Etapa 2 — Tratamento e junção das bases (Seção 6.2 e docs/decisoes_metodologicas.md).
+"""Etapa 2: tratamento e junção das bases.
 
-Uso:
     python -m src.tratamento.tratar
 
-Lê data/raw e data/referencia e grava em data/processed:
-    exercicio.csv                  deputado × legislatura: dias/meses de exercício, faixa, partido (D3, D7, D12)
-    votos.csv                      deputado × votação: voto, pró-pauta, partido, espectro, fidelidade (D5, D6, D8, D9, D11)
-    coesao_rice.csv                partido × votação: índice de Rice (D10)
-    produtividade.csv              deputado × legislatura: produção normativa e aprovação na Câmara (D13, D14)
-    gasto_ceap.csv                 deputado × legislatura: gasto relativo ao teto da cota (D15)
-    base_deputado_legislatura.csv  junção das anteriores, com população, quadrante e caso extremo (D3, D16)
-
-No fim, roda verificações de consistência e para com erro se alguma falhar.
+Lê data/raw e data/referencia e grava em data/processed: exercicio, votos,
+coesao_rice, produtividade, gasto_ceap e base_deputado_legislatura. No fim,
+roda verificações de consistência e para com erro se alguma falhar.
 """
 import re
 from datetime import date, timedelta
@@ -25,9 +18,7 @@ from src.extracao import camara_api as api
 OUT = config.DATA_PROCESSED
 
 
-# ===========================================================================
-# Tabelas de referência
-# ===========================================================================
+# --- Tabelas de referência -----------------------------------------------------
 def carregar_referencias():
     ler = lambda p: pd.read_csv(p, dtype=str, keep_default_na=False)
     partidos = ler(config.PARTIDOS_CSV).set_index("sigla_api")
@@ -39,7 +30,7 @@ def carregar_referencias():
 
 
 def harmonizar_partido(sigla_api: str, partidos: pd.DataFrame, espectro: pd.DataFrame) -> dict:
-    """D8/D9: rótulo vigente, identidade, família e espectro de uma sigla da API."""
+    """Rótulo, identidade, família e espectro de uma sigla da API."""
     s = sigla_api if sigla_api in partidos.index else re.sub(config.SUFIXO_ESPURIO, "", sigla_api)
     if s not in partidos.index:
         raise KeyError(f"sigla sem linha em partidos.csv: {sigla_api!r}")
@@ -49,26 +40,25 @@ def harmonizar_partido(sigla_api: str, partidos: pd.DataFrame, espectro: pd.Data
             "espectro": espectro.loc[pid, "espectro"] if pid else None}
 
 
-# ===========================================================================
-# Exercício (D12, D7, D3): estado diário a partir do histórico
-# ===========================================================================
+# --- Exercício: estado diário a partir do histórico ----------------------------
 def _deputados_por_legislatura() -> dict[int, list[dict]]:
     return {leg: api.get_paginado("deputados", {"idLegislatura": leg}) for leg in config.LEGISLATURAS}
 
 
 def _historico(id_dep: int, leg: int) -> pd.DataFrame:
-    """Histórico do deputado na legislatura, ordenado e normalizado (ver estado_diario)."""
+    """Histórico do deputado na legislatura, ordenado."""
     hist = pd.DataFrame(api.get(f"deputados/{id_dep}/historico")["dados"])
-    hist = hist[(hist["idLegislatura"] == leg) & hist["situacao"].notna()].copy()  # descarta registros espúrios
+    hist = hist[(hist["idLegislatura"] == leg) & hist["situacao"].notna()].copy()
     if hist.empty:
         return hist
     hist.loc[hist["descricaoStatus"].str.contains("Efetivação", na=False), "situacao"] = config.SITUACAO_EXERCICIO
-    return hist.assign(momento=pd.to_datetime(hist["dataHora"])).sort_values("momento", kind="stable")
+    # Unidade fixa: o merge_asof de estado_diario exige a mesma resolução.
+    momento = pd.to_datetime(hist["dataHora"]).dt.as_unit("ns")
+    return hist.assign(momento=momento).sort_values("momento", kind="stable")
 
 
 def em_exercicio_no_momento(leg: int, momento: pd.Timestamp) -> pd.DataFrame:
-    """Deputados em exercício num instante exato (ex.: o registro de uma
-    votação), com o partido e a UF daquele instante."""
+    """Deputados em exercício num instante exato, com partido e UF daquele instante."""
     linhas = []
     for id_dep in sorted({d["id"] for d in api.get_paginado("deputados", {"idLegislatura": leg})}):
         hist = _historico(id_dep, leg)
@@ -80,24 +70,12 @@ def em_exercicio_no_momento(leg: int, momento: pd.Timestamp) -> pd.DataFrame:
 
 
 def estado_diario(partidos, espectro) -> pd.DataFrame:
-    """Uma linha por deputado × legislatura × dia, com a situação e o partido
-    vigentes no fim do dia. O histórico é um registro de mudanças de estado:
-    cada registro vale até o seguinte da mesma legislatura.
-
-    Um dia conta como de exercício se o deputado esteve em exercício em algum
-    momento dele: no início, no fim, ou num registro de exercício ao longo do
-    dia. Isso evita perder quem tomou posse de manhã ou se licenciou à noite
-    (ex.: votou na 6x1 e saiu de licença às 23h55).
-
-    Registros de "Efetivação" de suplente são confirmações de exercício. A
-    Câmara os grava no mesmo segundo de um registro "Exercício", às vezes com a
-    situação "CONVOCADO"; sem a correção, a ordem arbitrária entre os dois
-    tirava o deputado do exercício.
-    """
+    """Uma linha por deputado × legislatura × dia, com situação e partido no fim do dia.
+    O dia conta como de exercício se o deputado esteve em exercício em algum momento dele."""
     linhas = []
     for leg, deps in _deputados_por_legislatura().items():
         ini, fim = config.LEGISLATURAS[leg][0], config.fim_efetivo(leg)
-        dias = pd.DataFrame({"dia": pd.date_range(ini, fim, freq="D")})
+        dias = pd.DataFrame({"dia": pd.date_range(ini, fim, freq="D", unit="ns")})
         dias["fim_do_dia"] = dias["dia"] + pd.Timedelta(hours=23, minutes=59, seconds=59)
         for id_dep in sorted({d["id"] for d in deps}):
             hist = _historico(id_dep, leg)
@@ -134,19 +112,22 @@ def tratar_exercicio(diario, partidos, espectro) -> pd.DataFrame:
     base["faixa"] = base["meses_exercicio"].map(config.faixa_de_exercicio)
     base["na_populacao"] = base["meses_exercicio"] >= config.MESES_MINIMOS
 
-    # D7: partido (identidade, já unificando renomeações) com mais dias de exercício.
+    # Partido principal: o com mais dias de exercício (quem nunca teve fica S.PART.).
     dias_partido = ex.groupby(["id_deputado", "legislatura", "partido_id"]).size().rename("dias").reset_index()
     dias_partido = dias_partido.sort_values(["id_deputado", "legislatura", "dias"], ascending=[True, True, False])
     principal = dias_partido.drop_duplicates(["id_deputado", "legislatura"])
     n_partidos = dias_partido.groupby(["id_deputado", "legislatura"]).size().rename("n_partidos")
-    base = base.merge(principal[["id_deputado", "legislatura", "partido_id"]], on=["id_deputado", "legislatura"])
-    base = base.merge(n_partidos, on=["id_deputado", "legislatura"])
-    # Rótulo exibido: a sigla mais usada pelo deputado dentro dessa identidade.
+    base = base.merge(principal[["id_deputado", "legislatura", "partido_id"]], on=["id_deputado", "legislatura"],
+                      how="left")
+    base = base.merge(n_partidos, on=["id_deputado", "legislatura"], how="left")
+    base["n_partidos"] = base["n_partidos"].fillna(0).astype(int)
     rot = (ex.merge(principal[["id_deputado", "legislatura", "partido_id"]])
            .groupby(["id_deputado", "legislatura"])["siglaPartido"].agg(lambda s: s.mode().iat[0]))
-    base["partido"] = [harmonizar_partido(rot[(i, l)], partidos, espectro)["partido"]
+    base["partido"] = [harmonizar_partido(rot[(i, l)], partidos, espectro)["partido"] if (i, l) in rot.index
+                       else config.SIGLA_SEM_PARTIDO
                        for i, l in zip(base["id_deputado"], base["legislatura"])]
-    base["familia"] = base["partido_id"].map(lambda p: partidos.loc[partidos["partido_id"] == p, "familia"].iat[0])
+    familia = partidos[partidos["partido_id"] != ""].drop_duplicates("partido_id").set_index("partido_id")["familia"]
+    base["familia"] = base["partido_id"].map(familia)
     base["espectro"] = base["partido_id"].map(espectro["espectro"])
     base["nome"] = [nomes.get((l, i)) for i, l in zip(base["id_deputado"], base["legislatura"])]
     base["sexo"] = ["F" if (l, i) in mulheres else "M" for i, l in zip(base["id_deputado"], base["legislatura"])]
@@ -160,13 +141,9 @@ def tratar_exercicio(diario, partidos, espectro) -> pd.DataFrame:
     return base
 
 
-# ===========================================================================
-# Votos (D5, D6, D11) e coesão (D10)
-# ===========================================================================
+# --- Votos e coesão ------------------------------------------------------------
 def _orientacoes(id_votacao, partidos, blocos) -> tuple[dict, str | None]:
-    """partido_id → (orientação válida Sim/Não/None, fonte "partido"|"bloco") e
-    a orientação do Governo. A fonte permite separar, na análise, a fidelidade
-    ao próprio partido da fidelidade ao líder do bloco."""
+    """partido_id → (orientação, fonte "partido"|"bloco") e a orientação do Governo."""
     composicao = {b["bloco_api"]: [s for s in b["partidos"].split(";") if s] for _, b in blocos.iterrows()}
     por_partido, por_bloco, governo = {}, {}, None
     for o in api.get(f"votacoes/{id_votacao}/orientacoes")["dados"]:
@@ -180,7 +157,7 @@ def _orientacoes(id_votacao, partidos, blocos) -> tuple[dict, str | None]:
         else:
             for s in composicao[nome]:
                 por_bloco[partidos.loc[s, "partido_id"]] = (valor, "bloco")
-    return {**por_bloco, **por_partido}, governo  # orientação própria prevalece (D11)
+    return {**por_bloco, **por_partido}, governo  # orientação própria prevalece
 
 
 def tratar_votos(diario, exercicio, partidos, espectro, blocos) -> pd.DataFrame:
@@ -196,14 +173,12 @@ def tratar_votos(diario, exercicio, partidos, espectro, blocos) -> pd.DataFrame:
         for x in votos:
             dep = x["deputado_"]
             votaram.add(dep["id"])
-            if x["tipoVoto"] == config.CATEGORIA_PRESIDENTE:  # D5: presidente sai da população
+            if x["tipoVoto"] == config.CATEGORIA_PRESIDENTE:
                 removidos_art17 += 1
                 continue
             linhas.append({**base, "id_deputado": dep["id"], "sigla_api": dep["siglaPartido"],
                            "uf": dep["siglaUf"], "voto_original": x["tipoVoto"]})
-        # D5: ausente = em exercício no instante do registro da votação (histórico, D12)
-        # e sem voto registrado. O instante, e não o dia, evita contar titular e
-        # suplente juntos no dia de uma troca.
+        # Ausente: em exercício no instante da votação e sem voto registrado.
         momento = pd.Timestamp(api.get(f"votacoes/{v['id_votacao']}")["dados"]["dataHoraRegistro"])
         no_momento = em_exercicio_no_momento(leg, momento)
         for r in no_momento[~no_momento["id_deputado"].isin(votaram)].itertuples():
@@ -217,11 +192,9 @@ def tratar_votos(diario, exercicio, partidos, espectro, blocos) -> pd.DataFrame:
     df["nome"] = [info["nome"].get((i, l)) for i, l in zip(df["id_deputado"], df["legislatura"])]
     df["sexo"] = [info["sexo"].get((i, l)) for i, l in zip(df["id_deputado"], df["legislatura"])]
     df["voto_valido"] = df["voto_original"].map(config.MAPA_VOTO_VALIDO)
-    # D6
     tem_direcao = df["direcao_pro_pauta"].notna() & df["voto_valido"].notna()
     df["pro_pauta"] = pd.array(np.where(tem_direcao, df["voto_valido"] == df["direcao_pro_pauta"], pd.NA),
                                dtype="boolean")
-    # D11
     orient = [orientacoes[c][0].get(p, (None, None)) for c, p in zip(df["chave_votacao"], df["partido_id"])]
     df["orientacao_partido"] = [o[0] for o in orient]
     df["fonte_orientacao"] = [o[1] for o in orient]
@@ -242,7 +215,7 @@ def tratar_votos(diario, exercicio, partidos, espectro, blocos) -> pd.DataFrame:
 
 
 def tratar_rice(votos) -> pd.DataFrame:
-    """D10: Rice por partido (rótulo vigente na data) × votação."""
+    """Índice de Rice por partido × votação."""
     v = votos[votos["partido_id"].notna()]
     tab = (v.groupby(["chave_votacao", "votacao", "legislatura", "partido", "partido_id", "espectro"])
            .agg(sim=("voto_valido", lambda s: (s == "Sim").sum()),
@@ -258,9 +231,7 @@ def tratar_rice(votos) -> pd.DataFrame:
     return tab
 
 
-# ===========================================================================
-# Produtividade (D13, D14)
-# ===========================================================================
+# --- Produtividade -------------------------------------------------------------
 def tratar_produtividade(exercicio) -> pd.DataFrame:
     anos = range(config.ANO_INICIO, config.ANO_FIM + 1)
     props = pd.concat(pd.read_csv(config.DATA_RAW / "proposicoes" / f"proposicoes-{a}.csv", sep=";",
@@ -276,6 +247,7 @@ def tratar_produtividade(exercicio) -> pd.DataFrame:
     props["aprovada_camara"] = sit.isin(config.SITUACOES_APROVADA_CAMARA)
     props["norma"] = sit == config.SITUACAO_NORMA
     props["apensada"] = sit == config.SITUACAO_APENSADA
+    props["decreto"] = props["siglaTipo"].isin(config.TIPOS_DECRETO)
 
     autores = pd.concat(pd.read_csv(config.DATA_RAW / "proposicoesAutores" / f"proposicoesAutores-{a}.csv", sep=";",
                                     encoding="utf-8-sig", low_memory=False,
@@ -289,13 +261,14 @@ def tratar_produtividade(exercicio) -> pd.DataFrame:
     agg = (df.groupby(["id_deputado", "legislatura"])
            .agg(n_normativas=("id", "size"), n_com_situacao=("com_situacao", "sum"),
                 n_aprovada_camara=("aprovada_camara", "sum"), n_norma=("norma", "sum"),
-                n_apensadas=("apensada", "sum"))
+                n_apensadas=("apensada", "sum"), n_decreto=("decreto", "sum"))
            .reset_index())
     prod = exercicio[["id_deputado", "legislatura", "meses_exercicio"]].merge(
         agg, on=["id_deputado", "legislatura"], how="left")
-    contagens = ["n_normativas", "n_com_situacao", "n_aprovada_camara", "n_norma", "n_apensadas"]
+    contagens = ["n_normativas", "n_com_situacao", "n_aprovada_camara", "n_norma", "n_apensadas", "n_decreto"]
     prod[contagens] = prod[contagens].fillna(0).astype(int)
     prod["prod_bruta_mensal"] = (prod["n_normativas"] / prod["meses_exercicio"]).round(4)
+    prod["prod_bruta_mensal_sem_pdl"] = ((prod["n_normativas"] - prod["n_decreto"]) / prod["meses_exercicio"]).round(4)
     prod["prod_qualificada"] = (prod["n_aprovada_camara"] / prod["n_com_situacao"]).where(prod["n_com_situacao"] > 0).round(4)
     prod["prod_qualificada_norma"] = (prod["n_norma"] / prod["n_com_situacao"]).where(prod["n_com_situacao"] > 0).round(4)
     prod = prod.drop(columns="meses_exercicio")
@@ -306,9 +279,7 @@ def tratar_produtividade(exercicio) -> pd.DataFrame:
     return prod
 
 
-# ===========================================================================
-# Gasto relativo da CEAP (D15)
-# ===========================================================================
+# --- Gasto relativo da CEAP ----------------------------------------------------
 def _teto_mensal(tetos: pd.DataFrame) -> pd.DataFrame:
     """Teto de cada UF × mês, ponderado pelos dias de cada vigência no mês."""
     dias = pd.DataFrame({"dia": pd.date_range(config.DATA_INICIO, config.DATA_CORTE, freq="D")})
@@ -327,9 +298,8 @@ def tratar_gasto(diario, exercicio, tetos) -> pd.DataFrame:
     ult = config.CEAP_ULTIMA_COMPETENCIA
     competencia = lambda a, m: a * 100 + m
     lim, desde_api = competencia(*ult), competencia(*config.SIGEPA_API_DESDE)
-    inicio = competencia(config.DATA_INICIO.year, config.DATA_INICIO.month)  # jan/2015 é da 54ª
+    inicio = competencia(config.DATA_INICIO.year, config.DATA_INICIO.month)
 
-    # Exercício por mês: fração de dias em exercício.
     d = diario.assign(ano=diario["dia"].dt.year, mes=diario["dia"].dt.month)
     mensal = (d.groupby(["id_deputado", "legislatura", "ano", "mes"])
               .agg(dias_exercicio=("em_exercicio", "sum")).reset_index())
@@ -338,14 +308,14 @@ def tratar_gasto(diario, exercicio, tetos) -> pd.DataFrame:
     mensal = mensal.merge(exercicio[["id_deputado", "legislatura", "uf"]], on=["id_deputado", "legislatura"])
     mensal = mensal.merge(_teto_mensal(tetos), on=["uf", "ano", "mes"], how="left")
     assert mensal["teto_mes"].notna().all(), "mês sem teto da CEAP"
-    mensal["teto_exercicio"] = mensal["teto_mes"] * mensal["dias_exercicio"] / mensal["dias_no_mes"]
+    mensal["fracao_mes"] = mensal["dias_exercicio"] / mensal["dias_no_mes"]
+    mensal["teto_exercicio"] = mensal["teto_mes"] * mensal["fracao_mes"]
 
-    # Despesas: arquivos anuais + SIGEPA da API na lacuna.
     ceap = pd.concat(pd.read_csv(config.DATA_RAW / "ceap" / f"Ano-{a}.csv.zip", sep=";", encoding="utf-8-sig",
-                                 compression="zip", low_memory=False,  # usecols descarta CPF e dados pessoais
+                                 compression="zip", low_memory=False,
                                  usecols=["ideCadastro", "txtDescricao", config.CAMPO_VALOR_CEAP, "numMes", "numAno"])
                      for a in range(config.ANO_INICIO_CEAP, ult[0] + 1))
-    ceap = ceap[ceap["ideCadastro"].notna()]  # sem id = despesas de lideranças
+    ceap = ceap[ceap["ideCadastro"].notna()]
     ceap = ceap.rename(columns={"ideCadastro": "id_deputado", "numAno": "ano", "numMes": "mes",
                                 config.CAMPO_VALOR_CEAP: "valor"})
     ceap["valor"] = pd.to_numeric(ceap["valor"], errors="coerce")
@@ -365,13 +335,13 @@ def tratar_gasto(diario, exercicio, tetos) -> pd.DataFrame:
     fora = por_mes.merge(mensal[["id_deputado", "ano", "mes"]], how="left", indicator=True)
     valor_fora = (fora.loc[fora["_merge"] == "left_only", ["arquivo", "api_sigepa"]].sum().sum())
     gasto = (g.groupby(["id_deputado", "legislatura"])
-             .agg(meses_ceap=("mes", "size"), teto_total=("teto_exercicio", "sum"),
+             .agg(meses_ceap=("fracao_mes", "sum"), teto_total=("teto_exercicio", "sum"),
                   gasto_arquivo=("arquivo", "sum"), gasto_sigepa_api=("api_sigepa", "sum"))
              .reset_index())
     gasto["gasto_total"] = gasto["gasto_arquivo"] + gasto["gasto_sigepa_api"]
     gasto["gasto_relativo"] = (gasto["gasto_total"] / gasto["teto_total"]).round(4)
     gasto["gasto_medio_mensal"] = (gasto["gasto_total"] / gasto["meses_ceap"]).round(2)
-    for c in ("teto_total", "gasto_arquivo", "gasto_sigepa_api", "gasto_total"):
+    for c in ("meses_ceap", "teto_total", "gasto_arquivo", "gasto_sigepa_api", "gasto_total"):
         gasto[c] = gasto[c].round(2)
     gasto = gasto[["id_deputado", "legislatura", "meses_ceap", "gasto_total", "gasto_arquivo", "gasto_sigepa_api",
                    "teto_total", "gasto_relativo", "gasto_medio_mensal"]]
@@ -381,9 +351,7 @@ def tratar_gasto(diario, exercicio, tetos) -> pd.DataFrame:
     return gasto
 
 
-# ===========================================================================
-# Base consolidada, quadrantes e casos extremos (D3, D16)
-# ===========================================================================
+# --- Base consolidada, quadrantes e casos extremos -----------------------------
 def consolidar(exercicio, prod, gasto) -> pd.DataFrame:
     base = (exercicio.merge(prod, on=["id_deputado", "legislatura"], how="left")
             .merge(gasto, on=["id_deputado", "legislatura"], how="left"))
@@ -405,12 +373,10 @@ def consolidar(exercicio, prod, gasto) -> pd.DataFrame:
     return base
 
 
-# ===========================================================================
-# Verificações de consistência
-# ===========================================================================
+# --- Verificações de consistência ----------------------------------------------
 def verificar(diario, exercicio, votos, rice, prod, gasto, base) -> None:
     erros = []
-    # Quem votou tem de estar em exercício no dia, segundo o histórico (D12).
+    # Quem votou tem de estar em exercício no dia.
     em_ex = set(zip(diario.loc[diario["em_exercicio"], "id_deputado"], diario.loc[diario["em_exercicio"], "dia"]))
     votantes = votos[votos["voto_original"] != config.CATEGORIA_AUSENCIA]
     inconsistentes = [(i, d) for i, d in zip(votantes["id_deputado"], pd.to_datetime(votantes["data"]))
@@ -432,14 +398,17 @@ def verificar(diario, exercicio, votos, rice, prod, gasto, base) -> None:
         erros.append("deputado repetido numa votação")
     if exercicio.duplicated(["id_deputado", "legislatura"]).any():
         erros.append("deputado × legislatura repetido em exercicio.csv")
+    meses = gasto.merge(exercicio[["id_deputado", "legislatura", "meses_exercicio"]])
+    if (meses["meses_ceap"] > meses["meses_exercicio"] + 0.5).any():  # 0,5: mês de 30,44 dias × calendário
+        erros.append("meses_ceap acima de meses_exercicio")
     if (gasto["teto_total"] <= 0).any():
         erros.append("teto total não positivo")
-    if votos["partido_id"].isna().sum() != votos["partido"].eq("S.PART.").sum():
+    if votos["partido_id"].isna().sum() != votos["partido"].eq(config.SIGLA_SEM_PARTIDO).sum():
         erros.append("partido_id vazio para quem tem partido")
     if erros:
         raise AssertionError("Verificações falharam:\n  - " + "\n  - ".join(erros))
     print("\nVerificações: votantes em exercício no dia; placares reconstruídos = oficiais; ≤ 513 por votação; "
-          "sem duplicatas; dias ≤ legislatura; tetos positivos — OK")
+          "sem duplicatas; dias ≤ legislatura; meses_ceap ≤ meses_exercicio; tetos positivos — OK")
 
 
 if __name__ == "__main__":

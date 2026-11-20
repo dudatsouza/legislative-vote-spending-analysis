@@ -1,37 +1,28 @@
-"""
-Todo parâmetro de pesquisa fica aqui, com o código da decisão que o
-justifica (D1–D18). A explicação completa de cada decisão está em
-docs/decisoes_metodologicas.md.
+"""Parâmetros da pesquisa: caminhos, votações, critérios e constantes.
 
-Tabelas de referência que precisam de fonte citável (siglas partidárias,
-espectro ideológico, tetos da CEAP, composição de blocos) ficam em CSV em
-data/referencia/, para poderem ser preenchidas e conferidas numa planilha.
-Este módulo só guarda os caminhos para elas.
-
-Para conferir a consistência de tudo:
-    python -m src.validar_config            (com consultas à API, usa cache)
-    python -m src.validar_config --sem-api  (só verificações locais)
+As tabelas que precisam de fonte citável (partidos, espectro, tetos da CEAP,
+blocos) ficam em CSV em data/referencia/. Para conferir tudo:
+    python -m src.validar_config [--sem-api]
 """
 from datetime import date, timedelta
 from pathlib import Path
 
-# ===========================================================================
-# Caminhos
-# ===========================================================================
+# --- Caminhos ---------------------------------------------------------------
 RAIZ = Path(__file__).resolve().parent.parent
-DATA_RAW = RAIZ / "data" / "raw"                # não versionado (.gitignore)
-DATA_PROCESSED = RAIZ / "data" / "processed"    # versionado
-DATA_REFERENCIA = RAIZ / "data" / "referencia"  # versionado; tabelas com fonte
+DATA_RAW = RAIZ / "data" / "raw"                # não versionado
+DATA_PROCESSED = RAIZ / "data" / "processed"
+DATA_REFERENCIA = RAIZ / "data" / "referencia"
 FIGURAS = RAIZ / "figuras"
+FIGURAS_RELATORIO = FIGURAS / "relatorio"       # PDFs do relatório e dos slides
+FIGURAS_INTERATIVAS = FIGURAS / "interativas"   # HTML (Plotly)
+FIGURAS_PERFIL = FIGURAS / "perfil"             # relatórios do ydata-profiling
 
-PARTIDOS_CSV = DATA_REFERENCIA / "partidos.csv"                   # D7/D8
-ESPECTRO_CSV = DATA_REFERENCIA / "espectro_partidos.csv"          # D9
-BLOCOS_CSV = DATA_REFERENCIA / "blocos_orientacao.csv"            # D11
-TETOS_CEAP_CSV = DATA_REFERENCIA / "tetos_ceap.csv"               # D15
-
-MALHA_UF_GEOJSON = DATA_RAW / "ibge" / "malha_uf.geojson"         # mapa
-MANIFESTO_COLETA = DATA_PROCESSED / "manifesto_coleta.json"       # o que foi coletado e quando
-
+PARTIDOS_CSV = DATA_REFERENCIA / "partidos.csv"
+ESPECTRO_CSV = DATA_REFERENCIA / "espectro_partidos.csv"
+BLOCOS_CSV = DATA_REFERENCIA / "blocos_orientacao.csv"
+TETOS_CEAP_CSV = DATA_REFERENCIA / "tetos_ceap.csv"
+MALHA_UF_GEOJSON = DATA_RAW / "ibge" / "malha_uf.geojson"  # cópia versionada em data/referencia/
+MANIFESTO_COLETA = DATA_PROCESSED / "manifesto_coleta.json"
 
 API_CAMARA = "https://dadosabertos.camara.leg.br/api/v2"
 ARQUIVOS_CAMARA = "https://dadosabertos.camara.leg.br/arquivos"
@@ -39,21 +30,21 @@ ARQUIVOS_CEAP = "https://www.camara.leg.br/cotas/Ano-{ano}.csv.zip"
 MALHA_IBGE_UF = ("https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR"
                  "?formato=application/vnd.geo+json&qualidade=minima&intrarregiao=UF")
 
-INTERVALO_REQUISICOES = 0.5  # segundos entre chamadas, para respeitar a API
+INTERVALO_REQUISICOES = 0.5  # segundos entre chamadas à API
 ITENS_POR_PAGINA = 100       # máximo aceito pela API
 
 UFS = ("AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS",
        "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC",
        "SE", "SP", "TO")
+COD_IBGE_UF = {"11": "RO", "12": "AC", "13": "AM", "14": "RR", "15": "PA", "16": "AP", "17": "TO",
+               "21": "MA", "22": "PI", "23": "CE", "24": "RN", "25": "PB", "26": "PE", "27": "AL",
+               "28": "SE", "29": "BA", "31": "MG", "32": "ES", "33": "RJ", "35": "SP", "41": "PR",
+               "42": "SC", "43": "RS", "50": "MS", "51": "MT", "52": "GO", "53": "DF"}
 
-# ===========================================================================
-# D1 — Janela temporal: legislaturas 55ª a 57ª
-# ===========================================================================
+# --- Janela temporal: legislaturas 55ª a 57ª -------------------------------
 DATA_INICIO = date(2015, 2, 1)
-# Data de corte da coleta. A 57ª legislatura está em curso: tudo que depende
-# de tempo (meses de exercício, gasto, proposições) é contado até aqui.
-# Atualizar na coleta definitiva e citar no relatório.
-DATA_CORTE = date(2026, 11, 14)
+# A 57ª está em curso: tudo que depende de tempo é contado até a data de corte.
+DATA_CORTE = date(2026, 11, 20)
 
 LEGISLATURAS = {
     55: (date(2015, 2, 1), date(2019, 1, 31)),
@@ -61,11 +52,11 @@ LEGISLATURAS = {
     57: (date(2023, 2, 1), date(2027, 1, 31)),
 }
 ANO_INICIO, ANO_FIM = DATA_INICIO.year, DATA_CORTE.year
-ANO_INICIO_CEAP = ANO_INICIO  # a CEAP existe desde 2009; a janela começa em 2015
+ANO_INICIO_CEAP = ANO_INICIO
 
 
 def legislatura_da_data(d) -> int | None:
-    """Número da legislatura (55–57) que contém a data `d`; None fora da janela."""
+    """Legislatura (55–57) que contém a data `d`; None fora da janela."""
     if hasattr(d, "date"):
         d = d.date()
     if d < DATA_INICIO or d > DATA_CORTE:
@@ -81,17 +72,10 @@ def fim_efetivo(leg: int) -> date:
     return min(LEGISLATURAS[leg][1], DATA_CORTE)
 
 
-# ===========================================================================
-# Votações (seção 2.1) e direção pró-pauta (D6)
-#
-# id_votacao        id da votação nominal de mérito no Plenário (API).
-# data/legislatura  conferidos contra a API por src.validar_config.
-# placar_oficial    Sim e Não da descrição oficial da votação (sem abstenções).
-# direcao_pro_pauta voto que amplia ou preserva o direito do grupo afetado:
-#                   "Sim", "Não", ou None quando a direção é ambígua.
-#                   Votações com None ficam fora do índice pró-pauta, mas
-#                   entram em todas as análises por votação.
-# ===========================================================================
+# --- Votações ---------------------------------------------------------------
+# placar_oficial: Sim e Não da descrição oficial (sem abstenções).
+# direcao_pro_pauta: voto que amplia ou preserva o direito do grupo afetado;
+# None quando é ambígua (a votação fica fora do índice pró-pauta agregado).
 VOTACOES = [
     {
         "chave": "maioridade_penal",
@@ -156,7 +140,7 @@ VOTACOES = [
         "tema": "Assistência social / dívidas judiciais",
         "grupo_afetado": "Beneficiários do Auxílio Brasil × credores da União",
         "efeito_sim": "Amplia a transferência de renda e adia o pagamento de precatórios",
-        "direcao_pro_pauta": None,  # ambígua: fora do índice agregado (D6)
+        "direcao_pro_pauta": None,
     },
     {
         "chave": "igualdade_salarial",
@@ -199,7 +183,7 @@ VOTACOES = [
     },
 ]
 for _v in VOTACOES:
-    _v["nominal"] = True  # todas as selecionadas têm voto individual na API
+    _v["nominal"] = True
 
 
 def votacoes_no_indice() -> list[dict]:
@@ -207,32 +191,24 @@ def votacoes_no_indice() -> list[dict]:
     return [v for v in VOTACOES if v["direcao_pro_pauta"] is not None]
 
 
-# ===========================================================================
-# D5 — Categorias de voto
-# ===========================================================================
-# voto_original -> voto_valido. O que não está no mapa não é voto válido.
+# --- Votos e orientações ----------------------------------------------------
 MAPA_VOTO_VALIDO = {"Sim": "Sim", "Não": "Não", "Obstrução": "Não"}
-CATEGORIA_AUSENCIA = "Ausente"        # em exercício na data e sem voto registrado
+CATEGORIA_AUSENCIA = "Ausente"        # em exercício e sem voto registrado
 CATEGORIA_PRESIDENTE = "Artigo 17"    # presidente da sessão: sai da população
 
-# ===========================================================================
-# D11 — Orientações de bancada
-# ===========================================================================
 MAPA_ORIENTACAO = {"Sim": "Sim", "Não": "Não", "Obstrução": "Não"}
-ORIENTACOES_SEM_DIRECAO = {"Liberado", ""}  # tiram o deputado do cálculo
+ORIENTACOES_SEM_DIRECAO = {"Liberado", ""}
 ORIENTACAO_GOVERNO = "Governo"
 ORIENTACOES_IGNORADAS = {"Maioria", "Minoria", "Oposição"}
-# codTipoLideranca na API: "P" = partido (prevalece), "B" = bloco ou federação.
-LIDERANCA_PARTIDO, LIDERANCA_BLOCO = "P", "B"
+LIDERANCA_PARTIDO, LIDERANCA_BLOCO = "P", "B"  # codTipoLideranca; partido prevalece
 
-# ===========================================================================
-# D3 — População e faixas de tempo de exercício
-# ===========================================================================
+# --- População e faixas de exercício ----------------------------------------
 MESES_MINIMOS = 12
-# (rótulo, limite inferior inclusivo, limite superior exclusivo; None = sem teto)
-FAIXAS_EXERCICIO = (("C", 12, 24), ("B", 24, 36), ("A", 36, None))
-PERCENTIL_GASTO_EXTREMO = 0.80   # caso extremo: gasto relativo > P80 do estrato
-PERCENTIL_PROD_EXTREMO = 0.20    # ... e produtividade mensal <= P20 do estrato
+FAIXAS_EXERCICIO = (("C", 12, 24), ("B", 24, 36), ("A", 36, None))  # [ini, fim)
+PERCENTIL_GASTO_EXTREMO = 0.80   # caso extremo: gasto > P80 do estrato
+PERCENTIL_PROD_EXTREMO = 0.20    # ... e produtividade <= P20 do estrato
+SITUACAO_EXERCICIO = "Exercício"
+DIAS_POR_MES = 30.44
 
 
 def faixa_de_exercicio(meses: float) -> str | None:
@@ -243,22 +219,12 @@ def faixa_de_exercicio(meses: float) -> str | None:
     return None
 
 
-# ===========================================================================
-# D12 — Meses de exercício (histórico oficial do deputado)
-# ===========================================================================
-SITUACAO_EXERCICIO = "Exercício"
-DIAS_POR_MES = 30.44
+# --- Partidos e espectro (Bolognesi, Ribeiro e Codato, 2023) ---------------
+SIGLA_SEM_PARTIDO = "S.PART."
+SEM_PARTIDO = {SIGLA_SEM_PARTIDO}
+SUFIXO_ESPURIO = r"\*+$"  # PP** -> PP
 
-# ===========================================================================
-# D7/D8 — Partidos
-# ===========================================================================
-SEM_PARTIDO = {"S.PART."}
-SUFIXO_ESPURIO = r"\*+$"  # PP** -> PP (aplicado antes de consultar PARTIDOS_CSV)
-
-# ===========================================================================
-# D9 — Espectro ideológico (Bolognesi, Ribeiro e Codato, 2023)
-# ===========================================================================
-ESPECTROS = ("esquerda", "centro", "direita")  # ordem usada em todas as figuras
+ESPECTROS = ("esquerda", "centro", "direita")
 MAPA_ESPECTRO = {
     "extrema-esquerda": "esquerda",
     "esquerda": "esquerda",
@@ -268,9 +234,7 @@ MAPA_ESPECTRO = {
     "direita": "direita",
     "extrema-direita": "direita",
 }
-# Cortes do artigo (p. 16) sobre a média 0–10 da Tabela 1: (limite superior
-# inclusivo, categoria). Usados para classificar escores derivados, como a
-# média das origens numa fusão.
+# Cortes do artigo (p. 16) sobre a média 0–10: (limite superior inclusivo, categoria).
 CORTES_BOLOGNESI = (
     (1.50, "extrema-esquerda"),
     (3.00, "esquerda"),
@@ -283,103 +247,71 @@ CORTES_BOLOGNESI = (
 
 
 def categoria_bolognesi(escore: float) -> str:
-    """Categoria (7 níveis) de um escore 0–10, pelos cortes do artigo.
-
-    Os cortes do artigo têm buracos de 0,01 (ex.: 1,50 → 1,51). Escores com
-    mais casas decimais são arredondados para 2 casas antes da comparação.
-    """
+    """Categoria (7 níveis) de um escore 0–10; arredonda a 2 casas por causa dos buracos entre cortes."""
     escore = round(escore, 2)
     for limite, categoria in CORTES_BOLOGNESI:
         if escore <= limite:
             return categoria
     raise ValueError(f"escore fora da escala 0–10: {escore}")
 
-# ===========================================================================
-# D10 — Coesão partidária (Rice)
-# ===========================================================================
+
+# --- Coesão e produtividade -------------------------------------------------
 RICE_MIN_VOTOS_VALIDOS = 5
+PROD_QUALIFICADA_MIN_PROPOSICOES = 5  # robustez: denominador mínimo da razão
 
-# ===========================================================================
-# D13 — Produtividade bruta
-# ===========================================================================
-# PDC era a sigla do projeto de decreto legislativo até 2018; a partir de
-# 2019 passou a PDL (arquivos de 2015: 310 PDC e 3 PDL; 2020: 0 PDC e 469 PDL).
-# É o mesmo tipo, então as duas entram.
+# PDC virou PDL em 2019; é o mesmo tipo.
 TIPOS_NORMATIVOS = ("PL", "PLP", "PEC", "PDL", "PDC")
-ORDEM_PRIMEIRO_AUTOR = 1  # ordemAssinatura == 1 e proponente == 1
+TIPOS_DECRETO = ("PDL", "PDC")  # robustez: produtividade sem decretos legislativos
+ORDEM_PRIMEIRO_AUTOR = 1
 
-# ===========================================================================
-# D14 — Produtividade qualificada: "aprovada na Câmara"
-# Lista fechada a partir de todas as situações (ultimoStatus_descricaoSituacao)
-# das proposições normativas de 2015 a 2026.
-# ===========================================================================
+# Situações que contam como "aprovada na Câmara".
 SITUACOES_APROVADA_CAMARA = {
-    "Aguardando Envio à Redação Final",   # mérito aprovado; falta a redação final
-    "Aguardando Redação Final",           # idem
+    "Aguardando Redação Final",
     "Aguardando Autógrafos na Mesa",
     "Aguardando Envio ao Senado Federal",
     "Aguardando Apreciação pelo Senado Federal",
     "Aguardando Sanção",
     "Aguardando Apreciação do Veto",
-    "Vetado totalmente",                  # aprovada nas duas Casas e vetada
+    "Vetado totalmente",
     "Transformado em Norma Jurídica",
 }
-SITUACAO_NORMA = "Transformado em Norma Jurídica"  # métrica de robustez
-SITUACAO_APENSADA = "Tramitando em Conjunto"       # conta como "não atingiu"
+SITUACAO_NORMA = "Transformado em Norma Jurídica"
+SITUACAO_APENSADA = "Tramitando em Conjunto"
 SITUACOES_SEM_INFORMACAO = {"", "<Não Definido>"}  # saem do denominador
 
-# ===========================================================================
-# D15 — Gasto relativo da CEAP
-# ===========================================================================
+# --- Gasto da CEAP ----------------------------------------------------------
 CAMPO_VALOR_CEAP = "vlrLiquido"
 
-# Corte da CEAP: o deputado tem 90 dias para apresentar as notas, então os
-# meses mais recentes ainda estão incompletos. Entra só a competência até o
-# último mês inteiro anterior a DATA_CORTE − 90 dias. Numerador e teto usam
-# os mesmos meses.
+# O deputado tem 90 dias para apresentar as notas: entra só até o último mês
+# inteiro anterior a DATA_CORTE − 90 dias.
 CEAP_DIAS_PRAZO_NOTAS = 90
 
 
 def _ultima_competencia_ceap() -> tuple[int, int]:
     limite = DATA_CORTE - timedelta(days=CEAP_DIAS_PRAZO_NOTAS)
-    primeiro_do_mes = limite.replace(day=1)
-    anterior = primeiro_do_mes - timedelta(days=1)
+    anterior = limite.replace(day=1) - timedelta(days=1)
     return anterior.year, anterior.month
 
 
-CEAP_ULTIMA_COMPETENCIA = _ultima_competencia_ceap()  # (2026, 7) com a data de corte atual
+CEAP_ULTIMA_COMPETENCIA = _ultima_competencia_ceap()
 
-# Lacuna do arquivo em lote: a partir de ago/2025, "PASSAGEM AÉREA - SIGEPA"
-# não aparece em Ano-{ano}.csv.zip, mas está na API /deputados/{id}/despesas
-# (os valores batem com o arquivo nos meses em que os dois têm o dado). Nessas
-# competências, o SIGEPA do arquivo é descartado e substituído pelo da API.
-# Só o SIGEPA vem da API: nas demais categorias ela devolve o valor com o
-# sinal invertido.
+# A partir de ago/2025 o SIGEPA some do arquivo em lote; vem da API nesses meses.
 CATEGORIA_SIGEPA = "PASSAGEM AÉREA - SIGEPA"
 SIGEPA_API_DESDE = (2025, 8)
 SIGEPA_API_CSV = DATA_RAW / "ceap" / "sigepa_api.csv"
 
-# Teto em mês com mudança de vigência (fev/2016, fev/2026): média dos tetos
-# vigentes no mês, ponderada pelos dias de cada vigência; depois multiplicada
-# pela fração de dias em exercício (D12).
 TETO_MES_PARCIAL = "ponderado_por_dias"
-
-# ===========================================================================
-# D16 — Quadrantes
-# ===========================================================================
 QUADRANTE_INTERESSE = "gasto alto / produtividade baixa"
 
-# ===========================================================================
-# D18 — Critérios estatísticos
-# ===========================================================================
+# --- Estatística ------------------------------------------------------------
 ALPHA = 0.05
-CORRECAO_MULTIPLA = "holm"   # aplicada dentro de cada família
+CORRECAO_MULTIPLA = "holm"
 FREQ_ESPERADA_MIN = 5        # abaixo disso: Fisher (2×2) ou permutação (r×c)
 N_PERMUTACOES = 10_000
 N_BOOTSTRAP = 10_000
 NIVEL_CONFIANCA = 0.95
 METODO_IC_PROPORCAO = "wilson"
-SEMENTE = 20260929           # data da apresentação do pré-projeto
+SEMENTE = 20260929
 FAMILIAS_TESTES = {
     "F1": "partido × voto (qui-quadrado por votação)",
     "F2": "espectro × voto (qui-quadrado por votação)",
@@ -388,12 +320,8 @@ FAMILIAS_TESTES = {
     "F5": "quadrante × voto (2×2 por votação)",
 }
 
-# ===========================================================================
-# Visualização
-# ===========================================================================
+# --- Visualização -----------------------------------------------------------
 ESTILO_GRAFICOS = ["science", "ieee"]
-ESTILO_GRAFICOS_SEM_LATEX = ["science", "ieee", "no-latex"]  # fallback automático
-FORMATOS_FIGURA = ("pdf", "png")
-DPI_PNG = 600
+ESTILO_GRAFICOS_SEM_LATEX = ["science", "ieee", "no-latex"]
 COLORMAP_SEQUENCIAL = "cividis"
-COLORMAP_DIVERGENTE = "PuOr"  # neutro: evita o par vermelho/azul partidário
+COLORMAP_DIVERGENTE = "PuOr"  # evita o par vermelho/azul partidário

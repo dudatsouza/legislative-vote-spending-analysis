@@ -7,27 +7,80 @@ F2 sem classificação manual,pec_precatorios,0.6732151225636833,0.6732151225636
 F2 sem classificação manual,igualdade_salarial,0.17741315765466978,0.17741315765466978,0.0163983601639836,0.0163983601639836,True,0.0,,
 F2 sem classificação manual,marco_temporal,0.7741422964197899,0.7741422964197899,0.0005999400059994001,0.0005999400059994001,True,0.0,,
 F2 sem classificação manual,fim_escala_6x1,0.1198152729291764,0.11678376056822058,0.041195880411958805,0.058694130586941305,False,1.0,,
-F3 qualificada só Norma Jurídica,leg 55 faixa A,-0.018086238572835596,-0.013716710405147214,1.0,1.0,True,,,
+F3 qualificada só Norma Jurídica,leg 55 faixa A,-0.019006235222256692,-0.013679839143479389,1.0,1.0,True,,,
 F3 qualificada só Norma Jurídica,leg 55 faixa B,0.0741905732132872,0.035138145894978455,1.0,1.0,True,,,
 F3 qualificada só Norma Jurídica,leg 55 faixa C,0.08716878637544453,0.15762685325895665,1.0,1.0,True,,,
-F3 qualificada só Norma Jurídica,leg 56 faixa A,-0.0494161446295855,-0.001878863016997292,1.0,1.0,True,,,
+F3 qualificada só Norma Jurídica,leg 56 faixa A,-0.05164882344636982,-0.0019089633313796924,1.0,1.0,True,,,
 F3 qualificada só Norma Jurídica,leg 56 faixa B,0.06682274224615956,-0.0037123161117026925,1.0,1.0,True,,,
-F3 qualificada só Norma Jurídica,leg 56 faixa C,-0.4413129502321308,-0.44238941027348766,0.48992986754133094,0.48243270427853596,True,,,
-F3 qualificada só Norma Jurídica,leg 57 faixa A,0.05457191440929394,0.0378504700072889,1.0,1.0,True,,,
-F3 qualificada só Norma Jurídica,leg 57 faixa B,0.10877635933999061,-0.03508431042647258,1.0,1.0,True,,,
-F3 qualificada só Norma Jurídica,leg 57 faixa C,0.15754198381252388,0.08414780463041255,1.0,1.0,True,,,
+F3 qualificada só Norma Jurídica,leg 56 faixa C,-0.44376015698018323,-0.44238941027348766,0.4730199248140862,0.4824327042785368,True,,,
+F3 qualificada só Norma Jurídica,leg 57 faixa A,0.05666407263056367,0.037485542945974504,1.0,1.0,True,,,
+F3 qualificada só Norma Jurídica,leg 57 faixa B,0.05270792277756383,-0.022901172496013058,1.0,1.0,True,,,
+F3 qualificada só Norma Jurídica,leg 57 faixa C,0.13775096709204648,0.08388201817543918,1.0,1.0,True,,,
+F3 qualificada com ≥ 5 proposições,leg 55 faixa A,-0.019006235222256692,-0.04245339710515737,1.0,1.0,True,,458.0,373.0
+F3 qualificada com ≥ 5 proposições,leg 55 faixa B,0.0741905732132872,-0.007137840112208434,1.0,1.0,True,,41.0,28.0
+F3 qualificada com ≥ 5 proposições,leg 55 faixa C,0.08716878637544453,-0.12322123923344476,1.0,1.0,True,,43.0,28.0
+F3 qualificada com ≥ 5 proposições,leg 56 faixa A,-0.05164882344636982,-0.03384348629725428,1.0,1.0,True,,473.0,428.0
+F3 qualificada com ≥ 5 proposições,leg 56 faixa B,0.06682274224615956,0.059090717466365836,1.0,1.0,True,,30.0,23.0
+F3 qualificada com ≥ 5 proposições,leg 56 faixa C,-0.44376015698018323,-0.516343104768396,0.4730199248140862,0.42508623349799435,True,,25.0,19.0
+F3 qualificada com ≥ 5 proposições,leg 57 faixa A,0.05666407263056367,0.07651567503472326,1.0,1.0,True,,457.0,408.0
+F3 qualificada com ≥ 5 proposições,leg 57 faixa B,0.05270792277756383,-0.006557602876014175,1.0,1.0,True,,38.0,34.0
+F3 qualificada com ≥ 5 proposições,leg 57 faixa C,0.13775096709204648,0.10635299756798017,1.0,1.0,True,,46.0,33.0
+F3 produtividade bruta sem PDL,leg 55 faixa A,0.00816470809264685,0.005548261692427722,1.0,1.0,True,,466.0,466.0
+F3 produtividade bruta sem PDL,leg 55 faixa B,0.2241409726428376,0.2364052900138608,1.0,1.0,True,,44.0,44.0
+F3 produtividade bruta sem PDL,leg 55 faixa C,0.1347445830854029,0.14997836800490388,1.0,1.0,True,,49.0,49.0
+F3 produtividade bruta sem PDL,leg 56 faixa A,-0.09239492662610689,-0.09258408075402792,0.7206327752652515,0.7134472039269008,True,,483.0,483.0
+F3 produtividade bruta sem PDL,leg 56 faixa B,-0.02580905346315059,-0.006654567453115547,1.0,1.0,True,,31.0,31.0
+F3 produtividade bruta sem PDL,leg 56 faixa C,0.1355607602395265,0.17141295012964777,1.0,1.0,True,,28.0,28.0
+F3 produtividade bruta sem PDL,leg 57 faixa A,-0.013599751081811896,-0.010517129293752772,1.0,1.0,True,,465.0,465.0
+F3 produtividade bruta sem PDL,leg 57 faixa B,0.2767614222722582,0.27666760484097946,1.0,1.0,True,,40.0,40.0
+F3 produtividade bruta sem PDL,leg 57 faixa C,0.028387657078872364,0.024153933843400005,1.0,1.0,True,,48.0,48.0
+F4 produtividade sem PDL,maioridade_penal,0.05297805642633224,0.07406478578892361,1.0,0.832021030938836,True,,469.0,469.0
+F4 produtividade sem PDL,teto_gastos,0.006529666863788641,0.038980879164202564,1.0,1.0,True,,470.0,470.0
+F4 produtividade sem PDL,reforma_trabalhista,-0.05825450999512438,-0.036489517308629926,1.0,1.0,True,,468.0,468.0
+F4 produtividade sem PDL,reforma_previdencia,-0.1892011311417462,-0.08331124072110285,0.01002763587246035,0.832021030938836,False,,491.0,491.0
+F4 produtividade sem PDL,pec_precatorios,-0.19133026181073576,-0.11611452391399735,0.003754261746267597,0.23652403849399786,False,,490.0,490.0
+F4 produtividade sem PDL,igualdade_salarial,-0.3557319223985891,-0.2671075837742505,0.0038165458734017647,0.07545855425499814,False,,359.0,359.0
+F4 produtividade sem PDL,marco_temporal,-9.309686729042088e-05,-0.035609551738584044,1.0,1.0,True,,433.0,433.0
+F4 produtividade sem PDL,fim_escala_6x1,-0.32968828557063856,-0.2552790346907994,0.08857530261751274,0.39805155740938813,True,,460.0,460.0
+F5 quadrante sem PDL,maioridade_penal,1.2818397084560818,1.3012397902969963,1.0,1.0,True,,469.0,469.0
+F5 quadrante sem PDL,teto_gastos,1.343165277201737,1.398274917224021,1.0,0.9006756844062269,True,,470.0,470.0
+F5 quadrante sem PDL,reforma_trabalhista,1.060098155066749,1.12179990930131,1.0,1.0,True,,468.0,468.0
+F5 quadrante sem PDL,reforma_previdencia,0.45825825517333696,0.7690267873560416,0.026816393573826352,1.0,False,,491.0,491.0
+F5 quadrante sem PDL,pec_precatorios,2.851894144698803,2.015135702085688,0.0001046035753792453,0.014698209181419477,True,,490.0,490.0
+F5 quadrante sem PDL,igualdade_salarial,3.966366570295023,2.7940877688614703,0.0979079239946539,0.34997773790115494,True,,359.0,359.0
+F5 quadrante sem PDL,marco_temporal,1.2649713218890482,1.2901337157628117,1.0,1.0,True,,433.0,433.0
+F5 quadrante sem PDL,fim_escala_6x1,2.6462823501148933,2.614395473902686,1.0,1.0,True,,460.0,460.0
+F4 controlada pelo espectro (van Elteren),maioridade_penal,0.05297805642633224,0.03059109427489103,1.0,0.6151498032981363,True,,469.0,469.0
+F4 controlada pelo espectro (van Elteren),teto_gastos,0.006529666863788641,-0.10071448200054957,1.0,0.8222927964233431,True,,470.0,470.0
+F4 controlada pelo espectro (van Elteren),reforma_trabalhista,-0.05825450999512438,-0.11865206226088774,1.0,0.4909323148392067,True,,468.0,468.0
+F4 controlada pelo espectro (van Elteren),reforma_previdencia,-0.1892011311417462,-0.14294678714859435,0.01002763587246035,0.6151498032981363,False,,491.0,490.0
+F4 controlada pelo espectro (van Elteren),pec_precatorios,-0.19133026181073576,-0.1563267310525454,0.003754261746267597,0.25525435050869033,False,,490.0,489.0
+F4 controlada pelo espectro (van Elteren),igualdade_salarial,-0.3557319223985891,-0.3974530831099196,0.0038165458734017647,0.0029307505627962586,True,,359.0,359.0
+F4 controlada pelo espectro (van Elteren),marco_temporal,-9.309686729042088e-05,-0.07451967916433501,1.0,0.8222927964233431,True,,433.0,433.0
+F4 controlada pelo espectro (van Elteren),fim_escala_6x1,-0.32968828557063856,-0.3206837606837607,0.08857530261751274,0.1538572668009624,True,,460.0,460.0
+F5 controlada pelo espectro (Mantel-Haenszel),maioridade_penal,1.2818397084560818,1.3465350912126086,1.0,0.9478315299392857,True,,469.0,469.0
+F5 controlada pelo espectro (Mantel-Haenszel),teto_gastos,1.343165277201737,1.8450967353788672,1.0,0.7311647339068977,True,,470.0,470.0
+F5 controlada pelo espectro (Mantel-Haenszel),reforma_trabalhista,1.060098155066749,0.7447765046678043,1.0,0.9478315299392857,True,,468.0,468.0
+F5 controlada pelo espectro (Mantel-Haenszel),reforma_previdencia,0.45825825517333696,0.3828982805388999,0.026816393573826352,0.21890090048949484,False,,491.0,490.0
+F5 controlada pelo espectro (Mantel-Haenszel),pec_precatorios,2.851894144698803,3.1674072618103275,0.0001046035753792453,0.005261584477762149,True,,490.0,489.0
+F5 controlada pelo espectro (Mantel-Haenszel),igualdade_salarial,3.966366570295023,3.8626439101270447,0.0979079239946539,0.14635797179550225,True,,359.0,359.0
+F5 controlada pelo espectro (Mantel-Haenszel),marco_temporal,1.2649713218890482,0.9276112341918213,1.0,0.9478315299392857,True,,433.0,433.0
+F5 controlada pelo espectro (Mantel-Haenszel),fim_escala_6x1,2.6462823501148933,2.4,1.0,0.9478315299392857,True,,460.0,460.0
+Fidelidade só com orientação própria,leg 55 PTC,50.0,,,,,,2.0,0.0
+Fidelidade só com orientação própria,leg 55 PTdoB,60.0,,,,,,10.0,0.0
+Fidelidade só com orientação própria,leg 55 PPS,62.96296296296296,62.96296296296296,,,,,27.0,27.0
+Fidelidade só com orientação própria,leg 55 PSDC,100.0,,,,,,2.0,0.0
 Fidelidade só com orientação própria,leg 55 DEM,97.22222222222221,97.22222222222221,,,,,72.0,72.0
+Fidelidade só com orientação própria,leg 55 PMDB,88.95027624309392,87.93103448275862,,,,,181.0,58.0
+Fidelidade só com orientação própria,leg 55 PEN,71.42857142857143,66.66666666666666,,,,,7.0,3.0
 Fidelidade só com orientação própria,leg 55 PCdoB,100.0,100.0,,,,,33.0,33.0
 Fidelidade só com orientação própria,leg 55 PDT,80.0,80.0,,,,,50.0,50.0
-Fidelidade só com orientação própria,leg 55 PEN,71.42857142857143,66.66666666666666,,,,,7.0,3.0
 Fidelidade só com orientação própria,leg 55 PHS,90.0,100.0,,,,,10.0,6.0
-Fidelidade só com orientação própria,leg 55 PMB,100.0,100.0,,,,,2.0,2.0
-Fidelidade só com orientação própria,leg 55 PMDB,88.95027624309392,87.93103448275862,,,,,181.0,58.0
-Fidelidade só com orientação própria,leg 55 PMN,100.0,,,,,,2.0,0.0
-Fidelidade só com orientação própria,leg 55 PP,91.33858267716536,,,,,,127.0,0.0
-Fidelidade só com orientação própria,leg 55 PPS,62.96296296296296,62.96296296296296,,,,,27.0,27.0
 Fidelidade só com orientação própria,leg 55 PR,89.7196261682243,89.7196261682243,,,,,107.0,107.0
-Fidelidade só com orientação própria,leg 55 PRB,91.80327868852459,87.8048780487805,,,,,61.0,41.0
+Fidelidade só com orientação própria,leg 55 PMB,100.0,100.0,,,,,2.0,2.0
+Fidelidade só com orientação própria,leg 55 PMN,100.0,,,,,,2.0,0.0
+Fidelidade só com orientação própria,leg 55 PTN,70.37037037037037,,,,,,27.0,0.0
+Fidelidade só com orientação própria,leg 55 PP,91.33858267716536,,,,,,127.0,0.0
 Fidelidade só com orientação própria,leg 55 PROS,52.17391304347826,61.111111111111114,,,,,23.0,18.0
 Fidelidade só com orientação própria,leg 55 PRP,100.0,100.0,,,,,4.0,1.0
 Fidelidade só com orientação própria,leg 55 PRTB,100.0,,,,,,1.0,0.0
@@ -35,16 +88,13 @@ Fidelidade só com orientação própria,leg 55 PSB,54.761904761904766,54.761904
 Fidelidade só com orientação própria,leg 55 PSC,85.71428571428571,80.0,,,,,28.0,10.0
 Fidelidade só com orientação própria,leg 55 PSD,91.91919191919192,91.91919191919192,,,,,99.0,99.0
 Fidelidade só com orientação própria,leg 55 PSDB,96.35036496350365,96.35036496350365,,,,,137.0,137.0
-Fidelidade só com orientação própria,leg 55 PSDC,100.0,,,,,,2.0,0.0
 Fidelidade só com orientação própria,leg 55 PSL,80.0,,,,,,5.0,0.0
 Fidelidade só com orientação própria,leg 55 PSOL,100.0,100.0,,,,,15.0,15.0
 Fidelidade só com orientação própria,leg 55 PT,99.41520467836257,99.41520467836257,,,,,171.0,171.0
 Fidelidade só com orientação própria,leg 55 PTB,84.21052631578947,,,,,,57.0,0.0
-Fidelidade só com orientação própria,leg 55 PTC,50.0,,,,,,2.0,0.0
-Fidelidade só com orientação própria,leg 55 PTN,70.37037037037037,,,,,,27.0,0.0
-Fidelidade só com orientação própria,leg 55 PTdoB,60.0,,,,,,10.0,0.0
 Fidelidade só com orientação própria,leg 55 PV,68.42105263157895,68.42105263157895,,,,,19.0,19.0
 Fidelidade só com orientação própria,leg 55 REDE,100.0,100.0,,,,,7.0,7.0
+Fidelidade só com orientação própria,leg 55 PRB,91.80327868852459,87.8048780487805,,,,,61.0,41.0
 Fidelidade só com orientação própria,leg 55 SD,79.06976744186046,79.06976744186046,,,,,43.0,43.0
 Fidelidade só com orientação própria,leg 56 AVANTE,73.33333333333333,73.33333333333333,,,,,15.0,15.0
 Fidelidade só com orientação própria,leg 56 CIDADANIA,86.66666666666667,86.66666666666667,,,,,15.0,15.0
@@ -57,7 +107,6 @@ Fidelidade só com orientação própria,leg 56 PDT,74.0,74.0,,,,,50.0,50.0
 Fidelidade só com orientação própria,leg 56 PL,95.0,95.0,,,,,80.0,80.0
 Fidelidade só com orientação própria,leg 56 PODE,76.19047619047619,76.19047619047619,,,,,21.0,21.0
 Fidelidade só com orientação própria,leg 56 PP,96.20253164556962,100.0,,,,,79.0,41.0
-Fidelidade só com orientação própria,leg 56 PRB,93.54838709677419,93.54838709677419,,,,,31.0,31.0
 Fidelidade só com orientação própria,leg 56 PROS,84.21052631578947,84.21052631578947,,,,,19.0,19.0
 Fidelidade só com orientação própria,leg 56 PSB,69.49152542372882,69.49152542372882,,,,,59.0,59.0
 Fidelidade só com orientação própria,leg 56 PSC,100.0,100.0,,,,,18.0,18.0
@@ -67,7 +116,7 @@ Fidelidade só com orientação própria,leg 56 PSL,97.0873786407767,97.08737864
 Fidelidade só com orientação própria,leg 56 PSOL,100.0,100.0,,,,,15.0,15.0
 Fidelidade só com orientação própria,leg 56 PT,100.0,100.0,,,,,101.0,101.0
 Fidelidade só com orientação própria,leg 56 PTB,95.45454545454545,90.0,,,,,22.0,10.0
-Fidelidade só com orientação própria,leg 56 REPUBLICANOS,100.0,100.0,,,,,30.0,30.0
+Fidelidade só com orientação própria,leg 56 REPUBLICANOS,96.72131147540983,96.72131147540983,,,,,61.0,61.0
 Fidelidade só com orientação própria,leg 56 SOLIDARIEDADE,96.29629629629629,96.29629629629629,,,,,27.0,27.0
 Fidelidade só com orientação própria,leg 57 AVANTE,82.35294117647058,100.0,,,,,17.0,5.0
 Fidelidade só com orientação própria,leg 57 CIDADANIA,71.42857142857143,,,,,,7.0,0.0

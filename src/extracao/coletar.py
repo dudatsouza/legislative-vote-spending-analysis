@@ -1,27 +1,12 @@
-"""Etapa 1 — Extração de dados (Seção 6.1 e docs/decisoes_metodologicas.md).
+"""Etapa 1: coleta dos dados brutos em data/raw (não versionado).
 
-Uso (a partir da raiz do projeto):
-    python -m src.extracao.coletar votacoes     # votos, orientações e deputados em exercício (D5, D11)
-    python -m src.extracao.coletar deputados    # deputados por legislatura e histórico de cada um (D7, D12)
-    python -m src.extracao.coletar proposicoes  # proposições e autores, arquivos anuais (D13, D14)
-    python -m src.extracao.coletar despesas     # CEAP, arquivos anuais (D15)
-    python -m src.extracao.coletar sigepa       # passagens SIGEPA pela API, lacuna do arquivo desde ago/2025 (D15)
-    python -m src.extracao.coletar malha        # contorno das UFs (IBGE), para o mapa
-    python -m src.extracao.coletar tudo
+    python -m src.extracao.coletar votacoes|deputados|proposicoes|despesas|sigepa|malha|tudo
     python -m src.extracao.coletar localizar PL 6787 2016
 
-Tudo é salvo em data/raw (não versionado). Rodar de novo reaproveita o que
-já foi baixado: respostas da API ficam em cache (data/raw/api) e arquivos já
-existentes não são baixados de novo. Uma coleta interrompida pode ser
-retomada rodando o mesmo comando.
-
-Ao final, data/processed/manifesto_coleta.json registra o que foi coletado,
-quando, quantos registros e o hash de cada arquivo em lote, para documentar
-o estado dos dados usado na análise (D1, data de corte).
-
-Votações, deputados e histórico vêm da API REST. Proposições e CEAP vêm dos
-arquivos em lote do mesmo portal: a API não tem /deputados/{id}/proposicoes
-e a CEAP por deputado exigiria dezenas de milhares de chamadas.
+Rodar de novo reaproveita o que já foi baixado. Votações, deputados e
+histórico vêm da API; proposições e CEAP, dos arquivos em lote. O manifesto
+em data/processed/manifesto_coleta.json registra o que foi coletado, quando e
+o sha256 de cada arquivo.
 """
 import hashlib
 import json
@@ -33,12 +18,9 @@ from src import config
 from src.extracao import camara_api as api
 
 
-# ---------------------------------------------------------------------------
-# Utilitário de busca de votações (usado na seleção, seção 2.1)
-# ---------------------------------------------------------------------------
+# --- Busca de votações ---------------------------------------------------------
 def localizar_votacao(sigla: str, numero: int, ano: int) -> list[dict]:
-    """Lista as votações de Plenário de uma proposição e quantos votos
-    individuais cada uma tem (0 = votação simbólica)."""
+    """Votações de Plenário de uma proposição e quantos votos individuais cada uma tem."""
     props = api.get("proposicoes", {"siglaTipo": sigla, "numero": numero, "ano": ano})["dados"]
     if not props:
         print(f"Proposição {sigla} {numero}/{ano} não encontrada.")
@@ -55,13 +37,9 @@ def localizar_votacao(sigla: str, numero: int, ano: int) -> list[dict]:
     return candidatas
 
 
-# ---------------------------------------------------------------------------
-# Votações (D5, D11)
-# ---------------------------------------------------------------------------
+# --- Votações ------------------------------------------------------------------
 def coletar_votacoes() -> dict:
-    """Metadados, votos individuais, orientações de bancada e deputados em
-    exercício na data de cada votação. A lista de deputados em exercício é o
-    que permite registrar a ausência como categoria própria (D5)."""
+    """Metadados, votos, orientações e deputados em exercício na data de cada votação."""
     print("\n== Votações")
     resumo = {}
     for v in config.VOTACOES:
@@ -70,7 +48,6 @@ def coletar_votacoes() -> dict:
         orientacoes = api.get(f"votacoes/{v['id_votacao']}/orientacoes")["dados"]
         dia = meta["data"]
         em_exercicio = api.get_paginado("deputados", {"dataInicio": dia, "dataFim": dia})
-        # A listagem não traz sexo; uma segunda consulta filtrada resolve.
         mulheres = api.get_paginado("deputados", {"dataInicio": dia, "dataFim": dia, "siglaSexo": "F"})
         resumo[v["chave"]] = {"id_votacao": v["id_votacao"], "data": dia, "votos": len(votos),
                               "orientacoes": len(orientacoes), "em_exercicio": len(em_exercicio),
@@ -90,12 +67,9 @@ def _ids_das_votacoes() -> set[int]:
     return ids
 
 
-# ---------------------------------------------------------------------------
-# Deputados e histórico (D7, D12)
-# ---------------------------------------------------------------------------
+# --- Deputados e histórico -----------------------------------------------------
 def coletar_deputados() -> dict:
-    """Deputados de cada legislatura (e quais são mulheres) e o histórico de
-    cada um, de onde saem os períodos de exercício e as filiações com data."""
+    """Deputados de cada legislatura e o histórico de cada um."""
     print("\n== Deputados por legislatura")
     ids, por_leg = set(), {}
     for leg in config.LEGISLATURAS:
@@ -116,7 +90,7 @@ def coletar_deputados() -> dict:
     for n, id_dep in enumerate(sorted(ids), 1):
         try:
             registros += len(api.get(f"deputados/{id_dep}/historico")["dados"])
-        except Exception as erro:  # uma falha não interrompe a coleta; rodar de novo retoma
+        except Exception as erro:
             falhas.append(id_dep)
             print(f"  [falha] deputado {id_dep}: {erro.__class__.__name__}")
         if n % 100 == 0 or n == len(ids):
@@ -127,9 +101,7 @@ def coletar_deputados() -> dict:
             "registros_historico": registros, "falhas_historico": falhas}
 
 
-# ---------------------------------------------------------------------------
-# Arquivos em lote: proposições (D13, D14), CEAP (D15) e malha do IBGE
-# ---------------------------------------------------------------------------
+# --- Arquivos em lote: proposições, CEAP e malha do IBGE -----------------------
 def _sha256(caminho: Path) -> str:
     h = hashlib.sha256()
     with open(caminho, "rb") as f:
@@ -169,14 +141,8 @@ def coletar_despesas() -> list[dict]:
 
 
 def coletar_sigepa() -> dict:
-    """Passagens SIGEPA da API para os deputados da 57ª, cobrindo a lacuna do
-    arquivo em lote (config.SIGEPA_API_DESDE em diante).
-
-    Baixa os anos inteiros. Os meses anteriores à lacuna servem para validar a
-    API contra o arquivo: a comparação deputado × mês tem de bater, senão a
-    complementação não é confiável. Grava só os registros de SIGEPA em
-    config.SIGEPA_API_CSV, sem CPF/CNPJ do fornecedor.
-    """
+    """Passagens SIGEPA da API (57ª), para cobrir a lacuna do arquivo em lote.
+    Os meses anteriores à lacuna validam a API contra o arquivo."""
     import pandas as pd
 
     print("\n== Passagens SIGEPA pela API (lacuna do arquivo em lote)")
@@ -203,7 +169,6 @@ def coletar_sigepa() -> dict:
     config.SIGEPA_API_CSV.parent.mkdir(parents=True, exist_ok=True)
     api_df.to_csv(config.SIGEPA_API_CSV, index=False)
 
-    # Validação: meses em que o arquivo em lote ainda tem SIGEPA.
     arq = pd.read_csv(config.DATA_RAW / "ceap" / f"Ano-{ano_ini}.csv.zip", sep=";", encoding="utf-8-sig",
                       compression="zip", low_memory=False,
                       usecols=["ideCadastro", "txtDescricao", "vlrLiquido", "numMes"])
@@ -240,12 +205,9 @@ def coletar_malha() -> list[dict]:
     return [_registro_arquivo(destino, config.MALHA_IBGE_UF)]
 
 
-# ---------------------------------------------------------------------------
-# Manifesto
-# ---------------------------------------------------------------------------
+# --- Manifesto -----------------------------------------------------------------
 def _atualizar_manifesto(secoes: dict) -> None:
-    """Acrescenta ao manifesto as seções coletadas nesta execução, preservando
-    as das execuções anteriores."""
+    """Atualiza no manifesto as seções coletadas nesta execução."""
     caminho = config.MANIFESTO_COLETA
     manifesto = json.loads(caminho.read_text(encoding="utf-8")) if caminho.exists() else {}
     manifesto.update({"data_corte": config.DATA_CORTE.isoformat(),
@@ -264,7 +226,7 @@ ETAPAS = {
     "deputados": coletar_deputados,
     "proposicoes": coletar_proposicoes,
     "despesas": coletar_despesas,
-    "sigepa": coletar_sigepa,  # depende de "despesas" (usa o arquivo para validar)
+    "sigepa": coletar_sigepa,  # depende de "despesas"
     "malha": coletar_malha,
 }
 

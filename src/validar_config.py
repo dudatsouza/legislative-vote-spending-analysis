@@ -1,17 +1,16 @@
-"""Confere a consistência de src/config.py e das tabelas de data/referencia.
+"""Confere src/config.py, as tabelas de data/referencia e os dados brutos.
 
-Uso (a partir da raiz do projeto):
-    python -m src.validar_config            # verificações locais + API (com cache)
-    python -m src.validar_config --sem-api  # só verificações locais
+    python -m src.validar_config [--sem-api]
 
-Cada verificação imprime uma linha:
-    [OK]     correto
-    [AVISO]  pendência conhecida (ex.: tabela ainda não preenchida); não impede rodar
-    [ERRO]   inconsistência; o script termina com código 1
+Cada verificação imprime [OK], [AVISO] (pendência, não impede rodar) ou
+[ERRO] (o script termina com código 1).
 """
+import hashlib
+import json
 import re
 import sys
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
+from pathlib import Path
 
 import pandas as pd
 import requests
@@ -42,11 +41,9 @@ def _ler_csv(caminho) -> pd.DataFrame | None:
     return pd.read_csv(caminho, dtype=str, keep_default_na=False)
 
 
-# ---------------------------------------------------------------------------
-# 1. Parâmetros do config.py
-# ---------------------------------------------------------------------------
+# --- 1. Parâmetros do config.py ---
 def validar_janela() -> None:
-    _secao("D1 — janela temporal")
+    _secao("janela temporal")
     legs = sorted(config.LEGISLATURAS)
     checar(legs == [55, 56, 57], "legislaturas 55, 56 e 57", f"legislaturas inesperadas: {legs}")
     checar(config.DATA_INICIO == config.LEGISLATURAS[55][0],
@@ -70,7 +67,7 @@ def validar_janela() -> None:
 
 
 def validar_votacoes() -> None:
-    _secao("Votações e D6 — direção pró-pauta")
+    _secao("votações e direção pró-pauta")
     campos = {"chave", "nome", "proposicao", "id_votacao", "data", "legislatura",
               "placar_oficial", "tema", "grupo_afetado", "efeito_sim", "direcao_pro_pauta", "nominal"}
     faltando = {v.get("chave", "?"): campos - v.keys() for v in config.VOTACOES if campos - v.keys()}
@@ -101,54 +98,52 @@ def validar_votacoes() -> None:
            f"conjunto do índice inesperado; ambíguas = {ambiguas}")
     idx_leg = pd.Series([v["legislatura"] for v in no_indice]).value_counts().to_dict()
     checar(idx_leg.get(56, 0) >= 2, "56ª com ≥ 2 votações no índice",
-           f"56ª tem {idx_leg.get(56, 0)} votação no índice (decisão D6: manter e declarar)", "AVISO")
+           f"56ª tem {idx_leg.get(56, 0)} votação no índice (manter e declarar)", "AVISO")
 
 
 def validar_parametros() -> None:
-    _secao("D3, D5, D9, D10, D13, D14, D18 — parâmetros")
+    _secao("parâmetros")
     checar(set(config.MAPA_VOTO_VALIDO.values()) <= {"Sim", "Não"}
            and config.MAPA_VOTO_VALIDO.get("Obstrução") == "Não",
-           "D5: votos válidos Sim/Não, obstrução = Não", "D5: MAPA_VOTO_VALIDO incoerente")
+           "votos válidos Sim/Não, obstrução = Não", "MAPA_VOTO_VALIDO incoerente")
     checar(config.MAPA_ORIENTACAO == config.MAPA_VOTO_VALIDO,
-           "D11: orientações seguem a mesma regra dos votos", "D11: MAPA_ORIENTACAO difere de MAPA_VOTO_VALIDO")
+           "orientações seguem a mesma regra dos votos", "MAPA_ORIENTACAO difere de MAPA_VOTO_VALIDO")
 
     faixas = config.FAIXAS_EXERCICIO
     contiguas = all(a[2] == b[1] for a, b in zip(faixas, faixas[1:]))
     checar(faixas[0][1] == config.MESES_MINIMOS and faixas[-1][2] is None and contiguas,
-           "D3: faixas contíguas a partir de 12 meses, a última sem teto", "D3: faixas incoerentes")
+           "faixas contíguas a partir de 12 meses, a última sem teto", "faixas incoerentes")
     casos = {11.99: None, 12: "C", 23.99: "C", 24: "B", 35.99: "B", 36: "A", 48: "A"}
     erros = {m: config.faixa_de_exercicio(m) for m, esp in casos.items() if config.faixa_de_exercicio(m) != esp}
-    checar(not erros, "D3: faixa_de_exercicio correta nas bordas", f"D3: faixa_de_exercicio falhou: {erros}")
+    checar(not erros, "faixa_de_exercicio correta nas bordas", f"faixa_de_exercicio falhou: {erros}")
     checar(0.5 < config.PERCENTIL_GASTO_EXTREMO < 1 and 0 < config.PERCENTIL_PROD_EXTREMO < 0.5,
-           f"D3: percentis P{config.PERCENTIL_GASTO_EXTREMO*100:.0f}/P{config.PERCENTIL_PROD_EXTREMO*100:.0f}",
-           "D3: percentis fora do intervalo esperado")
+           f"percentis P{config.PERCENTIL_GASTO_EXTREMO*100:.0f}/P{config.PERCENTIL_PROD_EXTREMO*100:.0f}",
+           "percentis fora do intervalo esperado")
 
     checar(len(config.MAPA_ESPECTRO) == 7 and set(config.MAPA_ESPECTRO.values()) == set(config.ESPECTROS),
-           "D9: 7 categorias do artigo → 3 espectros", "D9: MAPA_ESPECTRO incompleto")
-    checar(config.RICE_MIN_VOTOS_VALIDOS == 5, "D10: corte do Rice = 5 votos válidos", "D10: corte diferente de 5")
+           "7 categorias do artigo → 3 espectros", "MAPA_ESPECTRO incompleto")
+    checar(config.RICE_MIN_VOTOS_VALIDOS == 5, "corte do Rice = 5 votos válidos", "corte diferente de 5")
     checar({"PDC", "PDL"} <= set(config.TIPOS_NORMATIVOS),
-           "D13: PDC (até 2018) e PDL (desde 2019) incluídos", "D13: falta PDC ou PDL")
+           "PDC (até 2018) e PDL (desde 2019) incluídos", "falta PDC ou PDL")
     checar(config.SITUACAO_NORMA in config.SITUACOES_APROVADA_CAMARA
            and config.SITUACAO_APENSADA not in config.SITUACOES_APROVADA_CAMARA,
-           "D14: norma conta como aprovada; apensada não conta", "D14: conjuntos de situação incoerentes")
+           "norma conta como aprovada; apensada não conta", "conjuntos de situação incoerentes")
     corte = config.CEAP_ULTIMA_COMPETENCIA
     fim_corte = date(corte[0] + (corte[1] == 12), corte[1] % 12 + 1, 1) - timedelta(days=1)
     checar(fim_corte <= config.DATA_CORTE - timedelta(days=config.CEAP_DIAS_PRAZO_NOTAS)
            and (fim_corte + timedelta(days=1)) > config.DATA_CORTE - timedelta(days=config.CEAP_DIAS_PRAZO_NOTAS + 31),
-           f"D15: competência da CEAP até {corte[1]:02d}/{corte[0]} (último mês inteiro antes de corte − 90 dias)",
-           f"D15: CEAP_ULTIMA_COMPETENCIA incoerente: {corte}")
+           f"competência da CEAP até {corte[1]:02d}/{corte[0]} (último mês inteiro antes de corte − 90 dias)",
+           f"CEAP_ULTIMA_COMPETENCIA incoerente: {corte}")
     checar(config.SIGEPA_API_DESDE <= corte and config.TETO_MES_PARCIAL == "ponderado_por_dias",
-           f"D15: SIGEPA pela API desde {config.SIGEPA_API_DESDE[1]:02d}/{config.SIGEPA_API_DESDE[0]}; "
-           f"teto do mês ponderado por dias", "D15: parâmetros de SIGEPA/teto incoerentes")
+           f"SIGEPA pela API desde {config.SIGEPA_API_DESDE[1]:02d}/{config.SIGEPA_API_DESDE[0]}; "
+           f"teto do mês ponderado por dias", "parâmetros de SIGEPA/teto incoerentes")
     checar(config.ALPHA == 0.05 and config.CORRECAO_MULTIPLA == "holm" and len(config.FAMILIAS_TESTES) == 5,
-           "D18: α = 0,05, Holm, 5 famílias", "D18: parâmetros estatísticos divergem do decidido")
+           "α = 0,05, Holm, 5 famílias", "parâmetros estatísticos divergem do decidido")
 
 
-# ---------------------------------------------------------------------------
-# 2. Tabelas de referência
-# ---------------------------------------------------------------------------
+# --- 2. Tabelas de referência ---
 def validar_partidos() -> pd.DataFrame | None:
-    _secao("D7/D8 — data/referencia/partidos.csv")
+    _secao("data/referencia/partidos.csv")
     df = _ler_csv(config.PARTIDOS_CSV)
     if df is None:
         return None
@@ -183,7 +178,7 @@ def validar_partidos() -> pd.DataFrame | None:
 
 
 def validar_espectro(partidos: pd.DataFrame | None) -> None:
-    _secao("D9 — data/referencia/espectro_partidos.csv")
+    _secao("data/referencia/espectro_partidos.csv")
     df = _ler_csv(config.ESPECTRO_CSV)
     if df is None:
         return
@@ -226,11 +221,11 @@ def validar_espectro(partidos: pd.DataFrame | None) -> None:
            f"classificação manual pendente: {', '.join(sem_categoria)}", "AVISO")
     sem_fonte = manuais.loc[manuais["fonte"] == "", "partido_id"]
     checar(sem_fonte.empty, "classificações manuais com fonte documental",
-           f"fonte documental pendente (estatuto, programa ou manifesto — D9): {', '.join(sem_fonte)}", "AVISO")
+           f"fonte documental pendente (estatuto, programa ou manifesto): {', '.join(sem_fonte)}", "AVISO")
 
 
 def validar_blocos(partidos: pd.DataFrame | None) -> None:
-    _secao("D11 — data/referencia/blocos_orientacao.csv")
+    _secao("data/referencia/blocos_orientacao.csv")
     df = _ler_csv(config.BLOCOS_CSV)
     if df is None:
         return
@@ -259,7 +254,7 @@ def validar_blocos(partidos: pd.DataFrame | None) -> None:
 
 
 def validar_tetos() -> None:
-    _secao("D15 — data/referencia/tetos_ceap.csv")
+    _secao("data/referencia/tetos_ceap.csv")
     df = _ler_csv(config.TETOS_CEAP_CSV)
     if df is None:
         return
@@ -287,9 +282,7 @@ def validar_tetos() -> None:
                f"{uf}: vigências não cobrem {config.DATA_INICIO}–{config.DATA_CORTE} ou têm lacuna")
 
 
-# ---------------------------------------------------------------------------
-# 3. Conferência contra a API da Câmara (usa o cache em data/raw/api)
-# ---------------------------------------------------------------------------
+# --- 3. Conferência contra a API da Câmara (usa o cache em data/raw/api) ---
 _PLACAR = re.compile(r"Sim:?\s*(\d+)\D{1,4}N[ãa]o:?\s*(\d+)", re.IGNORECASE)
 
 
@@ -350,11 +343,9 @@ def validar_api(partidos: pd.DataFrame | None) -> None:
         _log("AVISO", f"malha do IBGE inacessível agora ({erro.__class__.__name__})")
 
 
-# ---------------------------------------------------------------------------
-# 4. Conferência contra os dados brutos já baixados (se existirem)
-# ---------------------------------------------------------------------------
+# --- 4. Conferência contra os dados brutos já baixados (se existirem) ---
 def validar_proposicoes_brutas() -> None:
-    _secao("D13/D14 — situações e tipos nos arquivos de proposições")
+    _secao("situações e tipos nos arquivos de proposições")
     arquivos = [config.DATA_RAW / "proposicoes" / f"proposicoes-{a}.csv"
                 for a in range(config.ANO_INICIO, config.ANO_FIM + 1)]
     presentes = [a for a in arquivos if a.exists()]
@@ -372,14 +363,60 @@ def validar_proposicoes_brutas() -> None:
     sit = norm["ultimoStatus_descricaoSituacao"].fillna("")
     existentes = set(sit)
     ausentes = config.SITUACOES_APROVADA_CAMARA - existentes
-    checar(not ausentes, "todas as situações do marco D14 existem nos dados (grafia exata)",
+    checar(not ausentes, "todas as situações do marco de aprovação existem nos dados (grafia exata)",
            f"situações do marco sem ocorrência (grafia?): {ausentes}")
     com_info = ~sit.isin(config.SITUACOES_SEM_INFORMACAO)
     marco = sit.isin(config.SITUACOES_APROVADA_CAMARA)
     print(f"         proposições normativas: {len(norm):,} | sem situação: {(~com_info).mean():.1%} | "
           f"apensadas: {(sit == config.SITUACAO_APENSADA).mean():.1%} | "
-          f"marco D14 (entre as com situação): {marco[com_info].mean():.1%} | "
+          f"marco de aprovação (entre as com situação): {marco[com_info].mean():.1%} | "
           f"só norma jurídica: {(sit[com_info] == config.SITUACAO_NORMA).mean():.1%}")
+
+
+def validar_brutos() -> None:
+    """Confere se os arquivos de data/raw/ batem com o manifesto (sha256)."""
+    _secao("Dados brutos × manifesto da coleta")
+    if not config.MANIFESTO_COLETA.exists():
+        _log("AVISO", "manifesto da coleta ausente; rode a coleta")
+        return
+    manifesto = json.loads(config.MANIFESTO_COLETA.read_text(encoding="utf-8"))
+    registros = []
+
+    def percorrer(x):
+        if isinstance(x, dict):
+            if isinstance(x.get("arquivo"), str) and x.get("sha256"):
+                registros.append(x)
+            for v in x.values():
+                percorrer(v)
+        elif isinstance(x, list):
+            for v in x:
+                percorrer(v)
+    percorrer(manifesto.get("secoes", {}))
+
+    ausentes, diferentes, antigos = [], [], []
+    for r in registros:
+        caminho = config.RAIZ / r["arquivo"]
+        if not caminho.exists():
+            ausentes.append(r["arquivo"])
+            continue
+        h = hashlib.sha256()
+        with open(caminho, "rb") as f:
+            for bloco in iter(lambda: f.read(1 << 20), b""):
+                h.update(bloco)
+        if h.hexdigest() != r["sha256"]:
+            diferentes.append(r["arquivo"])
+        if (r.get("baixado_em") and "ibge" not in r["arquivo"]
+                and datetime.fromisoformat(r["baixado_em"]).date() < config.DATA_CORTE):
+            antigos.append(r["arquivo"])
+    resumir = lambda xs: ", ".join(Path(x).name for x in xs[:4]) + (f" e mais {len(xs) - 4}" if len(xs) > 4 else "")
+    checar(not ausentes, f"os {len(registros)} arquivos do manifesto existem em data/raw/",
+           f"{len(ausentes)} arquivo(s) do manifesto ausente(s): {resumir(ausentes)}")
+    checar(not diferentes, "arquivos brutos idênticos aos do manifesto (sha256)",
+           f"{len(diferentes)} arquivo(s) diferente(s) do manifesto ({resumir(diferentes)}): os resultados não "
+           f"vão reproduzir os versionados. Use os mesmos data/raw/ de quem gerou o manifesto ou rode a coleta "
+           f"de novo e commite o manifesto novo.")
+    checar(not antigos, f"arquivos baixados na data de corte ({config.DATA_CORTE}) ou depois",
+           f"{len(antigos)} arquivo(s) baixado(s) antes da data de corte ({resumir(antigos)})", "AVISO")
 
 
 def main() -> int:
@@ -395,6 +432,7 @@ def main() -> int:
     if not sem_api:
         validar_api(partidos)
     validar_proposicoes_brutas()
+    validar_brutos()
     print(f"\nResumo: {_contagem['OK']} OK, {_contagem['AVISO']} avisos, {_contagem['ERRO']} erros")
     return 1 if _contagem["ERRO"] else 0
 

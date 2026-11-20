@@ -1,7 +1,18 @@
+# Dependências do pipeline e do painel (Python 3.10 ou superior).
+# O relatório de exploração usa um ambiente separado: requirements-perfil.txt.
+
+# Coleta e tratamento
 requests>=2.31
 pandas>=2.2
+
+# Análise estatística
 scipy>=1.12
+statsmodels>=0.14       # Mantel-Haenszel e regressão logística (D19)
+
+# Visualização
 matplotlib>=3.8
-seaborn>=0.13
+SciencePlots>=2.2.2     # estilo IEEE das figuras (D7); a 2.1 não funciona com matplotlib 3.11
 plotly>=5.20
-jupyter>=1.0
+
+# Painel interativo (src/visualizacao/painel.py)
+streamlit>=1.40

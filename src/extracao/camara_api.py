@@ -1,13 +1,8 @@
-"""Cliente mínimo da API de Dados Abertos da Câmara (Seção 6.1).
-
-- paginação sequencial pelo parâmetro `itens`/`pagina`;
-- intervalo fixo entre requisições;
-- cada resposta bruta é salva em JSON em data/raw antes de qualquer
-  tratamento, e reaproveitada nas execuções seguintes (cache).
-"""
+"""Cliente da API de Dados Abertos da Câmara, com cache em data/raw/api."""
 import hashlib
 import json
 import time
+import zipfile
 from pathlib import Path
 
 import requests
@@ -33,8 +28,7 @@ def get(endpoint: str, params: dict | None = None, usar_cache: bool = True) -> d
         return json.loads(destino.read_text(encoding="utf-8"))
 
     url = f"{config.API_CAMARA}/{endpoint.lstrip('/')}"
-    # A API devolve 504 com frequência em consultas pesadas; insiste com
-    # espera crescente antes de desistir.
+    # A API devolve 504 com frequência: tenta de novo com espera crescente.
     for tentativa in range(8):
         try:
             resp = _sessao.get(url, params=params, timeout=90)
@@ -69,17 +63,37 @@ def get_paginado(endpoint: str, params: dict | None = None) -> list[dict]:
         pagina += 1
 
 
-def baixar_arquivo(url: str, destino: Path) -> Path:
-    """Baixa um arquivo em lote (CSV/ZIP) para data/raw, se ainda não existir.
+def _tamanho_total(resp: requests.Response) -> int | None:
+    """Tamanho completo do arquivo segundo o servidor, se ele informar."""
+    faixa = resp.headers.get("Content-Range", "")  # "bytes 100-999/1000"
+    if "/" in faixa and faixa.rsplit("/", 1)[1].isdigit():
+        return int(faixa.rsplit("/", 1)[1])
+    tamanho = resp.headers.get("Content-Length", "")
+    return int(tamanho) if resp.status_code == 200 and tamanho.isdigit() else None
 
-    O servidor da Câmara costuma derrubar a conexão no meio de arquivos
-    grandes; nesse caso o download é retomado de onde parou (header Range)
-    ou, se o servidor não aceitar retomada, recomeçado.
-    """
+
+def _zip_integro(caminho: Path, completo: bool = False) -> bool:
+    """O .zip abre? Com completo=True, confere também o CRC de todos os membros."""
+    if caminho.suffix != ".zip":
+        return True
+    try:
+        with zipfile.ZipFile(caminho) as z:
+            return z.testzip() is None if completo else bool(z.namelist())
+    except (zipfile.BadZipFile, OSError):
+        return False
+
+
+def baixar_arquivo(url: str, destino: Path) -> Path:
+    """Baixa um arquivo em lote para data/raw, se ainda não existir.
+    Retoma downloads interrompidos (Range) e confere tamanho e ZIP no fim."""
     if destino.exists():
-        return destino
+        if _zip_integro(destino):
+            return destino
+        print(f"  {destino.name} no cache está corrompido; baixando de novo")
+        destino.unlink()
     destino.parent.mkdir(parents=True, exist_ok=True)
     tmp = destino.with_suffix(destino.suffix + ".part")
+    esperado = None
 
     for tentativa in range(8):
         ja_baixado = tmp.stat().st_size if tmp.exists() else 0
@@ -89,11 +103,14 @@ def baixar_arquivo(url: str, destino: Path) -> Path:
                 if resp.status_code == 416:  # .part já está completo
                     break
                 resp.raise_for_status()
-                # 206 = retomada aceita; 200 = servidor mandou o arquivo inteiro.
+                esperado = _tamanho_total(resp) or esperado
                 modo = "ab" if resp.status_code == 206 else "wb"
                 with open(tmp, modo) as f:
                     for bloco in resp.iter_content(chunk_size=1 << 20):
                         f.write(bloco)
+            if esperado is not None and tmp.stat().st_size < esperado:
+                raise requests.exceptions.ChunkedEncodingError(
+                    f"recebidos {tmp.stat().st_size} de {esperado} bytes")
             break
         except (requests.ConnectionError, requests.Timeout,
                 requests.exceptions.ChunkedEncodingError) as erro:
@@ -104,6 +121,13 @@ def baixar_arquivo(url: str, destino: Path) -> Path:
     else:
         raise RuntimeError(f"Falha persistente ao baixar {url}")
 
+    recebido = tmp.stat().st_size
+    if esperado is not None and recebido != esperado:
+        tmp.unlink()
+        raise RuntimeError(f"{destino.name}: {recebido} bytes, diferente do informado pelo servidor ({esperado})")
+    if not _zip_integro(tmp, completo=True):
+        tmp.unlink()
+        raise RuntimeError(f"{destino.name}: ZIP corrompido após o download; rode a coleta de novo")
     tmp.rename(destino)
     time.sleep(config.INTERVALO_REQUISICOES)
     return destino
