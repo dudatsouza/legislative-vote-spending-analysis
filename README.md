@@ -11,6 +11,8 @@ Existe relação entre o alinhamento partidário dos deputados federais e o padr
 
 **Recorte:** legislaturas 55ª a 57ª, de 01/02/2015 até a data de corte (**20/11/2026**, `DATA_CORTE` em [`src/config.py`](src/config.py)), com 8 votações nominais de Plenário. A 57ª está em curso e entra como dado parcial.
 
+**Painel interativo:** [legislative-vote-spending-analysis-4ignabvfueef24bd6et3hx.streamlit.app](https://legislative-vote-spending-analysis-4ignabvfueef24bd6et3hx.streamlit.app)
+
 A análise é **descritiva e correlacional**. Não há modelos preditivos nem machine learning, conforme o escopo combinado com o professor.
 
 ## Estrutura
@@ -63,6 +65,8 @@ Os PDFs ficam em `figuras/relatorio/` e são os mesmos enviados ao Overleaf (pas
 
 ### Painel interativo (Streamlit)
 
+Publicado em **[legislative-vote-spending-analysis-4ignabvfueef24bd6et3hx.streamlit.app](https://legislative-vote-spending-analysis-4ignabvfueef24bd6et3hx.streamlit.app)**.
+
 O painel tem dez páginas em três grupos, com a legislatura escolhida na barra lateral (ela fica no endereço, como `?leg=56`, para compartilhar um link já filtrado):
 
 | Grupo | Página | Conteúdo |
@@ -87,6 +91,8 @@ Depois de rodar o pipeline:
 O painel abre em http://localhost:8501. Ele só lê os arquivos versionados (`data/processed/` e `data/referencia/`), então funciona sem a pasta `data/raw/`.
 
 #### Publicar no Streamlit Community Cloud
+
+Para republicar em outra conta:
 
 1. Faça o push do repositório para o GitHub.
 2. Em [share.streamlit.io](https://share.streamlit.io), entre com a conta do GitHub e escolha **Create app → Deploy a public app from GitHub**.
