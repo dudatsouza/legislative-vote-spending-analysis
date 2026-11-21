@@ -7,11 +7,11 @@ pandas>=2.2
 
 # Análise estatística
 scipy>=1.12
-statsmodels>=0.14       # Mantel-Haenszel e regressão logística (D19)
+statsmodels>=0.14  # Mantel-Haenszel e regressão logística
 
 # Visualização
 matplotlib>=3.8
-SciencePlots>=2.2.2     # estilo IEEE das figuras (D7); a 2.1 não funciona com matplotlib 3.11
+SciencePlots>=2.2.2     # estilo IEEE das figuras; a 2.1 não funciona com matplotlib 3.11
 plotly>=5.20
 
 # Painel interativo (src/visualizacao/painel.py)
