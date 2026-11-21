@@ -373,12 +373,14 @@ def validar_proposicoes_brutas() -> None:
           f"só norma jurídica: {(sit[com_info] == config.SITUACAO_NORMA).mean():.1%}")
 
 
-def validar_brutos() -> None:
-    """Confere se os arquivos de data/raw/ batem com o manifesto (sha256)."""
-    _secao("Dados brutos × manifesto da coleta")
+def comparar_brutos_manifesto() -> dict | None:
+    """Compara data/raw/ com o manifesto da coleta (sha256). None se não houver manifesto.
+
+    Devolve a data de corte do manifesto, os arquivos registrados e os que estão
+    ausentes, diferentes ou baixados antes da data de corte. Usado pela validação
+    e pelo tratamento, que se recusa a rodar com brutos fora do manifesto."""
     if not config.MANIFESTO_COLETA.exists():
-        _log("AVISO", "manifesto da coleta ausente; rode a coleta")
-        return
+        return None
     manifesto = json.loads(config.MANIFESTO_COLETA.read_text(encoding="utf-8"))
     registros = []
 
@@ -408,7 +410,26 @@ def validar_brutos() -> None:
         if (r.get("baixado_em") and "ibge" not in r["arquivo"]
                 and datetime.fromisoformat(r["baixado_em"]).date() < config.DATA_CORTE):
             antigos.append(r["arquivo"])
-    resumir = lambda xs: ", ".join(Path(x).name for x in xs[:4]) + (f" e mais {len(xs) - 4}" if len(xs) > 4 else "")
+    return {"data_corte": manifesto.get("data_corte"), "registros": registros,
+            "ausentes": ausentes, "diferentes": diferentes, "antigos": antigos}
+
+
+def resumir_arquivos(xs: list[str]) -> str:
+    return ", ".join(Path(x).name for x in xs[:4]) + (f" e mais {len(xs) - 4}" if len(xs) > 4 else "")
+
+
+def validar_brutos() -> None:
+    """Confere se os arquivos de data/raw/ batem com o manifesto (sha256)."""
+    _secao("Dados brutos × manifesto da coleta")
+    comp = comparar_brutos_manifesto()
+    if comp is None:
+        _log("AVISO", "manifesto da coleta ausente; rode a coleta")
+        return
+    registros, ausentes, diferentes, antigos = (comp[k] for k in ("registros", "ausentes", "diferentes", "antigos"))
+    resumir = resumir_arquivos
+    checar(comp["data_corte"] == config.DATA_CORTE.isoformat(),
+           f"manifesto com a mesma data de corte do config ({config.DATA_CORTE})",
+           f"data de corte do manifesto ({comp['data_corte']}) ≠ config.DATA_CORTE ({config.DATA_CORTE})")
     checar(not ausentes, f"os {len(registros)} arquivos do manifesto existem em data/raw/",
            f"{len(ausentes)} arquivo(s) do manifesto ausente(s): {resumir(ausentes)}")
     checar(not diferentes, "arquivos brutos idênticos aos do manifesto (sha256)",

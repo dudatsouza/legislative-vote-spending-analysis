@@ -411,7 +411,34 @@ def verificar(diario, exercicio, votos, rice, prod, gasto, base) -> None:
           "sem duplicatas; dias ≤ legislatura; meses_ceap ≤ meses_exercicio; tetos positivos — OK")
 
 
+def exigir_brutos_do_manifesto() -> None:
+    """Para o tratamento se data/raw/ não for a coleta registrada no manifesto.
+    Sem isso, as bases versionadas seriam regravadas com dados de outra coleta."""
+    from src.validar_config import comparar_brutos_manifesto, resumir_arquivos
+    print("== Conferindo data/raw/ × manifesto da coleta (sha256)", flush=True)
+    comp = comparar_brutos_manifesto()
+    if comp is None:
+        problemas = ["manifesto da coleta ausente"]
+    else:
+        problemas = []
+        if comp["data_corte"] != config.DATA_CORTE.isoformat():
+            problemas.append(f"data de corte do manifesto ({comp['data_corte']}) ≠ config.DATA_CORTE "
+                             f"({config.DATA_CORTE})")
+        if comp["ausentes"]:
+            problemas.append(f"{len(comp['ausentes'])} arquivo(s) ausente(s): {resumir_arquivos(comp['ausentes'])}")
+        if comp["diferentes"]:
+            problemas.append(f"{len(comp['diferentes'])} arquivo(s) diferente(s) do manifesto: "
+                             f"{resumir_arquivos(comp['diferentes'])}")
+    if problemas:
+        raise SystemExit("\nTratamento interrompido: data/raw/ não corresponde ao manifesto da coleta.\n  - "
+                         + "\n  - ".join(problemas)
+                         + "\nUse os mesmos data/raw/ de quem gerou o manifesto, ou rode a coleta de novo "
+                           "(ela atualiza o manifesto) e commite o manifesto novo.")
+    print(f"  {len(comp['registros'])} arquivos idênticos ao manifesto")
+
+
 if __name__ == "__main__":
+    exigir_brutos_do_manifesto()
     OUT.mkdir(parents=True, exist_ok=True)
     partidos, espectro, blocos, tetos = carregar_referencias()
     print("== Exercício (histórico, estado diário)")

@@ -1,2 +1,2 @@
-ydata-profiling>=4.17    # relatório de exploração (aula "Visualização de dados"); exige Python < 3.14
+ydata-profiling==4.17.0  # relatório de exploração (aula "Visualização de dados"); exige Python < 3.14
 setuptools<81            # pkg_resources, ainda importado pelo ydata-profiling

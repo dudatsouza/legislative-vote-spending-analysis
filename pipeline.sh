@@ -15,7 +15,8 @@
 #   ./pipeline.sh -h                  mostra esta ajuda
 #
 # Cria .venv (e .venv_perfil, para o ydata-profiling) na primeira execução.
-# Falhas na validação ou no perfil não interrompem o pipeline. Log em logs/.
+# Falhas na validação ou no perfil não interrompem o pipeline, mas o tratamento
+# para se data/raw/ não bater com o manifesto da coleta. Log em logs/.
 
 set -euo pipefail
 cd "$(dirname "$0")"

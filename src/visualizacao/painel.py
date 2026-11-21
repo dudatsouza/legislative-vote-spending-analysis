@@ -302,11 +302,13 @@ def aba_visao_geral(d: dict, leg: int) -> None:
     t = d["testes"]
     f1, f2, f3, f4, f5, f4e, f5e = (t[t["familia"] == f] for f in ("F1", "F2", "F3", "F4", "F5", "F4E", "F5E"))
     sig = lambda df: int(df["significativo"].sum())
+    v_sig = f1.loc[f1["significativo"].astype(bool), "valor_efeito"]  # faixa do V só entre as significativas
+    faixa_v = f" (V de Cramér de {num(v_sig.min(), 2)} a {num(v_sig.max(), 2)})" if len(v_sig) else ""
     achados = [
         ("Partido e espectro explicam o voto",
          f"{sig(f1)} de {len(f1)}",
-         f"votações com associação entre partido e voto (V de Cramér de {num(f1['valor_efeito'].min(), 2)} a "
-         f"{num(f1['valor_efeito'].max(), 2)}); espectro × voto em {sig(f2)} de {len(f2)}.", "votacoes"),
+         f"votações com associação entre partido e voto{faixa_v}; espectro × voto em {sig(f2)} de {len(f2)}.",
+         "votacoes"),
         ("Gasto e produtividade não andam juntos",
          f"{sig(f3)} de {len(f3)}",
          "correlações de Spearman entre gasto relativo e produtividade foram significativas, em nenhuma "

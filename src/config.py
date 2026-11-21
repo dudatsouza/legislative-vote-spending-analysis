@@ -266,6 +266,7 @@ ORDEM_PRIMEIRO_AUTOR = 1
 
 # Situações que contam como "aprovada na Câmara".
 SITUACOES_APROVADA_CAMARA = {
+    "Aguardando Envio à Redação Final",   # mérito aprovado; falta a redação final
     "Aguardando Redação Final",
     "Aguardando Autógrafos na Mesa",
     "Aguardando Envio ao Senado Federal",
@@ -308,7 +309,6 @@ ALPHA = 0.05
 CORRECAO_MULTIPLA = "holm"
 FREQ_ESPERADA_MIN = 5        # abaixo disso: Fisher (2×2) ou permutação (r×c)
 N_PERMUTACOES = 10_000
-N_BOOTSTRAP = 10_000
 NIVEL_CONFIANCA = 0.95
 METODO_IC_PROPORCAO = "wilson"
 SEMENTE = 20260929
