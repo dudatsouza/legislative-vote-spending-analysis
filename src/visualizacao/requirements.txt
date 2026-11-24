@@ -1,0 +1,14 @@
+# Dependências só do painel (src/visualizacao/painel.py), usadas pelo Streamlit Cloud.
+# O Streamlit Cloud procura este arquivo primeiro, na pasta do script do app, antes do da raiz.
+#
+# Por que um arquivo separado: o requirements.txt da raiz trava numpy 2.2.6 e scipy 1.15.3
+# para reproduzir os CSVs, mas essas versões não têm pacote pronto para Python 3.14, e o
+# app na nuvem quebrava ao instalá-las. O painel só lê os CSVs já gerados, então aqui
+# bastam faixas de versões compatíveis com qualquer Python de 3.10 a 3.14.
+numpy>=2.2,<3
+pandas>=2.3,<3.1        # painel testado com pandas 3.0
+scipy>=1.15,<2
+statsmodels>=0.14,<1
+matplotlib>=3.10,<4
+plotly>=6,<8
+streamlit>=1.65,<2
